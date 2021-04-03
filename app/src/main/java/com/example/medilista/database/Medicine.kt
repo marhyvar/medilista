@@ -9,7 +9,7 @@ data class Medicine (
         @PrimaryKey(autoGenerate = true)
         var medicineId: Long = 0L,
         @ColumnInfo(name = "medicine_name")
-        var name: String,
+        var medicineName: String,
         @ColumnInfo(name = "strength")
         var strength: Double,
         @ColumnInfo(name = "unit")

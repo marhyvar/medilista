@@ -7,7 +7,7 @@ data class MedicineWithDosages (
         @Embedded val Medicine: Medicine,
         @Relation(
                 parentColumn = "medicineId",
-                entityColumn = "dosageMedicineId"
+                entityColumn = "dosage_medicine_id"
         )
         val dosages: List<Dosage>
 )
