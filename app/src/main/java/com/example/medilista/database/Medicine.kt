@@ -11,9 +11,9 @@ data class Medicine (
         @ColumnInfo(name = "medicine_name")
         var medicineName: String,
         @ColumnInfo(name = "strength")
-        var strength: Double,
-        @ColumnInfo(name = "unit")
-        var unit: String,
+        var strength: String,
+        @ColumnInfo(name = "form")
+        var form: String,
         @ColumnInfo(name = "alarm")
         var alarm: Boolean,
         @ColumnInfo(name = "taken_when_needed")
