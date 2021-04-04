@@ -1,10 +1,14 @@
 package com.example.medilista.medicines
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.medilista.database.MedicineDao
 
-class MedicinesViewModel : ViewModel() {
+class MedicinesViewModel(
+        val database: MedicineDao,
+        application: Application) : AndroidViewModel(application) {
     private val _navigateToDetails = MutableLiveData<Boolean>()
     val navigateToDetails: LiveData<Boolean>
         get() = _navigateToDetails

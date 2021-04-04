@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="medicinesViewModel"
             type="com.example.medilista.medicines.MedicinesViewModel" />
     </data>
 
@@ -44,7 +44,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             app:srcCompat="@drawable/baseline_add_24"
-            android:onClick="@{() -> viewModel.onFabClicked()}"
+            android:onClick="@{() -> medicinesViewModel.onFabClicked()}"
             android:contentDescription="@string/fab_description" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -10,31 +10,41 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.medilista.R
+import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicinesBinding
 
 
 class MedicinesFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MedicinesFragment()
-    }
-
-    private lateinit var viewModel: MedicinesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentMedicinesBinding.inflate(inflater)
-        viewModel = ViewModelProvider(this).get(MedicinesViewModel::class.java)
-        binding.viewModel = viewModel
+        // reference to the binding object and inflate the fragment view
+        val binding: FragmentMedicinesBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_medicines, container, false)
 
-        viewModel.navigateToDetails.observe(viewLifecycleOwner,
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = MedicineDatabase.getInstance(application).medicineDao
+
+        val viewModelFactory = MedicinesViewModelFactory(dataSource, application)
+
+        val medicinesViewModel =
+                ViewModelProvider(
+                        this, viewModelFactory).get(MedicinesViewModel::class.java)
+
+        binding.medicinesViewModel = medicinesViewModel
+
+        binding.lifecycleOwner = this
+
+        medicinesViewModel.navigateToDetails.observe(viewLifecycleOwner,
             Observer<Boolean> { shouldNavigate ->
                 if (shouldNavigate == true) {
                     val navController = binding.root.findNavController()
                     navController.navigate(R.id.action_medicinesFragment_to_detailsFragment)
-                    viewModel.onNavigatedToDetails()
+                    medicinesViewModel.onNavigatedToDetails()
                 }
             })
         return binding.root
