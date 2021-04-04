@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/hint_medicine_name"
+            android:text="@={detailsViewModel.name}"
             app:layout_constraintBottom_toTopOf="@+id/edit_medicine_strength"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_medicine_strength"
+            android:text="@={detailsViewModel.strength}"
             app:layout_constraintBottom_toTopOf="@+id/edit_medicine_form"
             app:layout_constraintTop_toBottomOf="@+id/edit_medicine_name"
             tools:layout_editor_absoluteX="-16dp" />
@@ -38,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_medicine_form"
+            android:text="@={detailsViewModel.form}"
             app:layout_constraintBottom_toTopOf="@+id/edit_check_if_alarm"
             app:layout_constraintTop_toBottomOf="@+id/edit_medicine_strength"
             tools:layout_editor_absoluteX="-30dp" />
@@ -47,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alarm_check"
+            android:checked="@={detailsViewModel.alarm}"
             app:layout_constraintBottom_toTopOf="@+id/edit_check_if_taken_when_needed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_medicine_form" />
@@ -56,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/taken_when_needed"
+            android:checked="@={detailsViewModel.onlyWhenNeeded}"
             app:layout_constraintBottom_toTopOf="@+id/save_medicine_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_check_if_alarm" />

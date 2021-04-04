@@ -17,7 +17,16 @@ class DetailsViewModel(
     val navigateToMedicines: LiveData<Boolean?>
         get() = _navigateToMedicines
 
+    val name = MutableLiveData<String>()
 
+
+    val strength = MutableLiveData<String>()
+
+    val form = MutableLiveData<String>()
+
+    val alarm = MutableLiveData<Boolean>(false)
+
+    val onlyWhenNeeded = MutableLiveData<Boolean>(false)
 
     private suspend fun insert(medicine: Medicine) {
         database.insert(medicine)
@@ -29,7 +38,15 @@ class DetailsViewModel(
 
     fun onSaveButtonClick() {
         viewModelScope.launch {
-            var medicine = Medicine(medicineName = "Amlodipin", strength = "10 mg", form = "tabletti", alarm = false, takenWhenNeeded = false)
+            val med_name = name.value
+            val med_strength = strength.value
+            val med_form = form.value
+            val med_alarm = alarm.value
+            val med_needed = onlyWhenNeeded.value
+
+            //dangerous double bang, to do: add null checks!!
+            var medicine = Medicine(medicineName = med_name!!, strength = med_strength!!,
+                    form = med_form!!, alarm = med_alarm!!, takenWhenNeeded = med_needed!!)
             insert(medicine)
             _navigateToMedicines.value = true
         }
