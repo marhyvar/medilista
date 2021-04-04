@@ -24,6 +24,9 @@ interface MedicineDao {
     @Query("DELETE FROM medicine_table")
     fun clearAllMedicineData()
 
+    @Query("SELECT * FROM medicine_table ORDER BY medicine_name")
+    fun getMedicinesWithoutDosages(): LiveData<List<Medicine>>
+
     @Transaction
     @Query("SELECT * FROM medicine_table ORDER BY medicine_name")
     fun getAllMedicines(): LiveData<List<MedicineWithDosages>>

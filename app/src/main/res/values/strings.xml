@@ -4,4 +4,5 @@
     <string name="fragment_one">Hello blank fragment 1</string>
     <string name="fragment_two">Hello blank fragment 2</string>
     <string name="fab_description">Lisää lääke</string>
+    <string name="title"><![CDATA[<h1>Lääkkeeni</h1>]]></string>
 </resources>
