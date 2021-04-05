@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="detailsViewModel"
+            type="com.example.medilista.details.DetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,11 +14,68 @@
         android:layout_height="match_parent"
         tools:context=".details.DetailsFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_medicine_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/fragment_two" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_medicine_name"
+            android:text="@={detailsViewModel.name}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_medicine_strength"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_medicine_strength"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_medicine_strength"
+            android:text="@={detailsViewModel.strength}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_medicine_form"
+            app:layout_constraintTop_toBottomOf="@+id/edit_medicine_name"
+            tools:layout_editor_absoluteX="-16dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_medicine_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_medicine_form"
+            android:text="@={detailsViewModel.form}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_check_if_alarm"
+            app:layout_constraintTop_toBottomOf="@+id/edit_medicine_strength"
+            tools:layout_editor_absoluteX="-30dp" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/edit_check_if_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_check"
+            android:checked="@={detailsViewModel.alarm}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_check_if_taken_when_needed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_medicine_form" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/edit_check_if_taken_when_needed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/taken_when_needed"
+            android:checked="@={detailsViewModel.onlyWhenNeeded}"
+            app:layout_constraintBottom_toTopOf="@+id/save_medicine_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_check_if_alarm" />
+
+        <Button
+            android:id="@+id/save_medicine_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_medicine"
+            android:contentDescription="@string/save_medicine"
+            android:onClick="@{() -> detailsViewModel.onSaveButtonClick()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_check_if_taken_when_needed"
+            tools:layout_editor_absoluteX="-16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

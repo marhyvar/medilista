@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="medicinesViewModel"
             type="com.example.medilista.medicines.MedicinesViewModel" />
     </data>
 
@@ -23,17 +23,19 @@
                 tools:context=".medicines.MedicinesFragment">
 
                 <!-- TODO: Update blank fragment layout -->
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_one"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{medicinesViewModel.medicinesString}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -44,7 +46,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             app:srcCompat="@drawable/baseline_add_24"
-            android:onClick="@{() -> viewModel.onFabClicked()}"
+            android:onClick="@{() -> medicinesViewModel.onFabClicked()}"
             android:contentDescription="@string/fab_description" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
