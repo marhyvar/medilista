@@ -27,4 +27,24 @@ fun formatMedicines(medicines: List<Medicine>, resources: Resources): Spanned {
     }
 }
 
+fun combineNameAndStrength(name: String, strength: String): String {
+    return "$name $strength"
+}
+
+fun determineIfNeededOrContinuous(value: Boolean, resources: Resources): String {
+    return if (value) {
+        resources.getString(R.string.when_needed)
+    } else {
+        resources.getString(R.string.countinuous)
+    }
+}
+
+fun determineIfAlarmOrNot(value: Boolean, resources: Resources): String {
+    return if (value) {
+        resources.getString(R.string.alarm)
+    } else {
+        resources.getString(R.string.no_alarm)
+    }
+}
+
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
