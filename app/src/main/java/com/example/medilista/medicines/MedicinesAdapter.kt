@@ -24,18 +24,14 @@ class MedicinesAdapter: RecyclerView.Adapter<MedicinesAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater
-                .inflate(R.layout.list_item_medicine, parent, false)
-
-        return ViewHolder(view)
+        return ViewHolder.from(parent)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
         val medicine: TextView = itemView.findViewById(R.id.med_name_text)
         val ifNeeded: TextView = itemView.findViewById(R.id.med_if_needed_text)
         val alarm: TextView = itemView.findViewById(R.id.alarm_text)
-        
+
         fun bind(item: Medicine) {
             val res = itemView.context.resources
             val name = item.medicineName.toString()
@@ -45,5 +41,15 @@ class MedicinesAdapter: RecyclerView.Adapter<MedicinesAdapter.ViewHolder>() {
             ifNeeded.text = determineIfNeededOrContinuous(item.takenWhenNeeded, res)
             alarm.text = determineIfAlarmOrNot(item.alarm, res)
         }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val view = LayoutInflater.from(parent.context)
+                        .inflate(R.layout.list_item_medicine, parent, false)
+                return ViewHolder(view)
+            }
+        }
     }
+
+
 }
