@@ -1,5 +1,6 @@
 package com.example.medilista.medicines
 
+import android.content.res.Resources
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.medilista.database.Medicine
@@ -19,13 +20,7 @@ class MedicinesAdapter: RecyclerView.Adapter<MedicinesAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        val res = holder.itemView.context.resources
-        val name = item.medicineName.toString()
-        val strength = item.strength.toString()
-
-        holder.medicine.text = combineNameAndStrength(name, strength)
-        holder.ifNeeded.text = determineIfNeededOrContinuous(item.takenWhenNeeded, res)
-        holder.alarm.text = determineIfAlarmOrNot(item.alarm, res)
+        holder.bind(item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,5 +35,15 @@ class MedicinesAdapter: RecyclerView.Adapter<MedicinesAdapter.ViewHolder>() {
         val medicine: TextView = itemView.findViewById(R.id.med_name_text)
         val ifNeeded: TextView = itemView.findViewById(R.id.med_if_needed_text)
         val alarm: TextView = itemView.findViewById(R.id.alarm_text)
+        
+        fun bind(item: Medicine) {
+            val res = itemView.context.resources
+            val name = item.medicineName.toString()
+            val strength = item.strength.toString()
+
+            medicine.text = combineNameAndStrength(name, strength)
+            ifNeeded.text = determineIfNeededOrContinuous(item.takenWhenNeeded, res)
+            alarm.text = determineIfAlarmOrNot(item.alarm, res)
+        }
     }
 }
