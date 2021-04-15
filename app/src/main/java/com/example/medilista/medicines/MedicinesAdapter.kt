@@ -1,15 +1,13 @@
 package com.example.medilista.medicines
 
-import android.content.res.Resources
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.medilista.database.Medicine
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.medilista.*
+import com.example.medilista.databinding.ListItemMedicineBinding
 
 class MedicinesAdapter : ListAdapter<Medicine,
         MedicinesAdapter.ViewHolder>(MedicineDiffCallback()) {
@@ -24,26 +22,23 @@ class MedicinesAdapter : ListAdapter<Medicine,
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val medicine: TextView = itemView.findViewById(R.id.med_name_text)
-        val ifNeeded: TextView = itemView.findViewById(R.id.med_if_needed_text)
-        val alarm: TextView = itemView.findViewById(R.id.alarm_text)
+    class ViewHolder private constructor(val binding: ListItemMedicineBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: Medicine) {
             val res = itemView.context.resources
             val name = item.medicineName.toString()
             val strength = item.strength.toString()
 
-            medicine.text = combineNameAndStrength(name, strength)
-            ifNeeded.text = determineIfNeededOrContinuous(item.takenWhenNeeded, res)
-            alarm.text = determineIfAlarmOrNot(item.alarm, res)
+            binding.medNameText.text = combineNameAndStrength(name, strength)
+            binding.medIfNeededText.text = determineIfNeededOrContinuous(item.takenWhenNeeded, res)
+            binding.alarmText.text = determineIfAlarmOrNot(item.alarm, res)
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
-                val view = LayoutInflater.from(parent.context)
-                        .inflate(R.layout.list_item_medicine, parent, false)
-                return ViewHolder(view)
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ListItemMedicineBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
             }
         }
     }
