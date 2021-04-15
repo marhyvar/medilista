@@ -7,19 +7,16 @@ import com.example.medilista.database.Medicine
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.example.medilista.*
 
-class MedicinesAdapter: RecyclerView.Adapter<MedicinesAdapter.ViewHolder>() {
-    var data = listOf<Medicine>()
-        set(value) {
-            field = value
-            // save the new value by setting field = value
-            notifyDataSetChanged()
-        }
-    override fun getItemCount(): Int = data.size
+class MedicinesAdapter : ListAdapter<Medicine,
+        MedicinesAdapter.ViewHolder>(MedicineDiffCallback()) {
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
@@ -51,5 +48,13 @@ class MedicinesAdapter: RecyclerView.Adapter<MedicinesAdapter.ViewHolder>() {
         }
     }
 
+    class MedicineDiffCallback : DiffUtil.ItemCallback<Medicine>() {
+        override fun areItemsTheSame(oldItem: Medicine, newItem: Medicine): Boolean {
+            return oldItem.medicineId == newItem.medicineId
+        }
 
+        override fun areContentsTheSame(oldItem: Medicine, newItem: Medicine): Boolean {
+            return oldItem == newItem
+        }
+    }
 }
