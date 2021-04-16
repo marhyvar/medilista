@@ -25,13 +25,8 @@ class MedicinesAdapter : ListAdapter<Medicine,
     class ViewHolder private constructor(val binding: ListItemMedicineBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: Medicine) {
-            val res = itemView.context.resources
-            val name = item.medicineName.toString()
-            val strength = item.strength.toString()
-
-            binding.medNameText.text = combineNameAndStrength(name, strength)
-            binding.medIfNeededText.text = determineIfNeededOrContinuous(item.takenWhenNeeded, res)
-            binding.alarmText.text = determineIfAlarmOrNot(item.alarm, res)
+            binding.medicine = item
+            binding.executePendingBindings()
         }
 
         companion object {
