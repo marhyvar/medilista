@@ -47,4 +47,11 @@ fun determineIfAlarmOrNot(value: Boolean, resources: Resources): String {
     }
 }
 
+fun validateInputInMedicineDetails(name: String?, strength: String?, form: String?): Boolean {
+    if (name.isNullOrEmpty() || strength.isNullOrEmpty() || form.isNullOrEmpty()) {
+        return false
+    }
+    return true
+}
+
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
