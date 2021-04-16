@@ -12,7 +12,7 @@ class MedicinesViewModel(
         val database: MedicineDao,
         application: Application) : AndroidViewModel(application) {
 
-    private val medicines = database.getMedicinesWithoutDosages()
+    val medicines = database.getMedicinesWithoutDosages()
 
     val medicinesString = Transformations.map(medicines) { medicines ->
         formatMedicines(medicines, application.resources)

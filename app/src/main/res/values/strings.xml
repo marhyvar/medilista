@@ -12,4 +12,8 @@
     <string name="menu_label">Lääkemuoto</string>
     <string name="hint_medicine_form">Lääkemuoto (tabletti, liuos yms.)</string>
     <string name="save_medicine">Tallenna lääkkeen tiedot</string>
+    <string name="alarm">Hälytys</string>
+    <string name="no_alarm">Ei hälytystä</string>
+    <string name="countinuous">Jatkuva</string>
+    <string name="when_needed">Tarvittaessa</string>
 </resources>

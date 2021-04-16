@@ -39,6 +39,15 @@ class MedicinesFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
+        val adapter = MedicinesAdapter()
+        binding.medicineList.adapter = adapter
+
+        medicinesViewModel.medicines.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
+
         medicinesViewModel.navigateToDetails.observe(viewLifecycleOwner,
             Observer<Boolean> { shouldNavigate ->
                 if (shouldNavigate == true) {

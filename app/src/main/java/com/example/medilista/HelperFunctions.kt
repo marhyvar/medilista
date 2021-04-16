@@ -4,7 +4,9 @@ import android.content.res.Resources
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.widget.TextView
 import androidx.core.text.HtmlCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.example.medilista.database.Medicine
 
 fun formatMedicines(medicines: List<Medicine>, resources: Resources): Spanned {
@@ -24,3 +26,25 @@ fun formatMedicines(medicines: List<Medicine>, resources: Resources): Spanned {
         return HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
 }
+
+fun combineNameAndStrength(name: String, strength: String): String {
+    return "$name $strength"
+}
+
+fun determineIfNeededOrContinuous(value: Boolean, resources: Resources): String {
+    return if (value) {
+        resources.getString(R.string.when_needed)
+    } else {
+        resources.getString(R.string.countinuous)
+    }
+}
+
+fun determineIfAlarmOrNot(value: Boolean, resources: Resources): String {
+    return if (value) {
+        resources.getString(R.string.alarm)
+    } else {
+        resources.getString(R.string.no_alarm)
+    }
+}
+
+class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

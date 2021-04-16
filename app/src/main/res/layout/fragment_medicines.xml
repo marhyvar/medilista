@@ -22,25 +22,23 @@
                 android:layout_height="match_parent"
                 tools:context=".medicines.MedicinesFragment">
 
-                <!-- TODO: Update blank fragment layout -->
-                <ScrollView
+                <!-- TODO: RECYCLERVIEW CHECK CONSTRAINTS-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/medicine_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{medicinesViewModel.medicinesString}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </ScrollView>
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="80dp"
+                    app:layoutManager="LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
