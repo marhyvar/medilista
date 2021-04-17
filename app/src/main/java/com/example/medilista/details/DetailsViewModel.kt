@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
+import com.example.medilista.validateInputInMedicineDetails
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
@@ -28,6 +29,16 @@ class DetailsViewModel(
 
     val onlyWhenNeeded = MutableLiveData<Boolean>(false)
 
+    private var _showErrorEvent = MutableLiveData<Boolean>()
+
+
+    val showErrorEvent: LiveData<Boolean>
+        get() = _showErrorEvent
+
+    fun doneShowingError() {
+        _showErrorEvent.value = false
+    }
+
     private suspend fun insert(medicine: Medicine) {
         database.insert(medicine)
     }
@@ -38,17 +49,21 @@ class DetailsViewModel(
 
     fun onSaveButtonClick() {
         viewModelScope.launch {
-            val med_name = name.value
-            val med_strength = strength.value
-            val med_form = form.value
-            val med_alarm = alarm.value
-            val med_needed = onlyWhenNeeded.value
+            val medName = name.value
+            val medStrength = strength.value
+            val medForm = form.value
+            val medAlarm = alarm.value
+            val medNeeded = onlyWhenNeeded.value
 
-            //dangerous double bang, to do: add null checks!!
-            var medicine = Medicine(medicineName = med_name!!, strength = med_strength!!,
-                    form = med_form!!, alarm = med_alarm!!, takenWhenNeeded = med_needed!!)
-            insert(medicine)
-            _navigateToMedicines.value = true
+            if (validateInputInMedicineDetails(medName, medStrength, medForm)) {
+                var medicine = Medicine(medicineName = medName!!, strength = medStrength!!,
+                    form = medForm!!, alarm = medAlarm!!, takenWhenNeeded = medNeeded!!)
+                insert(medicine)
+                _navigateToMedicines.value = true
+            } else {
+                _showErrorEvent.value = true
+            }
+
         }
     }
 }
