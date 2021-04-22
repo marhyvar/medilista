@@ -46,7 +46,7 @@ dependencies {
 
     // Support libraries
     implementation "androidx.appcompat:appcompat:$version_appcompat"
-    implementation "androidx.fragment:fragment:$version_fragment"
+    implementation "androidx.fragment:fragment-ktx:$version_fragment"
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
     implementation "androidx.cardview:cardview:1.0.0"
 
@@ -70,8 +70,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
 
     // Navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
+
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
