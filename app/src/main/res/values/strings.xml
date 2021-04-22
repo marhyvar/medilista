@@ -17,4 +17,5 @@
     <string name="countinuous">Jatkuva</string>
     <string name="when_needed">Tarvittaessa</string>
     <string name="details_error">Et voi jättää kenttiä tyhjäksi!</string>
+    <string name="next">Jatka seuraavaan</string>
 </resources>

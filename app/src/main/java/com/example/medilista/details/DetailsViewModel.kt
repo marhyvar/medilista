@@ -29,6 +29,18 @@ class DetailsViewModel(
 
     val onlyWhenNeeded = MutableLiveData<Boolean>(false)
 
+    private val _navigateToDosage = MutableLiveData<Boolean>()
+    val navigateToDosage: LiveData<Boolean>
+        get() = _navigateToDosage
+
+    fun onNextButtonClicked() {
+        _navigateToDosage.value = true
+    }
+
+    fun onNavigatedToDosage() {
+        _navigateToDosage.value = false
+    }
+
     private var _showErrorEvent = MutableLiveData<Boolean>()
 
 

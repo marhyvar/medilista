@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -30,33 +31,26 @@ class DetailsFragment : Fragment() {
 
         val viewModelFactory = DetailsViewModelFactory(dataSource, application)
 
-        val detailsViewModel =
-                ViewModelProvider(
-                        this, viewModelFactory).get(DetailsViewModel::class.java)
+        //val detailsViewModel =
+         //       ViewModelProvider(
+         //               this, viewModelFactory).get(DetailsViewModel::class.java)
+
+        val detailsViewModel: DetailsViewModel by activityViewModels { viewModelFactory }
 
         binding.detailsViewModel = detailsViewModel
 
         binding.lifecycleOwner = this
 
-        detailsViewModel.navigateToMedicines.observe(viewLifecycleOwner, Observer {
-            if (it == true) { // Observed state = true
-                this.findNavController().navigate(
-                        R.id.action_detailsFragment_to_medicinesFragment)
-                detailsViewModel.finishedNavigating()
-            }
-        })
+        detailsViewModel.navigateToDosage.observe(viewLifecycleOwner,
+            Observer<Boolean> { shouldNavigate ->
+                if (shouldNavigate == true) {
+                    val navController = binding.root.findNavController()
+                    navController.navigate(R.id.action_detailsFragment_to_dosageFragment)
+                    detailsViewModel.onNavigatedToDosage()
+                }
+            })
 
-        detailsViewModel.showErrorEvent.observe(viewLifecycleOwner, Observer {
-            if (it == true) { // Observed state = true
-                Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    getString(R.string.details_error),
-                    Snackbar.LENGTH_SHORT // how long the message is displayed
-                ).show()
-                // Make sure the snackbar is shown once
-                detailsViewModel.doneShowingError()
-            }
-        })
+
 
         return binding.root
     }

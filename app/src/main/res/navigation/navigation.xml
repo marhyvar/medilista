@@ -18,5 +18,16 @@
         <action
             android:id="@+id/action_detailsFragment_to_medicinesFragment"
             app:destination="@id/medicinesFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_dosageFragment"
+            app:destination="@id/dosageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dosageFragment"
+        android:name="com.example.medilista.details.DosageFragment"
+        android:label="DosageFragment" >
+        <action
+            android:id="@+id/action_dosageFragment_to_medicinesFragment"
+            app:destination="@id/medicinesFragment" />
     </fragment>
 </navigation>
