@@ -18,4 +18,5 @@
     <string name="when_needed">Tarvittaessa</string>
     <string name="details_error">Et voi jättää kenttiä tyhjäksi!</string>
     <string name="next">Jatka seuraavaan</string>
+    <string name="show_timepicker">Valitse aika</string>
 </resources>

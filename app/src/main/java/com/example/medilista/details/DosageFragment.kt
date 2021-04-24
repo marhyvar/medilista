@@ -1,6 +1,7 @@
 package com.example.medilista.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,8 @@ import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentDosageBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 
 class DosageFragment : Fragment() {
     override fun onCreateView(
@@ -30,9 +33,28 @@ class DosageFragment : Fragment() {
 
         val dosageViewModel: DetailsViewModel by activityViewModels { viewModelFactory }
 
+
+
         binding.dosageViewModel = dosageViewModel
 
         binding.lifecycleOwner = this
+
+        binding.showTimePicker.setOnClickListener {
+                    MaterialTimePicker.Builder()
+                            .setTimeFormat(TimeFormat.CLOCK_24H)
+                            .setHour(0)
+                            .setMinute(0)
+                            .build()
+                            .apply {
+                                addOnPositiveButtonClickListener {
+                                    Log.i("picker", "$hour:$minute")
+                                }
+                                addOnDismissListener {
+                                    Log.i("picker", "dismiss button click")
+                                }
+                            }
+                            .show(parentFragmentManager, "")
+        }
 
         dosageViewModel.navigateToMedicines.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
@@ -53,6 +75,8 @@ class DosageFragment : Fragment() {
                 dosageViewModel.doneShowingError()
             }
         })
+
+
 
         return binding.root
     }

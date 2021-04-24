@@ -33,6 +33,8 @@ class DetailsViewModel(
     val navigateToDosage: LiveData<Boolean>
         get() = _navigateToDosage
 
+
+
     fun onNextButtonClicked() {
         _navigateToDosage.value = true
     }
@@ -58,6 +60,8 @@ class DetailsViewModel(
     fun finishedNavigating() {
         _navigateToMedicines.value = null
     }
+
+
 
     fun onSaveButtonClick() {
         viewModelScope.launch {
