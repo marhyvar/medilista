@@ -48,6 +48,7 @@ class DosageFragment : Fragment() {
                             .apply {
                                 addOnPositiveButtonClickListener {
                                     Log.i("picker", "$hour:$minute")
+                                    dosageViewModel.onTimePickerChange(hour, minute)
                                 }
                                 addOnDismissListener {
                                     Log.i("picker", "dismiss button click")
@@ -59,7 +60,7 @@ class DosageFragment : Fragment() {
         val pickerValues = Array(80) { i -> (0.25 + i * 0.25).toString() } // 0.25 -> 20
         val picker = binding.numberPicker
         picker.minValue = 0
-        picker.maxValue = 79
+        picker.maxValue = pickerValues.size -1 // 79
         picker.displayedValues = pickerValues
 
         dosageViewModel.navigateToDetails.observe(viewLifecycleOwner, Observer {

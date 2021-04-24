@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
+import com.example.medilista.formatNumberPickerValue
 import com.example.medilista.validateInputInMedicineDetails
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,15 @@ class DetailsViewModel(
     val alarm = MutableLiveData<Boolean>(false)
 
     val onlyWhenNeeded = MutableLiveData<Boolean>(false)
+
+    val dosageValueFromPicker = MutableLiveData<String>()
+
+
+    val hours = MutableLiveData<Int>()
+
+
+    val minutes = MutableLiveData<Int>()
+
 
     private val _navigateToDosage = MutableLiveData<Boolean>()
     val navigateToDosage: LiveData<Boolean>
@@ -71,7 +81,14 @@ class DetailsViewModel(
         _navigateToMedicines.value = null
     }
 
+    fun onPickerValueChange(value: Int) {
+        dosageValueFromPicker.value = formatNumberPickerValue(value)
+    }
 
+    fun onTimePickerChange(hour: Int, minute: Int) {
+        hours.value = hour
+        minutes.value = minute
+    }
 
     fun onSaveButtonClick() {
         viewModelScope.launch {

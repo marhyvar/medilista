@@ -54,4 +54,8 @@ fun validateInputInMedicineDetails(name: String?, strength: String?, form: Strin
     return true
 }
 
+fun formatNumberPickerValue(value: Int): String {
+    return (0.25 + value * 0.25).toString()
+}
+
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
