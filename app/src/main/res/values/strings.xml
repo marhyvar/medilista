@@ -19,4 +19,5 @@
     <string name="details_error">Et voi jättää kenttiä tyhjäksi!</string>
     <string name="next">Jatka seuraavaan</string>
     <string name="show_timepicker">Valitse aika</string>
+    <string name="edit_dosage_value">Valitse annostus</string>
 </resources>

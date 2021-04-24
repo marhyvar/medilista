@@ -56,6 +56,12 @@ class DosageFragment : Fragment() {
                             .show(parentFragmentManager, "")
         }
 
+        val pickerValues = Array(80) { i -> (0.25 + i * 0.25).toString() } // 0.25 -> 20
+        val picker = binding.numberPicker
+        picker.minValue = 0
+        picker.maxValue = 79
+        picker.displayedValues = pickerValues
+
         dosageViewModel.navigateToMedicines.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
                 this.findNavController().navigate(
