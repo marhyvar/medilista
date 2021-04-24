@@ -33,7 +33,9 @@ class DetailsViewModel(
     val navigateToDosage: LiveData<Boolean>
         get() = _navigateToDosage
 
-
+    private val _navigateToDetails = MutableLiveData<Boolean>()
+    val navigateToDetails: LiveData<Boolean>
+        get() = _navigateToDetails
 
     fun onNextButtonClicked() {
         _navigateToDosage.value = true
@@ -41,6 +43,14 @@ class DetailsViewModel(
 
     fun onNavigatedToDosage() {
         _navigateToDosage.value = false
+    }
+
+    fun onBackButtonClicked() {
+        _navigateToDetails.value = true
+    }
+
+    fun onNavigatedToDetails() {
+        _navigateToDetails.value = false
     }
 
     private var _showErrorEvent = MutableLiveData<Boolean>()

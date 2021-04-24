@@ -62,27 +62,13 @@ class DosageFragment : Fragment() {
         picker.maxValue = 79
         picker.displayedValues = pickerValues
 
-        dosageViewModel.navigateToMedicines.observe(viewLifecycleOwner, Observer {
+        dosageViewModel.navigateToDetails.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
                 this.findNavController().navigate(
-                    R.id.action_dosageFragment_to_medicinesFragment)
-                dosageViewModel.finishedNavigating()
+                        R.id.action_dosageFragment_to_detailsFragment)
+                dosageViewModel.onNavigatedToDetails()
             }
         })
-
-        dosageViewModel.showErrorEvent.observe(viewLifecycleOwner, Observer {
-            if (it == true) { // Observed state = true
-                Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    getString(R.string.details_error),
-                    Snackbar.LENGTH_SHORT // how long the message is displayed
-                ).show()
-                // Make sure the snackbar is shown once
-                dosageViewModel.doneShowingError()
-            }
-        })
-
-
 
         return binding.root
     }

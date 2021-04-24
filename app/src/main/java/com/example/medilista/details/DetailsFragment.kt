@@ -50,7 +50,25 @@ class DetailsFragment : Fragment() {
                 }
             })
 
+        detailsViewModel.navigateToMedicines.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state = true
+                this.findNavController().navigate(
+                        R.id.action_detailsFragment_to_medicinesFragment)
+                detailsViewModel.finishedNavigating()
+            }
+        })
 
+        detailsViewModel.showErrorEvent.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state = true
+                Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        getString(R.string.details_error),
+                        Snackbar.LENGTH_SHORT // how long the message is displayed
+                ).show()
+                // Make sure the snackbar is shown once
+                detailsViewModel.doneShowingError()
+            }
+        })
 
         return binding.root
     }
