@@ -7,7 +7,7 @@ import androidx.room.*
 interface MedicineDao {
 
     @Insert
-    fun insert(medicine: Medicine)
+    suspend fun insert(medicine: Medicine): Long
 
     @Insert
     suspend fun insertMedicineAndDosages(medicine: Medicine, dosages: List<Dosage>)
