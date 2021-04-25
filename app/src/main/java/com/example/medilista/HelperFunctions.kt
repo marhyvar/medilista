@@ -54,6 +54,13 @@ fun validateInputInMedicineDetails(name: String?, strength: String?, form: Strin
     return true
 }
 
+fun validateDosageListInput(amount: String, hours: String, minutes: String): Boolean {
+    if (amount.isNullOrEmpty() || hours.isNullOrEmpty() || minutes.isNullOrEmpty()) {
+        return false
+    }
+    return true
+}
+
 fun formatNumberPickerValue(value: Int): String {
     return (0.25 + value * 0.25).toString()
 }
