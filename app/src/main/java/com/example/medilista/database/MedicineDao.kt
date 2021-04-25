@@ -30,4 +30,21 @@ interface MedicineDao {
     @Transaction
     @Query("SELECT * FROM medicine_table ORDER BY medicine_name")
     fun getAllMedicines(): LiveData<List<MedicineWithDosages>>
+
+    @Query("SELECT medicineId FROM medicine_table ORDER BY medicineId DESC LIMIT 1")
+    suspend fun getInsertedMedicineId(): Long?
+
+    @Insert
+    suspend fun insertDosage(dosage: Dosage)
+
+    @Update
+    suspend fun updateDosage(dosage: Dosage)
+
+    @Delete
+    suspend fun deleteDosage(dosage: Dosage)
+
+    @Query("SELECT * from dosage_table WHERE dosageId = :key")
+    fun getDosage(key: Long): Dosage?
+
+
 }

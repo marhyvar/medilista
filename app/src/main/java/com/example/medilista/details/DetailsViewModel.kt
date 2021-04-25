@@ -1,13 +1,16 @@
 package com.example.medilista.details
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
 import com.example.medilista.formatNumberPickerValue
+import com.example.medilista.validateDosageListInput
 import com.example.medilista.validateInputInMedicineDetails
 import kotlinx.coroutines.launch
 
@@ -32,7 +35,6 @@ class DetailsViewModel(
 
     val dosageValueFromPicker = MutableLiveData<String>()
 
-
     val hours = MutableLiveData<Int>()
 
 
@@ -47,6 +49,17 @@ class DetailsViewModel(
     val navigateToDetails: LiveData<Boolean>
         get() = _navigateToDetails
 
+    private val dosageList = MutableLiveData<MutableList<Dosage>>()
+
+    init {
+        dosageList.value = ArrayList()
+    }
+
+    fun addDosageToList(dosage: Dosage) {
+        dosageList.value?.add(dosage)
+        dosageList.value = dosageList.value
+    }
+
     fun onNextButtonClicked() {
         _navigateToDosage.value = true
     }
@@ -56,6 +69,16 @@ class DetailsViewModel(
     }
 
     fun onBackButtonClicked() {
+        val amount = dosageValueFromPicker?.value ?: ""
+        val valueHours = hours?.value.toString() ?: ""
+        val valueMinutes = minutes?.value.toString() ?: ""
+
+        if (validateDosageListInput(amount, valueHours, valueMinutes)) {
+            var dosage = Dosage(-1, -1,
+                    amount.toDouble(), hours.value!!, minutes.value!!)
+            addDosageToList(dosage)
+            Log.i("database", "dosage lisätty listaan")
+        }
         _navigateToDetails.value = true
     }
 
@@ -101,7 +124,14 @@ class DetailsViewModel(
             if (validateInputInMedicineDetails(medName, medStrength, medForm)) {
                 var medicine = Medicine(medicineName = medName!!, strength = medStrength!!,
                     form = medForm!!, alarm = medAlarm!!, takenWhenNeeded = medNeeded!!)
+                //val id = insert(medicine)
                 insert(medicine)
+                val id = database.getInsertedMedicineId()
+                if (!id.toString().isNullOrEmpty()) {
+                    Log.i("database", "dosage päivitys")
+                    insertDosagesForMedicineFromList(id!!)
+                }
+
                 _navigateToMedicines.value = true
             } else {
                 _showErrorEvent.value = true
@@ -109,4 +139,19 @@ class DetailsViewModel(
 
         }
     }
+
+    private suspend fun insertDosagesForMedicineFromList(id: Long) {
+        val list = dosageList?.value ?: arrayListOf()
+        Log.i("database", list.get(0).amount.toString())
+        list.forEach { item ->
+            var dosage = item
+            var newDosage = Dosage(dosageMedicineId = id, amount = dosage.amount,
+                    timeValueHours = dosage.timeValueHours,
+                    timeValueMinutes = dosage.timeValueMinutes)
+            database.insertDosage(newDosage)
+            Log.i("database", newDosage.timeValueHours.toString())
+        }
+        list.clear()
+    }
+
 }
