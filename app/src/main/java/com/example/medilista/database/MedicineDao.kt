@@ -7,7 +7,7 @@ import androidx.room.*
 interface MedicineDao {
 
     @Insert
-    suspend fun insert(medicine: Medicine): Long
+    suspend fun insert(medicine: Medicine)
 
     @Insert
     suspend fun insertMedicineAndDosages(medicine: Medicine, dosages: List<Dosage>)
@@ -31,14 +31,17 @@ interface MedicineDao {
     @Query("SELECT * FROM medicine_table ORDER BY medicine_name")
     fun getAllMedicines(): LiveData<List<MedicineWithDosages>>
 
+    @Query("SELECT medicineId FROM medicine_table ORDER BY medicineId DESC LIMIT 1")
+    suspend fun getInsertedMedicineId(): Long?
+
     @Insert
-    fun insertDosage(dosage: Dosage)
+    suspend fun insertDosage(dosage: Dosage)
 
     @Update
     suspend fun updateDosage(dosage: Dosage)
 
     @Delete
-    fun deleteDosage(dosage: Dosage)
+    suspend fun deleteDosage(dosage: Dosage)
 
     @Query("SELECT * from dosage_table WHERE dosageId = :key")
     fun getDosage(key: Long): Dosage?

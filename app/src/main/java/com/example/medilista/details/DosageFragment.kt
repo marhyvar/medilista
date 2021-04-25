@@ -47,11 +47,11 @@ class DosageFragment : Fragment() {
                             .build()
                             .apply {
                                 addOnPositiveButtonClickListener {
-                                    Log.i("picker", "$hour:$minute")
+                                    Log.i("database", "$hour:$minute")
                                     dosageViewModel.onTimePickerChange(hour, minute)
                                 }
                                 addOnDismissListener {
-                                    Log.i("picker", "dismiss button click")
+                                    Log.i("database", "dismiss button click")
                                 }
                             }
                             .show(parentFragmentManager, "")
