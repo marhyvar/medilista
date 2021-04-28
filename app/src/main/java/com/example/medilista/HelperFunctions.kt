@@ -47,6 +47,15 @@ fun determineIfAlarmOrNot(value: Boolean, resources: Resources): String {
     }
 }
 
+fun combineAmountAndTimes(amount: Double, hour: Int, min: Int): String {
+    var minuteString = min.toString()
+    val hourString = hour.toString()
+    if (min < 10) {
+        minuteString = "0${min.toString()}"
+    }
+    return "Määrä: ${amount.toString()}, klo $hourString:$minuteString"
+}
+
 fun validateInputInMedicineDetails(name: String?, strength: String?, form: String?): Boolean {
     if (name.isNullOrEmpty() || strength.isNullOrEmpty() || form.isNullOrEmpty()) {
         return false

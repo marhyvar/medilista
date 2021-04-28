@@ -1,9 +1,12 @@
 package com.example.medilista.database
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "dosage_table")
 data class Dosage (
         @PrimaryKey(autoGenerate = true)
@@ -16,4 +19,4 @@ data class Dosage (
         var timeValueHours: Int,
         @ColumnInfo(name = "time_minutes")
         var timeValueMinutes: Int
-)
+) : Parcelable
