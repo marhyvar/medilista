@@ -12,11 +12,7 @@ class MedicinesViewModel(
         val database: MedicineDao,
         application: Application) : AndroidViewModel(application) {
 
-    val medicines = database.getMedicinesWithoutDosages()
-
-    val medicinesString = Transformations.map(medicines) { medicines ->
-        formatMedicines(medicines, application.resources)
-    }
+    val medicines = database.getAllMedicines()
 
     private val _navigateToDetails = MutableLiveData<Boolean>()
     val navigateToDetails: LiveData<Boolean>

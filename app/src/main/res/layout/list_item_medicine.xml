@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="medicine"
-            type="com.example.medilista.database.Medicine" />
+            name="medicinewithdos"
+            type="com.example.medilista.database.MedicineWithDosages" />
 
     </data>
 
@@ -38,7 +38,7 @@
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
                 tools:text="Amlodipin 10 mg"
-                app:medicineNameAndStrength="@{medicine}"/>
+                app:medicineNameAndStrength="@{medicinewithdos.Medicine}"/>
 
             <TextView
                 android:id="@+id/med_if_needed_text"
@@ -49,7 +49,7 @@
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="@+id/alarm_image"
                 tools:text="Jatkuva"
-                app:whenNeededOrContinuous="@{medicine}"/>
+                app:whenNeededOrContinuous="@{medicinewithdos.Medicine}"/>
 
             <ImageView
                 android:id="@+id/alarm_image"
@@ -73,7 +73,18 @@
                 card_view:layout_constraintBottom_toBottomOf="@+id/alarm_image"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="@+id/alarm_image"
-                app:alarmStatus="@{medicine}"/>
+                app:alarmStatus="@{medicinewithdos.Medicine}"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dosage_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="LinearLayoutManager"
+                app:setDosages="@{medicinewithdos.dosages}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
