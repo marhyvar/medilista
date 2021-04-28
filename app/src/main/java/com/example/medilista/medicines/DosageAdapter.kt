@@ -9,30 +9,42 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.medilista.database.Dosage
 import com.example.medilista.databinding.ListItemDosageBinding
 
-class DosageAdapter : ListAdapter<Dosage, CustomViewHolder>(Companion) {
-    companion object : DiffUtil.ItemCallback<Dosage>() {
+class DosageAdapter : ListAdapter<Dosage,
+        DosageAdapter.ViewHolder>(DosageDiffCallback()) {
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.bind(item)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder.from(parent)
+    }
+
+    class ViewHolder private constructor(val binding: ListItemDosageBinding) : RecyclerView.ViewHolder(binding.root){
+
+
+        fun bind(item: Dosage) {
+            binding.dosage = item
+            binding.executePendingBindings()
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ListItemDosageBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
+        }
+    }
+
+    class DosageDiffCallback : DiffUtil.ItemCallback<Dosage>() {
         override fun areItemsTheSame(oldItem: Dosage, newItem: Dosage): Boolean {
-            return  oldItem === newItem
+            return oldItem.dosageId == newItem.dosageId
         }
 
         override fun areContentsTheSame(oldItem: Dosage, newItem: Dosage): Boolean {
-            return  oldItem.dosageId == newItem.dosageId
+            return oldItem == newItem
         }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ListItemDosageBinding.inflate(inflater, parent, false)
-
-        return CustomViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val currentDosage = getItem(position)
-        val itemBinding = holder.binding as ListItemDosageBinding
-        itemBinding.dosage = currentDosage
-        itemBinding.executePendingBindings()
-    }
 }
-
-class CustomViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)

@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.medilista.combineAmountAndTimes
 import com.example.medilista.combineNameAndStrength
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
@@ -38,5 +39,12 @@ fun RecyclerView.setDosages(dosages: List<Dosage>?) {
         dosageAdapter.submitList(dosages)
 
         adapter = dosageAdapter
+    }
+}
+
+@BindingAdapter("dosageText")
+fun TextView.setDosageText(item: Dosage?) {
+    item?.let {
+        text = combineAmountAndTimes(item.amount, item.timeValueHours, item.timeValueMinutes)
     }
 }
