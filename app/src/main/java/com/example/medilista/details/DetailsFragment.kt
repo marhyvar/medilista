@@ -41,16 +41,7 @@ class DetailsFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        val dosageAdapter = DosageAdapter()
-
-        binding.dosagesForSaving.adapter = dosageAdapter
-
-        //list
-        detailsViewModel.allDosages.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                dosageAdapter.submitList(it)
-            }
-        })
+        //FINISH ADAPTER FOR RECYCLERVIEW
 
         detailsViewModel.navigateToDosage.observe(viewLifecycleOwner,
             Observer<Boolean> { shouldNavigate ->

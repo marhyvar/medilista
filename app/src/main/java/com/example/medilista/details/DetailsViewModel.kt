@@ -49,7 +49,6 @@ class DetailsViewModel(
     val navigateToDetails: LiveData<Boolean>
         get() = _navigateToDetails
 
-    val allDosages = database.getAllDosages()
 
     private val dosageList = MutableLiveData<MutableList<Dosage>>()
     val list: LiveData<MutableList<Dosage>>
