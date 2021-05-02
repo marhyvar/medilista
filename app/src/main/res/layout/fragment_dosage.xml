@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="dosageViewModel"
+            type="com.example.medilista.details.DetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".details.DosageFragment">
+
+
+        <Button
+            android:id="@+id/show_time_picker"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/show_timepicker"
+
+            android:text="@string/show_timepicker"
+            app:layout_constraintBottom_toTopOf="@+id/show_dosage_text"
+            app:layout_constraintTop_toBottomOf="@+id/number_picker"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/edit_dosage_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_dosage_value"
+            app:layout_constraintBottom_toTopOf="@+id/number_picker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <NumberPicker
+            android:id="@+id/number_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/edit_dosage_value"
+            android:onValueChange="@{(picker,oldvalue,newvalue) -> dosageViewModel.onPickerValueChange(newvalue)}"
+            app:layout_constraintBottom_toTopOf="@+id/show_time_picker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_dosage_text" />
+
+        <TextView
+            android:id="@+id/show_dosage_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/back_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_time_picker"
+            android:text="@{dosageViewModel.dosageValueFromPicker}"
+            tools:text="Annostuksen tiedot" />
+
+        <Button
+            android:id="@+id/back_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/continue_button"
+            android:onClick="@{() -> dosageViewModel.onBackButtonClicked()}"
+            android:text="@string/continue_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_dosage_text"
+            tools:layout_editor_absoluteX="0dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

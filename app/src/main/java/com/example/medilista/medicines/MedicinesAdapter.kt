@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.medilista.*
+import com.example.medilista.database.MedicineWithDosages
 import com.example.medilista.databinding.ListItemMedicineBinding
 
-class MedicinesAdapter : ListAdapter<Medicine,
+class MedicinesAdapter : ListAdapter<MedicineWithDosages,
         MedicinesAdapter.ViewHolder>(MedicineDiffCallback()) {
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -24,8 +24,11 @@ class MedicinesAdapter : ListAdapter<Medicine,
 
     class ViewHolder private constructor(val binding: ListItemMedicineBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: Medicine) {
-            binding.medicine = item
+        private val viewPool = RecyclerView.RecycledViewPool()
+
+        fun bind(item: MedicineWithDosages) {
+            binding.medicinewithdos = item
+            binding.dosageList.setRecycledViewPool(viewPool)
             binding.executePendingBindings()
         }
 
@@ -38,12 +41,12 @@ class MedicinesAdapter : ListAdapter<Medicine,
         }
     }
 
-    class MedicineDiffCallback : DiffUtil.ItemCallback<Medicine>() {
-        override fun areItemsTheSame(oldItem: Medicine, newItem: Medicine): Boolean {
-            return oldItem.medicineId == newItem.medicineId
+    class MedicineDiffCallback : DiffUtil.ItemCallback<MedicineWithDosages>() {
+        override fun areItemsTheSame(oldItem: MedicineWithDosages, newItem: MedicineWithDosages): Boolean {
+            return oldItem.Medicine.medicineId == newItem.Medicine.medicineId
         }
 
-        override fun areContentsTheSame(oldItem: Medicine, newItem: Medicine): Boolean {
+        override fun areContentsTheSame(oldItem: MedicineWithDosages, newItem: MedicineWithDosages): Boolean {
             return oldItem == newItem
         }
     }

@@ -17,4 +17,8 @@
     <string name="countinuous">Jatkuva</string>
     <string name="when_needed">Tarvittaessa</string>
     <string name="details_error">Et voi jättää kenttiä tyhjäksi!</string>
+    <string name="to_dosage">Lisää annostus lääkkeelle</string>
+    <string name="show_timepicker">Valitse aika</string>
+    <string name="edit_dosage_value">Valitse annostus</string>
+    <string name="continue_button">Jatka</string>
 </resources>
