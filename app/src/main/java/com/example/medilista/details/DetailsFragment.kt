@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentDetailsBinding
+import com.example.medilista.medicines.DosageAdapter
 import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
@@ -40,6 +40,17 @@ class DetailsFragment : Fragment() {
         binding.detailsViewModel = detailsViewModel
 
         binding.lifecycleOwner = this
+
+        val dosageAdapter = DosageAdapter()
+
+        binding.dosagesForSaving.adapter = dosageAdapter
+
+        //list
+        detailsViewModel.allDosages.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                dosageAdapter.submitList(it)
+            }
+        })
 
         detailsViewModel.navigateToDosage.observe(viewLifecycleOwner,
             Observer<Boolean> { shouldNavigate ->
