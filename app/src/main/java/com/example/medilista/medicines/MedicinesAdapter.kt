@@ -10,12 +10,12 @@ import com.example.medilista.*
 import com.example.medilista.database.MedicineWithDosages
 import com.example.medilista.databinding.ListItemMedicineBinding
 
-class MedicinesAdapter : ListAdapter<MedicineWithDosages,
+class MedicinesAdapter(val clickListener: MedIdListener) : ListAdapter<MedicineWithDosages,
         MedicinesAdapter.ViewHolder>(MedicineDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(clickListener,item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,8 +26,9 @@ class MedicinesAdapter : ListAdapter<MedicineWithDosages,
 
         private val viewPool = RecyclerView.RecycledViewPool()
 
-        fun bind(item: MedicineWithDosages) {
+        fun bind(clickListener: MedIdListener, item: MedicineWithDosages) {
             binding.medicinewithdos = item
+            binding.clickListener = clickListener
             binding.dosageList.setRecycledViewPool(viewPool)
             binding.executePendingBindings()
         }
@@ -50,4 +51,8 @@ class MedicinesAdapter : ListAdapter<MedicineWithDosages,
             return oldItem == newItem
         }
     }
+}
+
+class MedIdListener(val clickListener: (medId: Long) -> Unit) {
+    fun onClick(item: MedicineWithDosages) = clickListener(item.Medicine.medicineId)
 }

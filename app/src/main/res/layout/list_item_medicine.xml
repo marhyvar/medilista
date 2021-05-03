@@ -9,6 +9,8 @@
         <variable
             name="medicinewithdos"
             type="com.example.medilista.database.MedicineWithDosages" />
+        <variable
+            name="clickListener" type="com.example.medilista.medicines.MedIdListener"/>
 
     </data>
 
@@ -19,7 +21,8 @@
         android:layout_gravity="center"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="4dp">
+        app:cardCornerRadius="4dp"
+        android:onClick="@{() -> clickListener.onClick(medicinewithdos)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
