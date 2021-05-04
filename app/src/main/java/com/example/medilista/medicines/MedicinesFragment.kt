@@ -61,11 +61,11 @@ class MedicinesFragment : Fragment() {
                 }
             })
 
-        medicinesViewModel.navigateToEditing.observe(viewLifecycleOwner, Observer {id ->
-            id?.let {
+        medicinesViewModel.navigateToEditing.observe(viewLifecycleOwner, Observer {med ->
+            med?.let {
                 val navController = binding.root.findNavController()
                 navController.navigate(MedicinesFragmentDirections
-                        .actionMedicinesFragmentToMedicineWithDosagesFragment(id))
+                        .actionMedicinesFragmentToMedicineWithDosagesFragment(med))
                 medicinesViewModel.onEditingNavigated()
             }
         })

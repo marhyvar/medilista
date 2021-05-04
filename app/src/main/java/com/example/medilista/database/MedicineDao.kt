@@ -19,7 +19,7 @@ interface MedicineDao {
     suspend fun delete(medicine: Medicine)
 
     @Query("SELECT * from medicine_table WHERE medicineId = :key")
-    suspend fun get(key: Long): Medicine?
+    fun get(key: Long): LiveData<Medicine>
 
     @Query("DELETE FROM medicine_table")
     suspend fun clearAllMedicineData()
@@ -46,6 +46,6 @@ interface MedicineDao {
     @Query("SELECT * from dosage_table WHERE dosageId = :key")
     fun getDosage(key: Long): Dosage?
 
-    @Query("SELECT * FROM dosage_table")
-    fun getAllDosages(): LiveData<List<Dosage>>
+    @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")
+    fun getDosagesOfMedicine(key: Long): LiveData<List<Dosage>>
 }

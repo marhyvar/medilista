@@ -1,10 +1,9 @@
 package com.example.medilista.edit
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
 
 class MedicineWithDosagesViewModel(
@@ -15,11 +14,19 @@ class MedicineWithDosagesViewModel(
     val navigateToHome: LiveData<Boolean>
         get() = _navigateToHome
 
-    private val _id = MutableLiveData<String>()
-    val id
-        get() = _id
+    private val med: LiveData<Medicine>
+
+    fun getMed() = med
 
     init {
-        _id.value = medicineKey.toString()
+        med = database.get(medicineKey)
+    }
+
+    fun onReturnButtonClicked() {
+        _navigateToHome.value = true
+    }
+
+    fun onNavigatedToHome() {
+        _navigateToHome.value = false
     }
 }

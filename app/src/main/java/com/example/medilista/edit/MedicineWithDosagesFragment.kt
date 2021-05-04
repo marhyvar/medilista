@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicineWithDosagesBinding
@@ -30,6 +32,17 @@ class MedicineWithDosagesFragment: Fragment() {
         val medicineWithDosagesViewModel: MedicineWithDosagesViewModel by activityViewModels { viewModelFactory }
 
         binding.medicineWithDosagesViewModel = medicineWithDosagesViewModel
+
+        binding.lifecycleOwner = this
+
+        medicineWithDosagesViewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state = true
+                this.findNavController().navigate(MedicineWithDosagesFragmentDirections
+                        .actionMedicineWithDosagesFragmentToMedicinesFragment()
+                )
+                medicineWithDosagesViewModel.onNavigatedToHome()
+            }
+        })
 
         return binding.root
     }
