@@ -3,8 +3,11 @@ package com.example.medilista.edit
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
+import com.example.medilista.database.MedicineWithDosages
+import kotlinx.coroutines.launch
 
 class MedicineWithDosagesViewModel(
         private val medicineKey: Long = 0L,
@@ -16,12 +19,14 @@ class MedicineWithDosagesViewModel(
     val navigateToHome: LiveData<Boolean?>
         get() = _navigateToHome
 
-    private val med: LiveData<Medicine>
+    private val med: LiveData<MedicineWithDosages>
+
 
     fun getMed() = med
 
+
     init {
-        med = database.get(medicineKey)
+        med = database.getMedicineWithDosages(medicineKey)
     }
 
     fun onReturnButtonClicked() {
@@ -31,5 +36,18 @@ class MedicineWithDosagesViewModel(
     fun onNavigatedToHome() {
         _navigateToHome.value = false
 
+    }
+    fun onDeleteButtonClicked() {
+        viewModelScope.launch {
+            //med.value?.let { database.deleteMedicineData(medicineKey, it.Medicine) }
+            med.value?.let {
+                med.value?.dosages?.forEach{item ->
+                    database.deleteDosage(item)
+                }
+                database.delete(med.value!!.Medicine)
+            }
+
+            _navigateToHome.value = true
+        }
     }
 }

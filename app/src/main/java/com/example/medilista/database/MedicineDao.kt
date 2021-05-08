@@ -31,6 +31,10 @@ interface MedicineDao {
     @Query("SELECT * FROM medicine_table ORDER BY medicine_name")
     fun getAllMedicines(): LiveData<List<MedicineWithDosages>>
 
+    @Transaction
+    @Query("SELECT * FROM medicine_table WHERE medicineId = :key")
+    fun getMedicineWithDosages(key: Long): LiveData<MedicineWithDosages>
+
     @Query("SELECT medicineId FROM medicine_table ORDER BY medicineId DESC LIMIT 1")
     suspend fun getInsertedMedicineId(): Long?
 
@@ -48,4 +52,16 @@ interface MedicineDao {
 
     @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")
     fun getDosagesOfMedicine(key: Long): LiveData<List<Dosage>>
+
+    @Query("SELECT * FROM dosage_table")
+    fun getDos(): LiveData<List<Dosage>>
+
+    @Query("DELETE from dosage_table WHERE dosage_medicine_id = :key")
+    suspend fun deleteDosagesOfMedicine(key: Long)
+
+    @Transaction
+    suspend fun deleteMedicineData(key: Long, medicine: Medicine) {
+        deleteDosagesOfMedicine(key)
+        delete(medicine)
+    }
 }
