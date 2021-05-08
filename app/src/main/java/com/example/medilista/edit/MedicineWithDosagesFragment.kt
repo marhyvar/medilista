@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
@@ -29,7 +30,10 @@ class MedicineWithDosagesFragment: Fragment() {
 
         val viewModelFactory = MedicineWithDosagesViewModelFactory(arguments.medicineKey, dataSource)
 
-        val medicineWithDosagesViewModel: MedicineWithDosagesViewModel by activityViewModels { viewModelFactory }
+        //don´t use this: val medicineWithDosagesViewModel: MedicineWithDosagesViewModel by activityViewModels { viewModelFactory }
+        val medicineWithDosagesViewModel =
+                ViewModelProvider(
+                        this, viewModelFactory).get(MedicineWithDosagesViewModel::class.java)
 
         binding.medicineWithDosagesViewModel = medicineWithDosagesViewModel
 

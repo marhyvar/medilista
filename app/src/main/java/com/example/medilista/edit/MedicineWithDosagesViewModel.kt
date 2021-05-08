@@ -8,10 +8,12 @@ import com.example.medilista.database.MedicineDao
 
 class MedicineWithDosagesViewModel(
         private val medicineKey: Long = 0L,
-        val database: MedicineDao) : ViewModel() {
+        dataSource: MedicineDao) : ViewModel() {
 
-    private val _navigateToHome = MutableLiveData<Boolean>()
-    val navigateToHome: LiveData<Boolean>
+    val database = dataSource
+
+    private val _navigateToHome = MutableLiveData<Boolean?>()
+    val navigateToHome: LiveData<Boolean?>
         get() = _navigateToHome
 
     private val med: LiveData<Medicine>
@@ -28,5 +30,6 @@ class MedicineWithDosagesViewModel(
 
     fun onNavigatedToHome() {
         _navigateToHome.value = false
+
     }
 }
