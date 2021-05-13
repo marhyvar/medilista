@@ -21,6 +21,8 @@ class MedicineWithDosagesViewModel(
 
     private val med: LiveData<MedicineWithDosages>
 
+    val dos = database.getDosagesOfMedicine(medicineKey)
+
 
     fun getMed() = med
 

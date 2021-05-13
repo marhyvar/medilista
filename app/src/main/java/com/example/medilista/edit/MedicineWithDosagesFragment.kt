@@ -1,6 +1,7 @@
 package com.example.medilista.edit
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,20 @@ class MedicineWithDosagesFragment: Fragment() {
         binding.medicineWithDosagesViewModel = medicineWithDosagesViewModel
 
         binding.lifecycleOwner = this
+
+        val editDosageAdapter = EditDosageAdapter()
+
+        binding.dosagesListEditing.adapter = editDosageAdapter
+
+
+        medicineWithDosagesViewModel.dos.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                it.forEach{
+                    Log.i("testi", it.timeValueHours.toString())
+                }
+                editDosageAdapter.submitList(it)
+            }
+        })
 
         medicineWithDosagesViewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
