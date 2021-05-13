@@ -97,6 +97,7 @@
             android:id="@+id/dosages_for_saving"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/edit_check_if_taken_when_needed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
