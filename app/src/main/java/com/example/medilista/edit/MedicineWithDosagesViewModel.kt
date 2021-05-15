@@ -52,4 +52,10 @@ class MedicineWithDosagesViewModel(
             _navigateToHome.value = true
         }
     }
+
+    fun onDeleteDosageButtonClicked(dosage: Dosage) {
+        viewModelScope.launch {
+            database.deleteDosage(dosage)
+        }
+    }
 }
