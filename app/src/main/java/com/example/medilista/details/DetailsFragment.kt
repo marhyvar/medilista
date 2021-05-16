@@ -68,15 +68,17 @@ class DetailsFragment : Fragment() {
             }
         })
 
-        detailsViewModel.showErrorEvent.observe(viewLifecycleOwner, Observer {
+        detailsViewModel.showMessageEvent.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
+                val message = detailsViewModel.message
                 Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
-                        getString(R.string.details_error),
+                        //getString(R.string.details_error),
+                        message,
                         Snackbar.LENGTH_SHORT // how long the message is displayed
                 ).show()
                 // Make sure the snackbar is shown once
-                detailsViewModel.doneShowingError()
+                detailsViewModel.doneShowingMessage()
             }
         })
 

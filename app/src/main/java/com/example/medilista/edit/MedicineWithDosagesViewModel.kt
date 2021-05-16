@@ -26,6 +26,15 @@ class MedicineWithDosagesViewModel(
 
     fun getMed() = med
 
+    var message = ""
+
+    private val _showMessageEvent = MutableLiveData<Boolean>()
+    val showMessageEvent: LiveData<Boolean>
+        get() = _showMessageEvent
+
+    fun doneShowingMessage() {
+        _showMessageEvent.value = false
+    }
 
     init {
         med = database.getMedicineWithDosages(medicineKey)
@@ -47,6 +56,8 @@ class MedicineWithDosagesViewModel(
                     database.deleteDosage(item)
                 }
                 database.delete(med.value!!.Medicine)
+                message = "Lääke on poistettu"
+                _showMessageEvent.value = true
             }
 
             _navigateToHome.value = true
@@ -56,6 +67,8 @@ class MedicineWithDosagesViewModel(
     fun onDeleteDosageButtonClicked(dosage: Dosage) {
         viewModelScope.launch {
             database.deleteDosage(dosage)
+            message = "Lääkkeen annostus on poistettu"
+            _showMessageEvent.value = true
         }
     }
 }

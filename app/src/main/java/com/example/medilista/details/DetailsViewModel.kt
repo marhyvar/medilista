@@ -1,6 +1,5 @@
 package com.example.medilista.details
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.medilista.database.Dosage
@@ -52,6 +51,8 @@ class DetailsViewModel(
     val list: LiveData<MutableList<Dosage>>
         get() = dosageList
 
+    var message = ""
+
     init {
         dosageList.value = ArrayList()
         hours.value = 0
@@ -89,14 +90,14 @@ class DetailsViewModel(
         _navigateToDetails.value = false
     }
 
-    private var _showErrorEvent = MutableLiveData<Boolean>()
+    private var _showMessageEvent = MutableLiveData<Boolean>()
 
 
-    val showErrorEvent: LiveData<Boolean>
-        get() = _showErrorEvent
+    val showMessageEvent: LiveData<Boolean>
+        get() = _showMessageEvent
 
-    fun doneShowingError() {
-        _showErrorEvent.value = false
+    fun doneShowingMessage() {
+        _showMessageEvent.value = false
     }
 
     private suspend fun insert(medicine: Medicine) {
@@ -142,8 +143,11 @@ class DetailsViewModel(
 
                 _navigateToMedicines.value = true
                 setEmptyValues()
+                message = "Lääke tallennettu"
+                _showMessageEvent.value = true
             } else {
-                _showErrorEvent.value = true
+                message = "Et voi jättää kenttiä tyhjäksi"
+                _showMessageEvent.value = true
             }
 
         }

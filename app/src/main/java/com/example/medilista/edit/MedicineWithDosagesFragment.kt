@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicineWithDosagesBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MedicineWithDosagesFragment: Fragment() {
     override fun onCreateView(
@@ -62,6 +63,19 @@ class MedicineWithDosagesFragment: Fragment() {
                         .actionMedicineWithDosagesFragmentToMedicinesFragment()
                 )
                 medicineWithDosagesViewModel.onNavigatedToHome()
+            }
+        })
+
+        medicineWithDosagesViewModel.showMessageEvent.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state = true
+                val message = medicineWithDosagesViewModel.message
+                Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        message,
+                        Snackbar.LENGTH_SHORT // how long the message is displayed
+                ).show()
+                // Make sure the snackbar is shown once
+                medicineWithDosagesViewModel.doneShowingMessage()
             }
         })
 
