@@ -74,4 +74,13 @@ fun formatNumberPickerValue(value: Int): String {
     return (0.25 + value * 0.25).toString()
 }
 
+fun formatTime(hour: Int, min: Int): String {
+    var minuteString = min.toString()
+    val hourString = hour.toString()
+    if (min < 10) {
+        minuteString = "0${min.toString()}"
+    }
+    return "Valittu aika: $hourString:$minuteString"
+}
+
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

@@ -7,6 +7,7 @@ import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
 import com.example.medilista.formatNumberPickerValue
+import com.example.medilista.formatTime
 import com.example.medilista.validateDosageListInput
 import com.example.medilista.validateInputInMedicineDetails
 import kotlinx.coroutines.launch
@@ -36,6 +37,7 @@ class DetailsViewModel(
 
     val minutes = MutableLiveData<Int>()
 
+    val timeString = MutableLiveData<String>()
 
     private val _navigateToDosage = MutableLiveData<Boolean>()
     val navigateToDosage: LiveData<Boolean>
@@ -52,6 +54,8 @@ class DetailsViewModel(
 
     init {
         dosageList.value = ArrayList()
+        hours.value = 0
+        minutes.value = 0
     }
 
     fun addDosageToList(dosage: Dosage) {
@@ -110,6 +114,7 @@ class DetailsViewModel(
     fun onTimePickerChange(hour: Int, minute: Int) {
         hours.value = hour
         minutes.value = minute
+        timeString.value = formatTime(hour, minute)
     }
 
     fun onSaveButtonClick() {

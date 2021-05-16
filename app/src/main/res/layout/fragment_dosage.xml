@@ -60,6 +60,17 @@
             android:text="@{dosageViewModel.dosageValueFromPicker}"
             tools:text="Annostuksen tiedot" />
 
+        <TextView
+            android:id="@+id/show_minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{dosageViewModel.timeString}"
+            app:layout_constraintBottom_toTopOf="@+id/back_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_dosage_text"
+            tools:text="20" />
+
         <Button
             android:id="@+id/back_button"
             style="@style/Widget.MaterialComponents.Button.TextButton"

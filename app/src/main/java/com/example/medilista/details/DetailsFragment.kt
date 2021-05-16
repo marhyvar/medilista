@@ -41,7 +41,6 @@ class DetailsFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        //FINISH ADAPTER FOR RECYCLERVIEW
         val saveDosageAdapter = SaveDosageAdapter()
 
         binding.dosagesForSaving.adapter = saveDosageAdapter
