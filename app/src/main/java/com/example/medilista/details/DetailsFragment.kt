@@ -29,7 +29,7 @@ class DetailsFragment : Fragment() {
 
         val dataSource = MedicineDatabase.getInstance(application).medicineDao
 
-        val viewModelFactory = DetailsViewModelFactory(dataSource, application)
+        val viewModelFactory = DetailsViewModelFactory(dataSource)
 
         //val detailsViewModel =
          //       ViewModelProvider(
@@ -42,6 +42,15 @@ class DetailsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         //FINISH ADAPTER FOR RECYCLERVIEW
+        val saveDosageAdapter = SaveDosageAdapter()
+
+        binding.dosagesForSaving.adapter = saveDosageAdapter
+
+        detailsViewModel.list.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                saveDosageAdapter.submitList(it)
+            }
+        })
 
         detailsViewModel.navigateToDosage.observe(viewLifecycleOwner,
             Observer<Boolean> { shouldNavigate ->

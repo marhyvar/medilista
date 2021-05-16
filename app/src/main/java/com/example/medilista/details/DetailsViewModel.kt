@@ -2,10 +2,7 @@ package com.example.medilista.details
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
@@ -15,8 +12,7 @@ import com.example.medilista.validateInputInMedicineDetails
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-        val database: MedicineDao,
-        application: Application) : AndroidViewModel(application) {
+        val database: MedicineDao) : ViewModel() {
 
     private val _navigateToMedicines = MutableLiveData<Boolean?>()
     val navigateToMedicines: LiveData<Boolean?>

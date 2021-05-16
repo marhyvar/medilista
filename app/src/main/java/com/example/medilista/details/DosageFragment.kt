@@ -29,7 +29,7 @@ class DosageFragment : Fragment() {
 
         val dataSource = MedicineDatabase.getInstance(application).medicineDao
 
-        val viewModelFactory = DetailsViewModelFactory(dataSource, application)
+        val viewModelFactory = DetailsViewModelFactory(dataSource)
 
         val dosageViewModel: DetailsViewModel by activityViewModels { viewModelFactory }
 
