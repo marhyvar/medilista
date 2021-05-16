@@ -2,13 +2,10 @@ package com.example.medilista.details
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.medilista.*
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
-import com.example.medilista.formatNumberPickerValue
-import com.example.medilista.formatTime
-import com.example.medilista.validateDosageListInput
-import com.example.medilista.validateInputInMedicineDetails
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
@@ -35,6 +32,8 @@ class DetailsViewModel(
 
 
     val minutes = MutableLiveData<Int>()
+
+    val dosageString = MutableLiveData<String>()
 
     val timeString = MutableLiveData<String>()
 
@@ -64,6 +63,11 @@ class DetailsViewModel(
         dosageList.value = dosageList.value
     }
 
+    fun clearDosageList() {
+        dosageList.value?.clear()
+        dosageList.value = dosageList.value
+    }
+
     fun onNextButtonClicked() {
         _navigateToDosage.value = true
     }
@@ -84,6 +88,8 @@ class DetailsViewModel(
             Log.i("database", "dosage lisätty listaan")
         }
         _navigateToDetails.value = true
+        timeString.value = ""
+        dosageString.value = ""
     }
 
     fun onNavigatedToDetails() {
@@ -110,6 +116,7 @@ class DetailsViewModel(
 
     fun onPickerValueChange(value: Int) {
         dosageValueFromPicker.value = formatNumberPickerValue(value)
+        dosageString.value = formatAmount(formatNumberPickerValue(value))
     }
 
     fun onTimePickerChange(hour: Int, minute: Int) {
@@ -164,7 +171,7 @@ class DetailsViewModel(
             database.insertDosage(newDosage)
             Log.i("database", newDosage.timeValueHours.toString())
         }
-        list.clear()
+        clearDosageList()
     }
 
     fun setEmptyValues() {

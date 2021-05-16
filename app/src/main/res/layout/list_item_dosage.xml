@@ -24,7 +24,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Määrä 1, klo 19:00" />
+            tools:text="Määrä 1, klo 19:00"
+            style="@style/TextStyle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -41,7 +41,8 @@
             android:contentDescription="@string/hint_medicine_name"
             android:text="@={medicineWithDosagesViewModel.med.Medicine.medicineName}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/InputStyle" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_med_strength"
@@ -51,7 +52,8 @@
             android:contentDescription="@string/hint_medicine_strength"
             android:text="@={medicineWithDosagesViewModel.med.Medicine.strength}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_med_name" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_med_name"
+            style="@style/InputStyle" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_med_form"
@@ -60,7 +62,8 @@
             android:layout_marginTop="16dp"
             android:text="@={medicineWithDosagesViewModel.med.Medicine.form}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_med_strength" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_med_strength"
+            style="@style/InputStyle" />
 
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -99,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Takaisin"
+            android:text="@string/back"
             android:onClick="@{() -> medicineWithDosagesViewModel.onReturnButtonClicked()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

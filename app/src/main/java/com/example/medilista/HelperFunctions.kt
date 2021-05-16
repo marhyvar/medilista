@@ -27,8 +27,8 @@ fun formatMedicines(medicines: List<Medicine>, resources: Resources): Spanned {
     }
 }
 
-fun combineNameAndStrength(name: String, strength: String): String {
-    return "$name $strength"
+fun combineNameAndStrength(name: String, strength: String, form: String): String {
+    return "$name $strength, $form"
 }
 
 fun determineIfNeededOrContinuous(value: Boolean, resources: Resources): String {
@@ -81,6 +81,10 @@ fun formatTime(hour: Int, min: Int): String {
         minuteString = "0${min.toString()}"
     }
     return "Valittu aika: $hourString:$minuteString"
+}
+
+fun formatAmount(value: String): String {
+    return "Valittu määrä: $value"
 }
 
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

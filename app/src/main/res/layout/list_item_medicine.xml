@@ -37,7 +37,8 @@
                 app:layout_constraintStart_toEndOf="@+id/med_name_text"
                 app:layout_constraintTop_toTopOf="@+id/med_name_text"
                 app:whenNeededOrContinuous="@{medicinewithdos.Medicine}"
-                tools:text="Jatkuva" />
+                tools:text="Jatkuva"
+                style="@style/TextStyle" />
 
             <TextView
                 android:id="@+id/med_name_text"
@@ -48,7 +49,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:medicineNameAndStrength="@{medicinewithdos.Medicine}"
-                tools:text="Amlodipin 10 mg" />
+                tools:text="Amlodipin 10 mg"
+                style="@style/BoldTextStyle" />
 
             <ImageView
                 android:id="@+id/alarm_image"
@@ -69,7 +71,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/alarm_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/alarm_image"
-                tools:text="Hälytys" />
+                tools:text="Hälytys"
+                style="@style/TextStyle" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dosage_list"

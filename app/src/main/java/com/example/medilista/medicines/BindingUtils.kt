@@ -14,7 +14,7 @@ import com.example.medilista.determineIfNeededOrContinuous
 @BindingAdapter("medicineNameAndStrength")
 fun TextView.setMedicineNameAndStrength(item: Medicine?) {
     item?.let {
-        text = combineNameAndStrength(item.medicineName, item.strength)
+        text = combineNameAndStrength(item.medicineName, item.strength, item.form)
     }
 }
 

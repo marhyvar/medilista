@@ -22,4 +22,6 @@
     <string name="edit_dosage_value">Valitse annostus</string>
     <string name="continue_button">Jatka</string>
     <string name="delete">Poista lääke</string>
+    <string name="back">Takaisin</string>
+    <string name="remove_dosage">Poista annostus</string>
 </resources>

@@ -27,14 +27,15 @@
             app:testi="@{editdosage}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Määrä 1, klo 19:00" />
+            tools:text="Määrä 1, klo 19:00"
+            style="@style/TextStyle"/>
 
         <ImageView
             android:id="@+id/image_delete"
             android:layout_width="54dp"
             android:layout_height="58dp"
             android:layout_marginStart="16dp"
-            android:contentDescription="Poista annostus"
+            android:contentDescription="@string/remove_dosage"
             android:onClick="@{() -> clickListener.onClick(editdosage)}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_dosage_text_test"
             app:layout_constraintStart_toEndOf="@+id/edit_dosage_text_test"
