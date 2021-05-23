@@ -1,10 +1,10 @@
 package com.example.medilista.edit
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.medilista.database.Dosage
-import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
 import com.example.medilista.database.MedicineWithDosages
 import kotlinx.coroutines.launch

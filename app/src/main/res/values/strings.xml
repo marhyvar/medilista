@@ -24,4 +24,5 @@
     <string name="delete">Poista lääke</string>
     <string name="back">Takaisin</string>
     <string name="remove_dosage">Poista annostus</string>
+    <string name="save_edited_med_info">Tallenna muutokset</string>
 </resources>
