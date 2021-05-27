@@ -79,6 +79,17 @@ class MedicineWithDosagesFragment: Fragment() {
             }
         })
 
+        medicineWithDosagesViewModel.saveMedicineEvent.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                val name = binding.editMedName.text.toString()
+                val strength = binding.editMedStrength.text.toString()
+                val form = binding.editMedForm.text.toString()
+                val needed = binding.editTakenWhenNeeded.isChecked
+                val alarm = binding.editAlarm.isChecked
+                medicineWithDosagesViewModel.saveMedicineChanges(name, strength, form, needed, alarm)
+            }
+        })
+
         return binding.root
     }
 }

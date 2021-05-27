@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.MedicineDao
 import com.example.medilista.database.MedicineWithDosages
+import com.example.medilista.validateInputInMedicineDetails
 import kotlinx.coroutines.launch
 
 class MedicineWithDosagesViewModel(
@@ -27,6 +28,10 @@ class MedicineWithDosagesViewModel(
     fun getMed() = med
 
     var message = ""
+
+    private val _saveMedicineEvent = MutableLiveData<Boolean>()
+    val saveMedicineEvent: LiveData<Boolean>
+        get() = _saveMedicineEvent
 
     private val _showMessageEvent = MutableLiveData<Boolean>()
     val showMessageEvent: LiveData<Boolean>
@@ -70,5 +75,31 @@ class MedicineWithDosagesViewModel(
             message = "Lääkkeen annostus on poistettu"
             _showMessageEvent.value = true
         }
+    }
+
+    fun onSaveMedicineChangesClicked() {
+        _saveMedicineEvent.value = true
+    }
+
+    fun saveMedicineChanges(name: String, strength: String, form: String, needed: Boolean, alarm: Boolean) {
+        viewModelScope.launch {
+            if (validateInputInMedicineDetails(name, strength, form)) {
+                med.value?.let {
+                    val medicine = med.value!!.Medicine
+                    medicine.medicineName = name
+                    medicine.strength = strength
+                    medicine.form = form
+                    medicine.takenWhenNeeded =needed
+                    medicine.alarm = alarm
+                    database.update(medicine)
+                    message = "Lääkkeen tietoja on päivitetty"
+                    _showMessageEvent.value = true
+                }
+            } else {
+                message = "Et voi jättää kenttiä tyhjäksi"
+                _showMessageEvent.value = true
+            }
+        }
+        _saveMedicineEvent.value = false
     }
 }

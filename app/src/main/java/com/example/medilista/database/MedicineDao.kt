@@ -13,7 +13,7 @@ interface MedicineDao {
     suspend fun insertMedicineAndDosages(medicine: Medicine, dosages: List<Dosage>)
 
     @Update
-    suspend fun update(medicine: Medicine, dosages: List<Dosage>)
+    suspend fun update(medicine: Medicine)
 
     @Delete
     suspend fun delete(medicine: Medicine)

@@ -101,6 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/save_edited_med_info"
+            android:onClick="@{() -> medicineWithDosagesViewModel.onSaveMedicineChangesClicked()}"
             app:layout_constraintBottom_toTopOf="@+id/dosages_list_editing"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_taken_when_needed" />
