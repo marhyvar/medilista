@@ -43,5 +43,19 @@
         <action
             android:id="@+id/action_medicineWithDosagesFragment_to_medicinesFragment"
             app:destination="@id/medicinesFragment" />
+        <action
+            android:id="@+id/action_medicineWithDosagesFragment_to_editDosageDetailsFragment"
+            app:destination="@id/editDosageDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDosageDetailsFragment"
+        android:name="com.example.medilista.edit.EditDosageDetailsFragment"
+        android:label="EditDosageDetailsFragment" >
+        <argument
+            android:name="dosageKey"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_editDosageDetailsFragment_to_medicineWithDosagesFragment"
+            app:destination="@id/medicineWithDosagesFragment" />
     </fragment>
 </navigation>

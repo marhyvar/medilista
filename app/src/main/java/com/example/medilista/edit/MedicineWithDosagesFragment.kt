@@ -46,7 +46,7 @@ class MedicineWithDosagesFragment: Fragment() {
         val editDosageAdapter = EditDosageAdapter(DosageListener { dosage ->
             medicineWithDosagesViewModel.onDeleteDosageButtonClicked(dosage)
         }, DosageListenerEdit { dosageId ->
-            Toast.makeText(context, "$dosageId", Toast.LENGTH_LONG).show()
+            medicineWithDosagesViewModel.onEditDosageButtonClicked(dosageId)
         })
 
         binding.dosagesListEditing.adapter = editDosageAdapter
@@ -97,7 +97,9 @@ class MedicineWithDosagesFragment: Fragment() {
         medicineWithDosagesViewModel.navigateToEditDosage.observe(viewLifecycleOwner, Observer { id ->
             id?.let {
                 val navController = binding.root.findNavController()
-                // finish navigation
+                navController.navigate(MedicineWithDosagesFragmentDirections
+                        .actionMedicineWithDosagesFragmentToEditDosageDetailsFragment(id))
+                medicineWithDosagesViewModel.onNavigatedToEditDosage()
         }
 
         })
