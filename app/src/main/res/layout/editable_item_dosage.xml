@@ -11,6 +11,9 @@
         <variable
             name="clickListener"
             type="com.example.medilista.edit.DosageListener" />
+        <variable
+            name="clickListenerEdit"
+            type="com.example.medilista.edit.DosageListenerEdit" />
 
     </data>
 
@@ -49,6 +52,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/edit_dosage"
+            android:onClick="@{() -> clickListenerEdit.onClick(editdosage)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/delete_dosage_button"
