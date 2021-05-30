@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
@@ -91,6 +92,14 @@ class MedicineWithDosagesFragment: Fragment() {
                 val alarm = binding.editAlarm.isChecked
                 medicineWithDosagesViewModel.saveMedicineChanges(name, strength, form, needed, alarm)
             }
+        })
+
+        medicineWithDosagesViewModel.navigateToEditDosage.observe(viewLifecycleOwner, Observer { id ->
+            id?.let {
+                val navController = binding.root.findNavController()
+                // finish navigation
+        }
+
         })
 
         return binding.root

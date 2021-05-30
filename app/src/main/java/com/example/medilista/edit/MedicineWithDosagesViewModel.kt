@@ -20,6 +20,10 @@ class MedicineWithDosagesViewModel(
     val navigateToHome: LiveData<Boolean?>
         get() = _navigateToHome
 
+    private val _navigateToEditDosage = MutableLiveData<Long?>()
+    val navigateToEditDosage
+        get() = _navigateToEditDosage
+
     private val med: LiveData<MedicineWithDosages>
 
     val dos = database.getDosagesOfMedicine(medicineKey)
@@ -75,6 +79,14 @@ class MedicineWithDosagesViewModel(
             message = "Lääkkeen annostus on poistettu"
             _showMessageEvent.value = true
         }
+    }
+
+    fun onEditDosageButtonClicked(id: Long) {
+        _navigateToEditDosage.value = id
+    }
+
+    fun onNavigatedToEditDosage() {
+        _navigateToEditDosage.value = null
     }
 
     fun onSaveMedicineChangesClicked() {
