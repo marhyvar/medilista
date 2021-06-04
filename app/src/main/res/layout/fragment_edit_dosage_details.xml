@@ -15,17 +15,17 @@
         tools:context=".edit.EditDosageDetailsFragment">
 
 
-        <Button
-            android:id="@+id/show_time_picker_edit"
+        <TextView
+            android:id="@+id/old_dosage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-
-            android:contentDescription="@string/show_timepicker"
-            android:text="@string/show_timepicker"
+            style="@style/TextStyle"
+            android:text=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/number_picker_edit" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Määrä: 1.0, klo 19:00" />
 
         <TextView
             android:id="@+id/change_dosage_text"
@@ -36,7 +36,7 @@
             android:text="@string/edit_dosage_value"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/old_dosage" />
 
         <NumberPicker
             android:id="@+id/number_picker_edit"
@@ -84,6 +84,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/show_minutes_edit" />
+
+        <Button
+            android:id="@+id/show_time_picker_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/show_timepicker"
+            android:text="@string/show_timepicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/number_picker_edit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

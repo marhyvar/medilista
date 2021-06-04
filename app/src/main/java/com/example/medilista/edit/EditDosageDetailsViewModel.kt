@@ -5,11 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.medilista.*
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.MedicineDao
-import com.example.medilista.formatAmount
-import com.example.medilista.formatNumberPickerValue
-import com.example.medilista.formatTime
 import kotlinx.coroutines.launch
 
 class EditDosageDetailsViewModel(
@@ -20,6 +18,8 @@ class EditDosageDetailsViewModel(
 
     private val dosage: LiveData<Dosage>
     fun getDosage() = dosage
+
+    val oldDosageText = MutableLiveData<String>()
 
     val hours = MutableLiveData<Int>()
 
@@ -37,9 +37,6 @@ class EditDosageDetailsViewModel(
 
     init {
         dosage = database.getDosage(dosageKey)
-        hours.value = dosage.value?.timeValueHours ?: 0
-        minutes.value = dosage.value?.timeValueMinutes ?: 0
-        dosageValueFromPicker.value = dosage.value?.amount.toString()
     }
 
     fun onPickerValueChange(value: Int) {
@@ -54,11 +51,29 @@ class EditDosageDetailsViewModel(
     }
 
     fun onBackButtonEditClicked() {
-        //fix navigation and update dosage
+        viewModelScope.launch {
+            dosage.value?.let {
+                if (!dosageValueFromPicker.value.isNullOrEmpty()) {
+                    dosage.value!!.amount = dosageValueFromPicker.value!!.toDouble()
+                }
+                if (!hours.value.toString().isNullOrEmpty()) {
+                    dosage.value!!.timeValueHours = hours.value!!
+                }
+                if (!minutes.value.toString().isNullOrEmpty()) {
+                    dosage.value!!.timeValueMinutes = minutes.value!!
+                }
+                database.updateDosage(dosage.value!!)
+            }
+        }
         _navigateToEditMed.value = true
     }
 
     fun onNavigatedtoEditMed() {
         _navigateToEditMed.value = false
+    }
+
+    fun formatDosageToEdit(dosage: Dosage): String {
+        val dosageText = combineAmountAndTimes(dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
+        return "Muokkaa annosta: $dosageText"
     }
 }

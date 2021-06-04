@@ -42,11 +42,12 @@ class EditDosageDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.showTimePickerEdit.setOnClickListener {
-
+            val hours = editDosageDetailsViewModel.hours?.value ?: 0
+            val minutes = editDosageDetailsViewModel.minutes?.value ?: 0
             MaterialTimePicker.Builder()
                     .setTimeFormat(TimeFormat.CLOCK_24H)
-                    .setHour(12)
-                    .setMinute(0)
+                    .setHour(hours)
+                    .setMinute(minutes)
                     .build()
                     .apply {
                         addOnPositiveButtonClickListener {
@@ -65,6 +66,14 @@ class EditDosageDetailsFragment : Fragment() {
         picker.minValue = 0
         picker.maxValue = pickerValues.size -1 // 79
         picker.displayedValues = pickerValues
+
+        editDosageDetailsViewModel.getDosage().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.oldDosage.text = editDosageDetailsViewModel.formatDosageToEdit(it)
+                editDosageDetailsViewModel.hours.value = it.timeValueHours
+                editDosageDetailsViewModel.minutes.value = it.timeValueMinutes
+            }
+        })
 
         editDosageDetailsViewModel.navigateToEditMed.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
