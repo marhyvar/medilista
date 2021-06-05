@@ -87,4 +87,10 @@ fun formatAmount(value: String): String {
     return "Valittu määrä: $value"
 }
 
+fun hasClockValueChanged(oldValue: Int?, newValue: Int?): Boolean {
+    return if (oldValue == null || newValue == null) {
+        false
+    } else oldValue != newValue
+}
+
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

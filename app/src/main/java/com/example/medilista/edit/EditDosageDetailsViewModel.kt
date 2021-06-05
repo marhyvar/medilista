@@ -19,8 +19,6 @@ class EditDosageDetailsViewModel(
     private val dosage: LiveData<Dosage>
     fun getDosage() = dosage
 
-    val oldDosageText = MutableLiveData<String>()
-
     val hours = MutableLiveData<Int>()
 
     val minutes = MutableLiveData<Int>()
@@ -39,6 +37,18 @@ class EditDosageDetailsViewModel(
         dosage = database.getDosage(dosageKey)
     }
 
+    var message = ""
+
+    private var _showMessageEvent = MutableLiveData<Boolean>()
+
+
+    val showMessageEvent: LiveData<Boolean>
+        get() = _showMessageEvent
+
+    fun doneShowingMessage() {
+        _showMessageEvent.value = false
+    }
+
     fun onPickerValueChange(value: Int) {
         dosageValueFromPicker.value = formatNumberPickerValue(value)
         dosageString.value = formatAmount(formatNumberPickerValue(value))
@@ -53,18 +63,35 @@ class EditDosageDetailsViewModel(
     fun onBackButtonEditClicked() {
         viewModelScope.launch {
             dosage.value?.let {
+                var edit = false
                 if (!dosageValueFromPicker.value.isNullOrEmpty()) {
                     dosage.value!!.amount = dosageValueFromPicker.value!!.toDouble()
+                    edit = true
                 }
-                if (!hours.value.toString().isNullOrEmpty()) {
+                if (hasClockValueChanged(dosage.value?.timeValueHours, hours.value)) {
                     dosage.value!!.timeValueHours = hours.value!!
+                    edit = true
                 }
-                if (!minutes.value.toString().isNullOrEmpty()) {
+                if (hasClockValueChanged(dosage.value?.timeValueMinutes, minutes.value)) {
                     dosage.value!!.timeValueMinutes = minutes.value!!
+                    edit = true
                 }
-                database.updateDosage(dosage.value!!)
+                Log.i("testi", edit.toString())
+                if (edit) {
+                    database.updateDosage(dosage.value!!)
+                    message = "Annostuksen tietoja on muokattu"
+                    _showMessageEvent.value = true
+                    _navigateToEditMed.value = true
+
+                } else {
+                    message = "Annostuksen tietojen muokkaus ei onnistunut"
+                    _showMessageEvent.value = true
+                }
             }
         }
+    }
+
+    fun onBackButtonNoEditClicked() {
         _navigateToEditMed.value = true
     }
 

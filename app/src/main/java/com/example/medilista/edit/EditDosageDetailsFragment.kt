@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentEditDosageDetailsBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 
@@ -42,8 +43,8 @@ class EditDosageDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.showTimePickerEdit.setOnClickListener {
-            val hours = editDosageDetailsViewModel.hours?.value ?: 0
-            val minutes = editDosageDetailsViewModel.minutes?.value ?: 0
+            val hours = editDosageDetailsViewModel.hours.value ?: 0
+            val minutes = editDosageDetailsViewModel.minutes.value ?: 0
             MaterialTimePicker.Builder()
                     .setTimeFormat(TimeFormat.CLOCK_24H)
                     .setHour(hours)
@@ -82,6 +83,19 @@ class EditDosageDetailsFragment : Fragment() {
                         EditDosageDetailsFragmentDirections
                                 .actionEditDosageDetailsFragmentToMedicineWithDosagesFragment(medId))
                 editDosageDetailsViewModel.onNavigatedtoEditMed()
+            }
+        })
+
+        editDosageDetailsViewModel.showMessageEvent.observe(viewLifecycleOwner, Observer {
+            if (it == true) { // Observed state = true
+                val message = editDosageDetailsViewModel.message
+                Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    message,
+                    Snackbar.LENGTH_SHORT // how long the message is displayed
+                ).show()
+                // Make sure the snackbar is shown once
+                editDosageDetailsViewModel.doneShowingMessage()
             }
         })
 

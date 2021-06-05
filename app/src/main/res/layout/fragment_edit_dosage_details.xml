@@ -9,11 +9,14 @@
             type="com.example.medilista.edit.EditDosageDetailsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".edit.EditDosageDetailsFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/old_dosage"
@@ -48,6 +51,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/change_dosage_text" />
+
+        <Button
+            android:id="@+id/show_time_picker_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/show_timepicker"
+            android:text="@string/show_timepicker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/number_picker_edit" />
 
         <TextView
             android:id="@+id/show_dosage_text_edit"
@@ -86,16 +101,17 @@
             app:layout_constraintTop_toBottomOf="@+id/show_minutes_edit" />
 
         <Button
-            android:id="@+id/show_time_picker_edit"
+            android:id="@+id/back_button_no_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="16dp"
             android:contentDescription="@string/show_timepicker"
-            android:text="@string/show_timepicker"
+            android:text="@string/cancel"
+            android:onClick="@{() -> editDosageDetailsViewModel.onBackButtonNoEditClicked()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/number_picker_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/back_button_edit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
