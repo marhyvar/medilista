@@ -9,100 +9,111 @@
             type="com.example.medilista.details.DetailsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".details.DetailsFragment">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_medicine_name"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/hint_medicine_name"
-            android:text="@={detailsViewModel.name}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/InputStyle"/>
+            android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_medicine_strength"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/hint_medicine_strength"
-            android:text="@={detailsViewModel.strength}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_medicine_name"
-            style="@style/InputStyle" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_medicine_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/hint_medicine_form"
-            android:text="@={detailsViewModel.form}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_medicine_strength"
-            style="@style/InputStyle" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_medicine_name"
+                style="@style/InputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/hint_medicine_name"
+                android:text="@={detailsViewModel.name}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/next_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/to_dosage"
-            android:onClick="@{() -> detailsViewModel.onNextButtonClicked()}"
-            android:text="@string/to_dosage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_medicine_form" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_medicine_strength"
+                style="@style/InputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/hint_medicine_strength"
+                android:text="@={detailsViewModel.strength}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_medicine_name" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/edit_check_if_taken_when_needed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:checked="@={detailsViewModel.onlyWhenNeeded}"
-            android:text="@string/taken_when_needed"
-            app:layout_constraintBottom_toTopOf="@+id/save_medicine_button"
-            app:layout_constraintEnd_toStartOf="@+id/edit_check_if_alarm"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_medicine_form"
+                style="@style/InputStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/hint_medicine_form"
+                android:text="@={detailsViewModel.form}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_medicine_strength" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/edit_check_if_alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:checked="@={detailsViewModel.alarm}"
-            android:text="@string/alarm_check"
-            app:layout_constraintBottom_toTopOf="@+id/save_medicine_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/edit_check_if_taken_when_needed" />
+            <Button
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/to_dosage"
+                android:onClick="@{() -> detailsViewModel.onNextButtonClicked()}"
+                android:text="@string/to_dosage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_check_if_taken_when_needed" />
 
-        <Button
-            android:id="@+id/save_medicine_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:contentDescription="@string/save_medicine"
-            android:onClick="@{() -> detailsViewModel.onSaveButtonClick()}"
-            android:text="@string/save_medicine"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/edit_check_if_taken_when_needed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={detailsViewModel.onlyWhenNeeded}"
+                android:text="@string/taken_when_needed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_check_if_alarm" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dosages_for_saving"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/next_button" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/edit_check_if_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:checked="@={detailsViewModel.alarm}"
+                android:text="@string/alarm_check"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_medicine_form" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/save_medicine_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/save_medicine"
+                android:onClick="@{() -> detailsViewModel.onSaveButtonClick()}"
+                android:text="@string/save_medicine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dosages_for_saving" />
+
+            <Button
+                android:id="@+id/back_to_medicines_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> detailsViewModel.onCancelButtonClicked()}"
+                android:text="@string/back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/save_medicine_button" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dosages_for_saving"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/next_button" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -160,6 +160,10 @@ class DetailsViewModel(
         }
     }
 
+    fun onCancelButtonClicked() {
+        _navigateToMedicines.value = true
+    }
+
     private suspend fun insertDosagesForMedicineFromList(id: Long) {
         val list = dosageList.value ?: arrayListOf()
         Log.i("database", list.get(0).amount.toString())
