@@ -6,11 +6,14 @@
     <string name="fab_description">Lisää lääke</string>
     <string name="title"><![CDATA[<h1>Lääkkeeni</h1>]]></string>
     <string name="hint_medicine_name">Lääkkeen nimi</string>
+    <string name="hint_medicine_name_label">Lääkkeen nimi:</string>
     <string name="hint_medicine_strength">Lääkkeen vahvuus</string>
+    <string name="hint_medicine_strength_label">Lääkkeen vahvuus:</string>
     <string name="alarm_check">Laita hälytys</string>
     <string name="taken_when_needed">Otetaan tarvittaessa</string>
     <string name="menu_label">Lääkemuoto</string>
     <string name="hint_medicine_form">Lääkemuoto (tabletti, liuos yms.)</string>
+    <string name="hint_medicine_form_label">Lääkemuoto (tabletti, liuos yms.):</string>
     <string name="save_medicine">Tallenna lääkkeen tiedot</string>
     <string name="alarm">Hälytys</string>
     <string name="no_alarm">Ei hälytystä</string>
@@ -27,4 +30,9 @@
     <string name="save_edited_med_info">Tallenna muutokset</string>
     <string name="edit_dosage">Muokkaa</string>
     <string name="cancel">Peruuta</string>
+    <string name="edit_pane">Lääkkeen ja annostusten tietojen muokkaus</string>
+    <string name="save_new_medicine_pane">Uuden lääkkeen tietojen syöttö</string>
+    <string name="save_new_dosage_pane">Annostuksen määrän ja ajankohdan valinta</string>
+    <string name="edit_new_dosage_pane">Annostuksen määrän ja ajankohdan muokkaus</string>
+    <string name="medicines_pane">Lääkityslistanäkymä</string>
 </resources>
