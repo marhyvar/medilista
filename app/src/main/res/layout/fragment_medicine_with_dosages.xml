@@ -44,6 +44,7 @@
             <TextView
                 android:id="@+id/label_med_name"
                 style="@style/LabelStyle"
+                android:labelFor="@+id/edit_med_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -64,6 +65,7 @@
             <TextView
                 android:id="@+id/label_med_strength"
                 style="@style/LabelStyle"
+                android:labelFor="@+id/edit_med_strength"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_medicine_strength_label"
@@ -83,6 +85,7 @@
             <TextView
                 android:id="@+id/label_med_form"
                 style="@style/LabelStyle"
+                android:labelFor="@+id/edit_med_form"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_medicine_form_label"
