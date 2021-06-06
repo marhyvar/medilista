@@ -29,7 +29,7 @@ class DetailsFragment : Fragment() {
 
         val dataSource = MedicineDatabase.getInstance(application).medicineDao
 
-        val viewModelFactory = DetailsViewModelFactory(dataSource, application)
+        val viewModelFactory = DetailsViewModelFactory(dataSource)
 
         //val detailsViewModel =
          //       ViewModelProvider(
@@ -41,7 +41,15 @@ class DetailsFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        //FINISH ADAPTER FOR RECYCLERVIEW
+        val saveDosageAdapter = SaveDosageAdapter()
+
+        binding.dosagesForSaving.adapter = saveDosageAdapter
+
+        detailsViewModel.list.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                saveDosageAdapter.submitList(it)
+            }
+        })
 
         detailsViewModel.navigateToDosage.observe(viewLifecycleOwner,
             Observer<Boolean> { shouldNavigate ->
@@ -60,15 +68,17 @@ class DetailsFragment : Fragment() {
             }
         })
 
-        detailsViewModel.showErrorEvent.observe(viewLifecycleOwner, Observer {
+        detailsViewModel.showMessageEvent.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
+                val message = detailsViewModel.message
                 Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
-                        getString(R.string.details_error),
+                        //getString(R.string.details_error),
+                        message,
                         Snackbar.LENGTH_SHORT // how long the message is displayed
                 ).show()
                 // Make sure the snackbar is shown once
-                detailsViewModel.doneShowingError()
+                detailsViewModel.doneShowingMessage()
             }
         })
 

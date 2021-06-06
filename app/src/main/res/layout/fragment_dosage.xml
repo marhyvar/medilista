@@ -17,15 +17,15 @@
 
         <Button
             android:id="@+id/show_time_picker"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/show_timepicker"
 
             android:text="@string/show_timepicker"
             app:layout_constraintBottom_toTopOf="@+id/show_dosage_text"
-            app:layout_constraintTop_toBottomOf="@+id/number_picker"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/number_picker" />
 
         <TextView
             android:id="@+id/edit_dosage_text"
@@ -36,7 +36,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/TextStyle"/>
 
         <NumberPicker
             android:id="@+id/number_picker"
@@ -57,20 +58,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/show_time_picker"
-            android:text="@{dosageViewModel.dosageValueFromPicker}"
-            tools:text="Annostuksen tiedot" />
+            android:text="@{dosageViewModel.dosageString}"
+            tools:text="Annostuksen tiedot"
+            style="@style/TextStyle" />
+
+        <TextView
+            android:id="@+id/show_minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{dosageViewModel.timeString}"
+            app:layout_constraintBottom_toTopOf="@+id/back_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_dosage_text"
+            tools:text="20.30"
+            style="@style/TextStyle"/>
 
         <Button
             android:id="@+id/back_button"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/continue_button"
             android:onClick="@{() -> dosageViewModel.onBackButtonClicked()}"
             android:text="@string/continue_button"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/show_dosage_text"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_dosage_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

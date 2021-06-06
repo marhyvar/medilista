@@ -21,4 +21,10 @@
     <string name="show_timepicker">Valitse aika</string>
     <string name="edit_dosage_value">Valitse annostus</string>
     <string name="continue_button">Jatka</string>
+    <string name="delete">Poista lääke</string>
+    <string name="back">Takaisin</string>
+    <string name="remove_dosage">Poista</string>
+    <string name="save_edited_med_info">Tallenna muutokset</string>
+    <string name="edit_dosage">Muokkaa</string>
+    <string name="cancel">Peruuta</string>
 </resources>

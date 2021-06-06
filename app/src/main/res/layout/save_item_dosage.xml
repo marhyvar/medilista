@@ -6,24 +6,24 @@
     <data>
 
         <variable
-            name="dosage"
+            name="savedosage"
             type="com.example.medilista.database.Dosage" />
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/dosage_text"
-            android:layout_width="match_parent"
+            android:id="@+id/save_dosage_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:dosageText="@{dosage}"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="32dp"
+            app:save="@{savedosage}"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Määrä 1, klo 19:00"
             style="@style/TextStyle" />
 

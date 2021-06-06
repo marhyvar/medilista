@@ -13,13 +13,13 @@ interface MedicineDao {
     suspend fun insertMedicineAndDosages(medicine: Medicine, dosages: List<Dosage>)
 
     @Update
-    suspend fun update(medicine: Medicine, dosages: List<Dosage>)
+    suspend fun update(medicine: Medicine)
 
     @Delete
     suspend fun delete(medicine: Medicine)
 
     @Query("SELECT * from medicine_table WHERE medicineId = :key")
-    suspend fun get(key: Long): Medicine?
+    fun get(key: Long): LiveData<Medicine>
 
     @Query("DELETE FROM medicine_table")
     suspend fun clearAllMedicineData()
@@ -30,6 +30,10 @@ interface MedicineDao {
     @Transaction
     @Query("SELECT * FROM medicine_table ORDER BY medicine_name")
     fun getAllMedicines(): LiveData<List<MedicineWithDosages>>
+
+    @Transaction
+    @Query("SELECT * FROM medicine_table WHERE medicineId = :key")
+    fun getMedicineWithDosages(key: Long): LiveData<MedicineWithDosages>
 
     @Query("SELECT medicineId FROM medicine_table ORDER BY medicineId DESC LIMIT 1")
     suspend fun getInsertedMedicineId(): Long?
@@ -44,8 +48,20 @@ interface MedicineDao {
     suspend fun deleteDosage(dosage: Dosage)
 
     @Query("SELECT * from dosage_table WHERE dosageId = :key")
-    fun getDosage(key: Long): Dosage?
+    fun getDosage(key: Long): LiveData<Dosage>
+
+    @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")
+    fun getDosagesOfMedicine(key: Long): LiveData<List<Dosage>>
 
     @Query("SELECT * FROM dosage_table")
-    fun getAllDosages(): LiveData<List<Dosage>>
+    fun getDos(): LiveData<List<Dosage>>
+
+    @Query("DELETE from dosage_table WHERE dosage_medicine_id = :key")
+    suspend fun deleteDosagesOfMedicine(key: Long)
+
+    @Transaction
+    suspend fun deleteMedicineData(key: Long, medicine: Medicine) {
+        deleteDosagesOfMedicine(key)
+        delete(medicine)
+    }
 }

@@ -1,22 +1,15 @@
 package com.example.medilista.details
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.medilista.*
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
-import com.example.medilista.formatNumberPickerValue
-import com.example.medilista.validateDosageListInput
-import com.example.medilista.validateInputInMedicineDetails
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-        val database: MedicineDao,
-        application: Application) : AndroidViewModel(application) {
+        val database: MedicineDao) : ViewModel() {
 
     private val _navigateToMedicines = MutableLiveData<Boolean?>()
     val navigateToMedicines: LiveData<Boolean?>
@@ -40,6 +33,9 @@ class DetailsViewModel(
 
     val minutes = MutableLiveData<Int>()
 
+    val dosageString = MutableLiveData<String>()
+
+    val timeString = MutableLiveData<String>()
 
     private val _navigateToDosage = MutableLiveData<Boolean>()
     val navigateToDosage: LiveData<Boolean>
@@ -54,12 +50,21 @@ class DetailsViewModel(
     val list: LiveData<MutableList<Dosage>>
         get() = dosageList
 
+    var message = ""
+
     init {
         dosageList.value = ArrayList()
+        hours.value = 0
+        minutes.value = 0
     }
 
     fun addDosageToList(dosage: Dosage) {
         dosageList.value?.add(dosage)
+        dosageList.value = dosageList.value
+    }
+
+    fun clearDosageList() {
+        dosageList.value?.clear()
         dosageList.value = dosageList.value
     }
 
@@ -83,20 +88,22 @@ class DetailsViewModel(
             Log.i("database", "dosage lisätty listaan")
         }
         _navigateToDetails.value = true
+        timeString.value = ""
+        dosageString.value = ""
     }
 
     fun onNavigatedToDetails() {
         _navigateToDetails.value = false
     }
 
-    private var _showErrorEvent = MutableLiveData<Boolean>()
+    private var _showMessageEvent = MutableLiveData<Boolean>()
 
 
-    val showErrorEvent: LiveData<Boolean>
-        get() = _showErrorEvent
+    val showMessageEvent: LiveData<Boolean>
+        get() = _showMessageEvent
 
-    fun doneShowingError() {
-        _showErrorEvent.value = false
+    fun doneShowingMessage() {
+        _showMessageEvent.value = false
     }
 
     private suspend fun insert(medicine: Medicine) {
@@ -109,11 +116,13 @@ class DetailsViewModel(
 
     fun onPickerValueChange(value: Int) {
         dosageValueFromPicker.value = formatNumberPickerValue(value)
+        dosageString.value = formatAmount(formatNumberPickerValue(value))
     }
 
     fun onTimePickerChange(hour: Int, minute: Int) {
         hours.value = hour
         minutes.value = minute
+        timeString.value = formatTime(hour, minute)
     }
 
     fun onSaveButtonClick() {
@@ -141,8 +150,11 @@ class DetailsViewModel(
 
                 _navigateToMedicines.value = true
                 setEmptyValues()
+                message = "Lääke tallennettu"
+                _showMessageEvent.value = true
             } else {
-                _showErrorEvent.value = true
+                message = "Et voi jättää kenttiä tyhjäksi"
+                _showMessageEvent.value = true
             }
 
         }
@@ -159,7 +171,7 @@ class DetailsViewModel(
             database.insertDosage(newDosage)
             Log.i("database", newDosage.timeValueHours.toString())
         }
-        list.clear()
+        clearDosageList()
     }
 
     fun setEmptyValues() {

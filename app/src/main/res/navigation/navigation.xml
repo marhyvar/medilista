@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_medicinesFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_medicinesFragment_to_medicineWithDosagesFragment"
+            app:destination="@id/medicineWithDosagesFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -29,5 +32,30 @@
         <action
             android:id="@+id/action_dosageFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicineWithDosagesFragment"
+        android:name="com.example.medilista.edit.MedicineWithDosagesFragment"
+        android:label="MedicineWithDosagesFragment" >
+        <argument
+            android:name="medicineKey"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_medicineWithDosagesFragment_to_medicinesFragment"
+            app:destination="@id/medicinesFragment" />
+        <action
+            android:id="@+id/action_medicineWithDosagesFragment_to_editDosageDetailsFragment"
+            app:destination="@id/editDosageDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDosageDetailsFragment"
+        android:name="com.example.medilista.edit.EditDosageDetailsFragment"
+        android:label="EditDosageDetailsFragment" >
+        <argument
+            android:name="dosageKey"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_editDosageDetailsFragment_to_medicineWithDosagesFragment"
+            app:destination="@id/medicineWithDosagesFragment" />
     </fragment>
 </navigation>

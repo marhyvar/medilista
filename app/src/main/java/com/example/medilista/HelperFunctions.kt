@@ -27,8 +27,8 @@ fun formatMedicines(medicines: List<Medicine>, resources: Resources): Spanned {
     }
 }
 
-fun combineNameAndStrength(name: String, strength: String): String {
-    return "$name $strength"
+fun combineNameAndStrength(name: String, strength: String, form: String): String {
+    return "$name $strength, $form"
 }
 
 fun determineIfNeededOrContinuous(value: Boolean, resources: Resources): String {
@@ -72,6 +72,25 @@ fun validateDosageListInput(amount: String, hours: String, minutes: String): Boo
 
 fun formatNumberPickerValue(value: Int): String {
     return (0.25 + value * 0.25).toString()
+}
+
+fun formatTime(hour: Int, min: Int): String {
+    var minuteString = min.toString()
+    val hourString = hour.toString()
+    if (min < 10) {
+        minuteString = "0${min.toString()}"
+    }
+    return "Valittu aika: $hourString:$minuteString"
+}
+
+fun formatAmount(value: String): String {
+    return "Valittu määrä: $value"
+}
+
+fun hasClockValueChanged(oldValue: Int?, newValue: Int?): Boolean {
+    return if (oldValue == null || newValue == null) {
+        false
+    } else oldValue != newValue
 }
 
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
