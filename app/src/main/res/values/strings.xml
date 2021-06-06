@@ -30,4 +30,9 @@
     <string name="save_edited_med_info">Tallenna muutokset</string>
     <string name="edit_dosage">Muokkaa</string>
     <string name="cancel">Peruuta</string>
+    <string name="edit_pane">Lääkkeen ja annostusten tietojen muokkaus</string>
+    <string name="save_new_medicine_pane">Uuden lääkkeen tietojen syöttö</string>
+    <string name="save_new_dosage_pane">Annostuksen määrän ja ajankohdan valinta</string>
+    <string name="edit_new_dosage_pane">Annostuksen määrän ja ajankohdan muokkaus</string>
+    <string name="medicines_pane">Lääkityslistanäkymä</string>
 </resources>

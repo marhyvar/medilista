@@ -12,7 +12,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".details.DetailsFragment">
+        tools:context=".details.DetailsFragment"
+        android:accessibilityPaneTitle="@string/save_new_medicine_pane">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,7 +36,6 @@
                 style="@style/InputStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_medicine_name"
                 android:text="@={detailsViewModel.name}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_medicine_name" />
@@ -55,7 +55,6 @@
                 style="@style/InputStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_medicine_strength"
                 android:text="@={detailsViewModel.strength}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_medicine_strength" />
@@ -75,7 +74,6 @@
                 style="@style/InputStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_medicine_form"
                 android:text="@={detailsViewModel.form}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_medicine_form" />
