@@ -65,6 +65,7 @@ class DetailsFragment : Fragment() {
                 this.findNavController().navigate(
                         R.id.action_detailsFragment_to_medicinesFragment)
                 detailsViewModel.finishedNavigating()
+                detailsViewModel.clearDosageList()
             }
         })
 

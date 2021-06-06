@@ -175,7 +175,6 @@ class DetailsViewModel(
             database.insertDosage(newDosage)
             Log.i("database", newDosage.timeValueHours.toString())
         }
-        clearDosageList()
     }
 
     fun setEmptyValues() {
