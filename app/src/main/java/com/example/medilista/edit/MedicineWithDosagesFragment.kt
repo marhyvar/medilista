@@ -68,11 +68,13 @@ class MedicineWithDosagesFragment: Fragment() {
         spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
-                // An item was selected. You can retrieve the selected item using
-                val value = parent.getItemAtPosition(position).toString()
-                medicineWithDosagesViewModel.setFormSelected(value)
-                Log.i("testi", value)
+                                        view: View?, position: Int, id: Long) {
+                // An item was selected. Null check for configuration change etc.
+                if (position >= 0) {
+                    val value = parent.getItemAtPosition(position).toString()
+                    medicineWithDosagesViewModel.setFormSelected(value)
+                    Log.i("testi", value)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {

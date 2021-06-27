@@ -12,8 +12,8 @@
     <string name="alarm_check">Laita hälytys</string>
     <string name="taken_when_needed">Otetaan tarvittaessa</string>
     <string name="menu_label">Lääkemuoto</string>
-    <string name="hint_medicine_form">Lääkemuoto (tabletti, liuos yms.)</string>
-    <string name="hint_medicine_form_label">Lääkemuoto (tabletti, liuos yms.):</string>
+    <string name="hint_medicine_form">Lääkemuoto/annostuksen yksikkö</string>
+    <string name="hint_medicine_form_label">Lääkemuoto/annostuksen yksikkö:</string>
     <string name="save_medicine">Tallenna lääkkeen tiedot</string>
     <string name="alarm">Hälytys</string>
     <string name="no_alarm">Ei hälytystä</string>

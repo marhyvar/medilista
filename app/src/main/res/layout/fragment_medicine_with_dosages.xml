@@ -83,14 +83,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_med_strength" />
 
+            <TextView
+                android:id="@+id/label_med_form_spinner"
+                style="@style/LabelStyle"
+                android:labelFor="@+id/med_form_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_medicine_form_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_med_strength" />
+
             <Spinner
                 android:id="@+id/med_form_spinner"
                 style="@style/InputStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:prompt="@string/form_prompt"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_med_strength" />
+                app:layout_constraintTop_toBottomOf="@+id/label_med_form_spinner" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/edit_taken_when_needed"
@@ -108,6 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:checked="@={medicineWithDosagesViewModel.med.Medicine.alarm}"
                 android:text="@string/alarm_check"
                 app:layout_constraintBottom_toTopOf="@+id/edit_taken_when_needed"
