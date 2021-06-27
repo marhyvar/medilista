@@ -41,6 +41,10 @@ class MedicineWithDosagesViewModel(
     val showMessageEvent: LiveData<Boolean>
         get() = _showMessageEvent
 
+    private val _formSelection = MutableLiveData<String>()
+    val formSelection: LiveData<String>
+        get() = _formSelection
+
     fun doneShowingMessage() {
         _showMessageEvent.value = false
     }
@@ -113,5 +117,9 @@ class MedicineWithDosagesViewModel(
             }
         }
         _saveMedicineEvent.value = false
+    }
+
+    fun setFormSelected(formValueSelection: String) {
+        _formSelection.value = formValueSelection
     }
 }

@@ -35,4 +35,5 @@
     <string name="save_new_dosage_pane">Annostuksen määrän ja ajankohdan valinta</string>
     <string name="edit_new_dosage_pane">Annostuksen määrän ja ajankohdan muokkaus</string>
     <string name="medicines_pane">Lääkityslistanäkymä</string>
+    <string name="form_prompt">Valitse lääkemuoto</string>
 </resources>

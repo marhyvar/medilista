@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -49,6 +52,35 @@ class MedicineWithDosagesFragment: Fragment() {
             medicineWithDosagesViewModel.onEditDosageButtonClicked(dosageId)
         })
 
+        val spinner: Spinner = binding.medFormSpinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+                application,
+                R.array.form_array,
+                android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+
+        spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        view: View, position: Int, id: Long) {
+                // An item was selected. You can retrieve the selected item using
+                val value = parent.getItemAtPosition(position).toString()
+                medicineWithDosagesViewModel.setFormSelected(value)
+                Log.i("testi", value)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
+
+
         binding.dosagesListEditing.adapter = editDosageAdapter
 
 
@@ -87,7 +119,8 @@ class MedicineWithDosagesFragment: Fragment() {
             if (it == true) {
                 val name = binding.editMedName.text.toString()
                 val strength = binding.editMedStrength.text.toString()
-                val form = binding.editMedForm.text.toString()
+                //val form = binding.editMedForm.text.toString()
+                val form = medicineWithDosagesViewModel.formSelection.value!!
                 val needed = binding.editTakenWhenNeeded.isChecked
                 val alarm = binding.editAlarm.isChecked
                 medicineWithDosagesViewModel.saveMedicineChanges(name, strength, form, needed, alarm)

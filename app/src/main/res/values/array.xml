@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="form_array">
+        <item>tabletti</item>
+        <item>kapseli</item>
+        <item>annospussi</item>
+        <item>tippa</item>
+        <item>ml</item>
+        <item>inhalaatio</item>
+        <item>laastari</item>
+        <item>peräpuikko</item>
+    </string-array>
+</resources>
