@@ -41,7 +41,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chosen_med" />
 
-
             <TextView
                 android:id="@+id/label_med_name"
                 style="@style/LabelStyle"
@@ -49,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/hint_medicine_name_label"
+                android:text="@string/hint_medicine_name_label_edit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/delete_medicine" />
 
@@ -69,7 +68,7 @@
                 android:labelFor="@+id/edit_med_strength"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_medicine_strength_label"
+                android:text="@string/hint_medicine_strength_label_edit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_med_name" />
 
@@ -84,14 +83,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/label_med_strength" />
 
             <TextView
+                android:id="@+id/current_form_text"
+                style="@style/LabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_form"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_med_strength" />
+
+            <TextView
+                android:id="@+id/current_form"
+                style="@style/LabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="@={medicineWithDosagesViewModel.med.Medicine.form}"
+                app:layout_constraintBottom_toBottomOf="@+id/current_form_text"
+                app:layout_constraintStart_toEndOf="@+id/current_form_text"
+                app:layout_constraintTop_toTopOf="@+id/current_form_text"
+                tools:text="tabletti" />
+
+            <TextView
                 android:id="@+id/label_med_form_spinner"
                 style="@style/LabelStyle"
                 android:labelFor="@+id/med_form_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_medicine_form_label"
+                android:text="@string/hint_medicine_form_label_edit"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_med_strength" />
+                app:layout_constraintTop_toBottomOf="@+id/current_form_text" />
 
             <Spinner
                 android:id="@+id/med_form_spinner"

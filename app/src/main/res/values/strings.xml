@@ -7,13 +7,17 @@
     <string name="title"><![CDATA[<h1>Lääkkeeni</h1>]]></string>
     <string name="hint_medicine_name">Lääkkeen nimi</string>
     <string name="hint_medicine_name_label">Lääkkeen nimi:</string>
+    <string name="hint_medicine_name_label_edit">Vaihda lääkkeen nimi:</string>
     <string name="hint_medicine_strength">Lääkkeen vahvuus</string>
     <string name="hint_medicine_strength_label">Lääkkeen vahvuus:</string>
+    <string name="hint_medicine_strength_label_edit">Vaihda lääkkeen vahvuus:</string>
     <string name="alarm_check">Laita hälytys</string>
     <string name="taken_when_needed">Otetaan tarvittaessa</string>
     <string name="menu_label">Lääkemuoto</string>
     <string name="hint_medicine_form">Lääkemuoto/annostuksen yksikkö</string>
     <string name="hint_medicine_form_label">Lääkemuoto/annostuksen yksikkö:</string>
+    <string name="hint_medicine_form_label_edit">Vaihda lääkemuoto/annostuksen yksikkö:</string>
+    <string name="current_form">Nykyinen arvo: </string>
     <string name="save_medicine">Tallenna lääkkeen tiedot</string>
     <string name="alarm">Hälytys</string>
     <string name="no_alarm">Ei hälytystä</string>
