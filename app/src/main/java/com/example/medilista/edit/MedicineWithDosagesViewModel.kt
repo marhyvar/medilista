@@ -89,6 +89,11 @@ class MedicineWithDosagesViewModel(
         _navigateToEditDosage.value = dosage
     }
 
+    fun onAddNewDosageButtonClicked() {
+        val newDosage = Dosage(-1, medicineKey, 0.0, 0, 0 )
+        _navigateToEditDosage.value = newDosage
+    }
+
     fun onNavigatedToEditDosage() {
         _navigateToEditDosage.value = null
     }

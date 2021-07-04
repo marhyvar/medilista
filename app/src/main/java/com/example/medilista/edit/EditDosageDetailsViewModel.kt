@@ -64,29 +64,48 @@ class EditDosageDetailsViewModel(
     fun onBackButtonEditClicked() {
         viewModelScope.launch {
             _selectedDosage.value?.let {
-                var edit = false
-                if (!dosageValueFromPicker.value.isNullOrEmpty()) {
-                    _selectedDosage.value!!.amount = dosageValueFromPicker.value!!.toDouble()
-                    edit = true
-                }
-                if (hasClockValueChanged(_selectedDosage.value?.timeValueHours, hours.value)) {
-                    _selectedDosage.value!!.timeValueHours = hours.value!!
-                    edit = true
-                }
-                if (hasClockValueChanged(_selectedDosage.value?.timeValueMinutes, minutes.value)) {
-                    _selectedDosage.value!!.timeValueMinutes = minutes.value!!
-                    edit = true
-                }
-                Log.i("testi", edit.toString())
-                if (edit) {
-                    database.updateDosage(_selectedDosage.value!!)
-                    message = "Annostuksen tietoja on muokattu"
-                    _showMessageEvent.value = true
-                    _navigateToEditMed.value = true
-
+                val id = _selectedDosage.value!!.dosageId
+                if (id < 0) {
+                    val amount = dosageValueFromPicker.value ?: ""
+                    val valueHours = hours.value.toString()
+                    val valueMinutes = minutes.value.toString()
+                    val medId = _selectedDosage.value!!.dosageMedicineId
+                    if (validateDosageListInput(amount, valueHours, valueMinutes)) {
+                        val newDosage = Dosage(dosageMedicineId =medId, amount=amount.toDouble(),
+                                timeValueHours=valueHours.toInt(), timeValueMinutes=valueMinutes.toInt())
+                        database.insertDosage(newDosage)
+                        message = "Lääkkeelle on lisätty uusi annostus"
+                        _showMessageEvent.value = true
+                        _navigateToEditMed.value = true
+                    } else {
+                        message = "Et voi jättää arvoja tyhjäksi"
+                        _showMessageEvent.value = true
+                    }
                 } else {
-                    message = "Annostuksen tietojen muokkaus ei onnistunut"
-                    _showMessageEvent.value = true
+                    var edit = false
+                    if (!dosageValueFromPicker.value.isNullOrEmpty()) {
+                        _selectedDosage.value!!.amount = dosageValueFromPicker.value!!.toDouble()
+                        edit = true
+                    }
+                    if (hasClockValueChanged(_selectedDosage.value?.timeValueHours, hours.value)) {
+                        _selectedDosage.value!!.timeValueHours = hours.value!!
+                        edit = true
+                    }
+                    if (hasClockValueChanged(_selectedDosage.value?.timeValueMinutes, minutes.value)) {
+                        _selectedDosage.value!!.timeValueMinutes = minutes.value!!
+                        edit = true
+                    }
+                    Log.i("testi", edit.toString())
+                    if (edit) {
+                        database.updateDosage(_selectedDosage.value!!)
+                        message = "Annostuksen tietoja on muokattu"
+                        _showMessageEvent.value = true
+                        _navigateToEditMed.value = true
+
+                    } else {
+                        message = "Annostuksen tietojen muokkaus ei onnistunut"
+                        _showMessageEvent.value = true
+                    }
                 }
             }
         }
