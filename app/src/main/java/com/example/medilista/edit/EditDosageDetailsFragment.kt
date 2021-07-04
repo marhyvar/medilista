@@ -32,7 +32,7 @@ class EditDosageDetailsFragment : Fragment() {
 
         val arguments = EditDosageDetailsFragmentArgs.fromBundle(requireArguments())
 
-        val viewModelFactory = EditDosageDetailsViewModelFactory(arguments.dosageKey, dataSource)
+        val viewModelFactory = EditDosageDetailsViewModelFactory(arguments.dosage, dataSource)
 
         val editDosageDetailsViewModel =
                 ViewModelProvider(
@@ -68,7 +68,7 @@ class EditDosageDetailsFragment : Fragment() {
         picker.maxValue = pickerValues.size -1 // 79
         picker.displayedValues = pickerValues
 
-        editDosageDetailsViewModel.getDosage().observe(viewLifecycleOwner, Observer {
+        editDosageDetailsViewModel.selectedDosage.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.oldDosage.text = editDosageDetailsViewModel.formatDosageToEdit(it)
                 editDosageDetailsViewModel.hours.value = it.timeValueHours
@@ -78,7 +78,7 @@ class EditDosageDetailsFragment : Fragment() {
 
         editDosageDetailsViewModel.navigateToEditMed.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
-                val medId = editDosageDetailsViewModel.getDosage().value?.dosageMedicineId ?: -1
+                val medId = editDosageDetailsViewModel.selectedDosage.value?.dosageMedicineId ?: -1
                 this.findNavController().navigate(
                         EditDosageDetailsFragmentDirections
                                 .actionEditDosageDetailsFragmentToMedicineWithDosagesFragment(medId))

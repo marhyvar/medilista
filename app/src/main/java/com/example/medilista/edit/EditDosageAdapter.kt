@@ -56,6 +56,6 @@ class DosageListener(val clickListener: (dosage: Dosage) -> Unit) {
     fun onClick(dosage: Dosage) = clickListener(dosage)
 }
 
-class DosageListenerEdit(val clickListenerEdit: (dosageId: Long) -> Unit) {
-    fun onClick(dosage: Dosage) = clickListenerEdit(dosage.dosageId)
+class DosageListenerEdit(val clickListenerEdit: (dosage: Dosage) -> Unit) {
+    fun onClick(dosage: Dosage) = clickListenerEdit(dosage)
 }

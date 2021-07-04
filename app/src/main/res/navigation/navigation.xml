@@ -52,8 +52,8 @@
         android:name="com.example.medilista.edit.EditDosageDetailsFragment"
         android:label="EditDosageDetailsFragment" >
         <argument
-            android:name="dosageKey"
-            app:argType="long" />
+            android:name="dosage"
+            app:argType="com.example.medilista.database.Dosage" />
         <action
             android:id="@+id/action_editDosageDetailsFragment_to_medicineWithDosagesFragment"
             app:destination="@id/medicineWithDosagesFragment" />

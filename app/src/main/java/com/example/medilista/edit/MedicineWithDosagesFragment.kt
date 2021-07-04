@@ -48,8 +48,8 @@ class MedicineWithDosagesFragment: Fragment() {
 
         val editDosageAdapter = EditDosageAdapter(DosageListener { dosage ->
             medicineWithDosagesViewModel.onDeleteDosageButtonClicked(dosage)
-        }, DosageListenerEdit { dosageId ->
-            medicineWithDosagesViewModel.onEditDosageButtonClicked(dosageId)
+        }, DosageListenerEdit { dosage ->
+            medicineWithDosagesViewModel.onEditDosageButtonClicked(dosage)
         })
 
         val spinner: Spinner = binding.medFormSpinner
@@ -129,11 +129,11 @@ class MedicineWithDosagesFragment: Fragment() {
             }
         })
 
-        medicineWithDosagesViewModel.navigateToEditDosage.observe(viewLifecycleOwner, Observer { id ->
-            id?.let {
+        medicineWithDosagesViewModel.navigateToEditDosage.observe(viewLifecycleOwner, Observer { dosage ->
+            dosage?.let {
                 val navController = binding.root.findNavController()
                 navController.navigate(MedicineWithDosagesFragmentDirections
-                        .actionMedicineWithDosagesFragmentToEditDosageDetailsFragment(id))
+                        .actionMedicineWithDosagesFragmentToEditDosageDetailsFragment(dosage))
                 medicineWithDosagesViewModel.onNavigatedToEditDosage()
         }
 

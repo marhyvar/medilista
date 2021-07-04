@@ -20,7 +20,7 @@ class MedicineWithDosagesViewModel(
     val navigateToHome: LiveData<Boolean?>
         get() = _navigateToHome
 
-    private val _navigateToEditDosage = MutableLiveData<Long?>()
+    private val _navigateToEditDosage = MutableLiveData<Dosage?>()
     val navigateToEditDosage
         get() = _navigateToEditDosage
 
@@ -85,8 +85,8 @@ class MedicineWithDosagesViewModel(
         }
     }
 
-    fun onEditDosageButtonClicked(id: Long) {
-        _navigateToEditDosage.value = id
+    fun onEditDosageButtonClicked(dosage: Dosage) {
+        _navigateToEditDosage.value = dosage
     }
 
     fun onNavigatedToEditDosage() {

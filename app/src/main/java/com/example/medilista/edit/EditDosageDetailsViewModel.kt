@@ -11,13 +11,14 @@ import com.example.medilista.database.MedicineDao
 import kotlinx.coroutines.launch
 
 class EditDosageDetailsViewModel(
-        private val dosageKey: Long = 0L,
+        dosage: Dosage,
         dataSource: MedicineDao) : ViewModel() {
 
     val database = dataSource
 
-    private val dosage: LiveData<Dosage>
-    fun getDosage() = dosage
+    private val _selectedDosage = MutableLiveData<Dosage>()
+    val selectedDosage: LiveData<Dosage>
+        get() = _selectedDosage
 
     val hours = MutableLiveData<Int>()
 
@@ -34,7 +35,7 @@ class EditDosageDetailsViewModel(
         get() = _navigateToEditMed
 
     init {
-        dosage = database.getDosage(dosageKey)
+        _selectedDosage.value = dosage
     }
 
     var message = ""
@@ -62,23 +63,23 @@ class EditDosageDetailsViewModel(
 
     fun onBackButtonEditClicked() {
         viewModelScope.launch {
-            dosage.value?.let {
+            _selectedDosage.value?.let {
                 var edit = false
                 if (!dosageValueFromPicker.value.isNullOrEmpty()) {
-                    dosage.value!!.amount = dosageValueFromPicker.value!!.toDouble()
+                    _selectedDosage.value!!.amount = dosageValueFromPicker.value!!.toDouble()
                     edit = true
                 }
-                if (hasClockValueChanged(dosage.value?.timeValueHours, hours.value)) {
-                    dosage.value!!.timeValueHours = hours.value!!
+                if (hasClockValueChanged(_selectedDosage.value?.timeValueHours, hours.value)) {
+                    _selectedDosage.value!!.timeValueHours = hours.value!!
                     edit = true
                 }
-                if (hasClockValueChanged(dosage.value?.timeValueMinutes, minutes.value)) {
-                    dosage.value!!.timeValueMinutes = minutes.value!!
+                if (hasClockValueChanged(_selectedDosage.value?.timeValueMinutes, minutes.value)) {
+                    _selectedDosage.value!!.timeValueMinutes = minutes.value!!
                     edit = true
                 }
                 Log.i("testi", edit.toString())
                 if (edit) {
-                    database.updateDosage(dosage.value!!)
+                    database.updateDosage(_selectedDosage.value!!)
                     message = "Annostuksen tietoja on muokattu"
                     _showMessageEvent.value = true
                     _navigateToEditMed.value = true
