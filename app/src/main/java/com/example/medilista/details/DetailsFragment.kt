@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -40,6 +43,38 @@ class DetailsFragment : Fragment() {
         binding.detailsViewModel = detailsViewModel
 
         binding.lifecycleOwner = this
+
+        val spinner: Spinner = binding.medicineFormSpinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+                application,
+                R.array.form_array,
+                android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+            val form = detailsViewModel.formSelection.value
+            val spinnerPosition = adapter.getPosition(form)
+            spinner.setSelection(spinnerPosition, false)
+        }
+
+        spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        view: View?, position: Int, id: Long) {
+                // An item was selected. Null check for configuration change etc.
+                if (position >= 0) {
+                    val value = parent.getItemAtPosition(position).toString()
+                    detailsViewModel.setFormSelected(value)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
 
         val saveDosageAdapter = SaveDosageAdapter()
 

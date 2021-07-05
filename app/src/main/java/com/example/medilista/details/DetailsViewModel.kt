@@ -17,10 +17,7 @@ class DetailsViewModel(
 
     val name = MutableLiveData<String>()
 
-
     val strength = MutableLiveData<String>()
-
-    val form = MutableLiveData<String>()
 
     val alarm = MutableLiveData<Boolean>(false)
 
@@ -29,7 +26,6 @@ class DetailsViewModel(
     val dosageValueFromPicker = MutableLiveData<String>()
 
     val hours = MutableLiveData<Int>()
-
 
     val minutes = MutableLiveData<Int>()
 
@@ -45,10 +41,13 @@ class DetailsViewModel(
     val navigateToDetails: LiveData<Boolean>
         get() = _navigateToDetails
 
-
     private val dosageList = MutableLiveData<MutableList<Dosage>>()
     val list: LiveData<MutableList<Dosage>>
         get() = dosageList
+
+    private val _formSelection = MutableLiveData<String>()
+    val formSelection: LiveData<String>
+        get() = _formSelection
 
     var message = ""
 
@@ -129,7 +128,7 @@ class DetailsViewModel(
         viewModelScope.launch {
             val medName = name.value
             val medStrength = strength.value
-            val medForm = form.value
+            val medForm = _formSelection.value
             val medAlarm = alarm.value
             val medNeeded = onlyWhenNeeded.value
 
@@ -161,6 +160,7 @@ class DetailsViewModel(
     }
 
     fun onCancelButtonClicked() {
+        setEmptyValues()
         _navigateToMedicines.value = true
     }
 
@@ -180,9 +180,12 @@ class DetailsViewModel(
     fun setEmptyValues() {
         name.value = ""
         strength.value = ""
-        form.value = ""
         alarm.value = false
         onlyWhenNeeded.value = false
+        setFormSelected("tabletti")
     }
 
+    fun setFormSelected(formValueSelection: String) {
+        _formSelection.value = formValueSelection
+    }
 }

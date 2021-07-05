@@ -69,12 +69,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_medicine_strength" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_medicine_form"
-                style="@style/InputStyle"
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/medicine_form_spinner"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@={detailsViewModel.form}"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:prompt="@string/form_prompt"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_medicine_form" />
 
@@ -106,7 +107,7 @@
                 android:checked="@={detailsViewModel.alarm}"
                 android:text="@string/alarm_check"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_medicine_form" />
+                app:layout_constraintTop_toBottomOf="@+id/medicine_form_spinner" />
 
             <Button
                 android:id="@+id/save_medicine_button"
