@@ -121,6 +121,10 @@ class EditDosageDetailsViewModel(
 
     fun formatDosageToEdit(dosage: Dosage): String {
         val dosageText = combineAmountAndTimes(dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
-        return "Muokkaa annosta: $dosageText"
+        if (_selectedDosage.value!!.dosageId < 0) {
+            return "Lisää uusi annostus lääkkeelle"
+        } else {
+            return "Muokkaa annostusta: $dosageText"
+        }
     }
 }
