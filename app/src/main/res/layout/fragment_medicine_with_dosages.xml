@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/hint_medicine_name"
-                android:text="@={medicineWithDosagesViewModel.med.Medicine.medicineName}"
+                android:text="@{medicineWithDosagesViewModel.med.Medicine.medicineName}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_med_name" />
 
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/hint_medicine_strength"
-                android:text="@={medicineWithDosagesViewModel.med.Medicine.strength}"
+                android:text="@{medicineWithDosagesViewModel.med.Medicine.strength}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_med_strength" />
 
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
-                android:text="@={medicineWithDosagesViewModel.med.Medicine.form}"
+                android:text="@{medicineWithDosagesViewModel.med.Medicine.form}"
                 app:layout_constraintBottom_toBottomOf="@+id/current_form_text"
                 app:layout_constraintStart_toEndOf="@+id/current_form_text"
                 app:layout_constraintTop_toTopOf="@+id/current_form_text"
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:checked="@={medicineWithDosagesViewModel.med.Medicine.takenWhenNeeded}"
+                android:checked="@{medicineWithDosagesViewModel.med.Medicine.takenWhenNeeded}"
                 android:text="@string/taken_when_needed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_alarm" />
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:checked="@={medicineWithDosagesViewModel.med.Medicine.alarm}"
+                android:checked="@{medicineWithDosagesViewModel.med.Medicine.alarm}"
                 android:text="@string/alarm_check"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/med_form_spinner" />

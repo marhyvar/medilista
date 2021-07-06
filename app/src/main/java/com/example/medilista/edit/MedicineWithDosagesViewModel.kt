@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.medilista.database.Dosage
+import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
 import com.example.medilista.database.MedicineWithDosages
 import com.example.medilista.validateInputInMedicineDetails
@@ -105,16 +106,26 @@ class MedicineWithDosagesViewModel(
     fun saveMedicineChanges(name: String, strength: String, form: String, needed: Boolean, alarm: Boolean) {
         viewModelScope.launch {
             if (validateInputInMedicineDetails(name, strength, form)) {
+                val changedMedicine = Medicine(medicineName = name, strength = strength, form = form,
+                takenWhenNeeded = needed, alarm = alarm)
+
                 med.value?.let {
                     val medicine = med.value!!.Medicine
-                    medicine.medicineName = name
-                    medicine.strength = strength
-                    medicine.form = form
-                    medicine.takenWhenNeeded =needed
-                    medicine.alarm = alarm
-                    database.update(medicine)
-                    message = "Lääkkeen tietoja on päivitetty"
-                    _showMessageEvent.value = true
+                    val oldMedicine = Medicine(medicineName = medicine.medicineName, strength = medicine.strength, form = medicine.form,
+                            takenWhenNeeded = medicine.takenWhenNeeded, alarm = medicine.alarm)
+                    if (oldMedicine == changedMedicine) {
+                        message = "Et ole antanut uusia arvoja lääkkeelle"
+                        _showMessageEvent.value = true
+                    } else {
+                        medicine.medicineName = name
+                        medicine.strength = strength
+                        medicine.form = form
+                        medicine.takenWhenNeeded = needed
+                        medicine.alarm = alarm
+                        database.update(medicine)
+                        message = "Lääkkeen tietoja on päivitetty"
+                        _showMessageEvent.value = true
+                    }
                 }
             } else {
                 message = "Et voi jättää kenttiä tyhjäksi"
