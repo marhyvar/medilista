@@ -31,7 +31,9 @@
         android:label="DosageFragment" >
         <action
             android:id="@+id/action_dosageFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment"
+            app:popUpTo="@id/detailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/medicineWithDosagesFragment"
@@ -56,6 +58,8 @@
             app:argType="com.example.medilista.database.Dosage" />
         <action
             android:id="@+id/action_editDosageDetailsFragment_to_medicineWithDosagesFragment"
-            app:destination="@id/medicineWithDosagesFragment" />
+            app:destination="@id/medicineWithDosagesFragment"
+            app:popUpTo="@id/medicineWithDosagesFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
