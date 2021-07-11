@@ -33,6 +33,17 @@ class DetailsViewModel(
 
     val timeString = MutableLiveData<String>()
 
+    val validNameAndStrength = MediatorLiveData<Boolean>().apply {
+        addSource(name) { nameData ->
+            val strengthData = strength.value
+            this.value = validateData(nameData, strengthData)
+        }
+        addSource(strength) {strengthData ->
+            val nameData = name.value
+            this.value = validateData(nameData, strengthData)
+        }
+    }
+
     private val _navigateToDosage = MutableLiveData<Boolean>()
     val navigateToDosage: LiveData<Boolean>
         get() = _navigateToDosage
@@ -188,4 +199,13 @@ class DetailsViewModel(
     fun setFormSelected(formValueSelection: String) {
         _formSelection.value = formValueSelection
     }
+
+    fun checkInput(inputName: MutableLiveData<String>): Boolean {
+        val valid = validateString(inputName.value)
+        if (!valid) {
+            return false
+        }
+        return true
+    }
+
 }

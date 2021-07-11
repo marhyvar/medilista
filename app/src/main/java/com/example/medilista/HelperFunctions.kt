@@ -93,4 +93,14 @@ fun hasClockValueChanged(oldValue: Int?, newValue: Int?): Boolean {
     } else oldValue != newValue
 }
 
+fun validateString(string: String?): Boolean {
+    return string != null && string.isNotBlank()
+}
+
+fun validateData(name: String?, strength: String? ): Boolean {
+    val validName = validateString(name)
+    val validStrength = validateString(strength)
+    return validName && validStrength
+}
+
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

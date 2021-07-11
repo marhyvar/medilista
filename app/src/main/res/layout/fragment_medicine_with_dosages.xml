@@ -155,6 +155,7 @@
                 android:layout_marginTop="4dp"
                 android:onClick="@{() -> medicineWithDosagesViewModel.onSaveMedicineChangesClicked()}"
                 android:text="@string/save_edited_med_info"
+                android:enabled="@{medicineWithDosagesViewModel.isButtonActive}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_taken_when_needed" />
 

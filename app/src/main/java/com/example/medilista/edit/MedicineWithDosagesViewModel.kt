@@ -9,6 +9,7 @@ import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
 import com.example.medilista.database.MedicineWithDosages
 import com.example.medilista.validateInputInMedicineDetails
+import com.example.medilista.validateString
 import kotlinx.coroutines.launch
 
 class MedicineWithDosagesViewModel(
@@ -34,6 +35,10 @@ class MedicineWithDosagesViewModel(
 
     var message = ""
 
+    private val _isButtonActive = MutableLiveData<Boolean?>()
+    val isButtonActive: LiveData<Boolean?>
+        get() = _isButtonActive
+
     private val _saveMedicineEvent = MutableLiveData<Boolean>()
     val saveMedicineEvent: LiveData<Boolean>
         get() = _saveMedicineEvent
@@ -52,6 +57,7 @@ class MedicineWithDosagesViewModel(
 
     init {
         med = database.getMedicineWithDosages(medicineKey)
+        _isButtonActive.value = true
     }
 
     fun onReturnButtonClicked() {
@@ -137,5 +143,15 @@ class MedicineWithDosagesViewModel(
 
     fun setFormSelected(formValueSelection: String) {
         _formSelection.value = formValueSelection
+    }
+
+    fun checkInput(inputName: String?): Boolean {
+        val valid = validateString(inputName)
+        if (!valid) {
+            _isButtonActive.value = false
+            return false
+        }
+        _isButtonActive.value = true
+        return true
     }
 }

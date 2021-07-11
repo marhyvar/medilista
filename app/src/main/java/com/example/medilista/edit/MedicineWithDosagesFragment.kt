@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -138,6 +137,20 @@ class MedicineWithDosagesFragment: Fragment() {
         }
 
         })
+
+        binding.editMedName.doOnTextChanged { text, _, _, _ ->
+            val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
+            if (!valid) {
+                binding.editMedName.error = "Pakollinen tieto"
+            }
+        }
+
+        binding.editMedStrength.doOnTextChanged { text, _, _, _ ->
+            val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
+            if (!valid) {
+                binding.editMedStrength.error = "Pakollinen tieto"
+            }
+        }
 
         return binding.root
     }

@@ -1,7 +1,6 @@
 package com.example.medilista.details
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -16,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentDetailsBinding
-import com.example.medilista.medicines.DosageAdapter
 import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
@@ -117,6 +116,24 @@ class DetailsFragment : Fragment() {
                 detailsViewModel.doneShowingMessage()
             }
         })
+
+        binding.editMedicineName.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val valid = detailsViewModel.checkInput(detailsViewModel.name)
+                if (!valid) {
+                    binding.editMedicineName.error = "Pakollinen tieto"
+                }
+            }
+        }
+
+        binding.editMedicineStrength.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val valid = detailsViewModel.checkInput(detailsViewModel.strength)
+                if (!valid) {
+                    binding.editMedicineStrength.error = "Pakollinen tieto"
+                }
+            }
+        }
 
         return binding.root
     }
