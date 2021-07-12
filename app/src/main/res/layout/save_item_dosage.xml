@@ -17,15 +17,15 @@
 
         <TextView
             android:id="@+id/save_dosage_text"
+            style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="32dp"
-            app:save="@{savedosage}"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Määrä 1, klo 19:00"
-            style="@style/TextStyle" />
+            app:save="@{savedosage}"
+            tools:text="Määrä 1, klo 19:00" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
