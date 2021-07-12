@@ -56,10 +56,10 @@ class MedicineWithDosagesFragment: Fragment() {
         ArrayAdapter.createFromResource(
                 application,
                 R.array.form_array,
-                android.R.layout.simple_spinner_item
+                R.layout.spinner_selected_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinner.adapter = adapter
         }

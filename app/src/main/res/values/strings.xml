@@ -41,4 +41,5 @@
     <string name="medicines_pane">Lääkityslistanäkymä</string>
     <string name="form_prompt">Valitse lääkemuoto</string>
     <string name="to_dosage_edit">Lisää uusi annostus</string>
+    <string name="show_timepicker_new">Valitse uusi aika</string>
 </resources>
