@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.medilista.database.Dosage
 import com.example.medilista.databinding.SaveItemDosageBinding
+import com.example.medilista.edit.DosageListener
 
-class SaveDosageAdapter : ListAdapter<Dosage,
+class SaveDosageAdapter(val clickListenerDelete: DosageListenerDelete) : ListAdapter<Dosage,
         SaveDosageAdapter.ViewHolder>(DosageDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(clickListenerDelete, item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,7 +24,8 @@ class SaveDosageAdapter : ListAdapter<Dosage,
     class ViewHolder private constructor(val binding: SaveItemDosageBinding) : RecyclerView.ViewHolder(binding.root){
 
 
-        fun bind(item: Dosage) {
+        fun bind(clickListenerDelete: DosageListenerDelete, item: Dosage) {
+            binding.clickListenerDelete = clickListenerDelete
             binding.savedosage = item
             binding.executePendingBindings()
         }
@@ -46,4 +48,8 @@ class SaveDosageAdapter : ListAdapter<Dosage,
             return oldItem == newItem
         }
     }
+}
+
+class DosageListenerDelete(val clickListenerDelete: (dosage: Dosage) -> Unit) {
+    fun onClick(dosage: Dosage) = clickListenerDelete(dosage)
 }

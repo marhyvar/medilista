@@ -75,7 +75,9 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        val saveDosageAdapter = SaveDosageAdapter()
+        val saveDosageAdapter = SaveDosageAdapter(DosageListenerDelete { dosage ->
+            detailsViewModel.onDeleteDosageButtonClicked(dosage)
+        })
 
         binding.dosagesForSaving.adapter = saveDosageAdapter
 
