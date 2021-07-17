@@ -74,9 +74,6 @@ class DetailsViewModel(
     }
 
     fun removeDosageFromList(dosage: Dosage) {
-        Log.i("testi", dosageList.value!!.size.toString())
-        Log.i("testi", dosageList.value?.get(0)?.amount.toString())
-        //TODO FIX recyclerview not updating accordingly
         dosageList.value?.remove(dosage)
         dosageList.value = dosageList.value
 

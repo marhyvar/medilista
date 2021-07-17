@@ -83,7 +83,7 @@ class DetailsFragment : Fragment() {
 
         detailsViewModel.list.observe(viewLifecycleOwner, Observer {
             it?.let {
-                saveDosageAdapter.submitList(it)
+                saveDosageAdapter.submitList(it.toMutableList())
             }
         })
 
