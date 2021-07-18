@@ -2,19 +2,19 @@ package com.example.medilista.medicines
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.medilista.combineFormAmountAndTimes
 import com.example.medilista.database.Dosage
 import com.example.medilista.databinding.ListItemDosageBinding
 
-class DosageAdapter : ListAdapter<Dosage,
+class DosageAdapter(val medForm: String) : ListAdapter<Dosage,
         DosageAdapter.ViewHolder>(DosageDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(medForm, item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,8 +24,9 @@ class DosageAdapter : ListAdapter<Dosage,
     class ViewHolder private constructor(val binding: ListItemDosageBinding) : RecyclerView.ViewHolder(binding.root){
 
 
-        fun bind(item: Dosage) {
+        fun bind(medForm: String, item: Dosage) {
             binding.dosage = item
+            binding.dosagetext = combineFormAmountAndTimes(medForm, item.amount, item.timeValueHours, item.timeValueMinutes)
             binding.executePendingBindings()
         }
 

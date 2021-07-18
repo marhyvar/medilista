@@ -5,9 +5,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import com.example.medilista.combineFormAmountAndTimes
+import com.example.medilista.database.Dosage
 import com.example.medilista.database.MedicineDao
-import com.example.medilista.formatMedicines
 
 class MedicinesViewModel(
         val database: MedicineDao,
