@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/medicinesFragment"
         android:name="com.example.medilista.medicines.MedicinesFragment"
-        android:label="MedicinesFragment" >
+        android:label="@string/medicine_list" >
         <action
             android:id="@+id/action_medicinesFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.medilista.details.DetailsFragment"
-        android:label="DetailsFragment" >
+        android:label="@string/add_new_medicine" >
         <action
             android:id="@+id/action_detailsFragment_to_medicinesFragment"
             app:destination="@id/medicinesFragment" />
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/dosageFragment"
         android:name="com.example.medilista.details.DosageFragment"
-        android:label="DosageFragment" >
+        android:label="@string/set_dosage" >
         <action
             android:id="@+id/action_dosageFragment_to_detailsFragment"
             app:destination="@id/detailsFragment"
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/medicineWithDosagesFragment"
         android:name="com.example.medilista.edit.MedicineWithDosagesFragment"
-        android:label="MedicineWithDosagesFragment" >
+        android:label="@string/edit_medicine_info" >
         <argument
             android:name="medicineKey"
             app:argType="long" />
@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/editDosageDetailsFragment"
         android:name="com.example.medilista.edit.EditDosageDetailsFragment"
-        android:label="EditDosageDetailsFragment" >
+        android:label="@string/edit_dosage_info" >
         <argument
             android:name="dosage"
             app:argType="com.example.medilista.database.Dosage" />

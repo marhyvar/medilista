@@ -42,4 +42,9 @@
     <string name="form_prompt">Valitse lääkemuoto</string>
     <string name="to_dosage_edit">Lisää uusi annostus</string>
     <string name="show_timepicker_new">Valitse uusi aika</string>
+    <string name="medicine_list">Lääkityslista</string>
+    <string name="add_new_medicine">Lisää uusi lääke</string>
+    <string name="set_dosage">Annostus uudelle lääkkeelle</string>
+    <string name="edit_medicine_info">Lääkkeen tietojen muokkaus</string>
+    <string name="edit_dosage_info">Annostus</string>
 </resources>
