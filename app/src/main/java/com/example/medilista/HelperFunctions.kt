@@ -59,10 +59,29 @@ fun combineAmountAndTimes(amount: Double, hour: Int, min: Int): String {
 fun combineFormAmountAndTimes(form: String, amount: Double, hour: Int, min: Int): String {
     var minuteString = min.toString()
     val hourString = hour.toString()
+    var formattedForm = form
     if (min < 10) {
         minuteString = "0${min.toString()}"
     }
-    return "${amount.toString()} $form klo $hourString:$minuteString"
+    if (amount > 1 || amount < 1) {
+        formattedForm = pluralForm(form)
+    }
+    return "${amount.toString()} $formattedForm klo $hourString:$minuteString"
+}
+
+fun pluralForm(text: String): String {
+    return when (text) {
+        "tabletti"-> "tablettia"
+        "kapseli" -> "kapselia"
+        "annospussi" -> "annospussia"
+        "tippa" -> "tippaa"
+        "ml" -> "ml:aa"
+        "inhalaatio" -> "inhalaatiota"
+        "laastari" -> "laastaria"
+        "peräpuikko" -> "peräpuikkoa"
+        "IU" -> "IU:ta"
+        else -> "annosta"
+    }
 }
 
 fun validateInputInMedicineDetails(name: String?, strength: String?, form: String?): Boolean {
