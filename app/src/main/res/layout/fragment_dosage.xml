@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/edit_dosage_value"
             android:onValueChange="@{(picker,oldvalue,newvalue) -> dosageViewModel.onPickerValueChange(newvalue)}"
+            android:theme="@style/NumberPickerStyle"
             app:layout_constraintBottom_toTopOf="@+id/show_time_picker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
