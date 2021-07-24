@@ -12,8 +12,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".details.DetailsFragment"
-        android:accessibilityPaneTitle="@string/save_new_medicine_pane">
+        tools:context=".details.DetailsFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

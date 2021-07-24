@@ -12,8 +12,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".details.DosageFragment"
-        android:accessibilityPaneTitle="@string/save_new_dosage_pane">
+        tools:context=".details.DosageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
