@@ -53,20 +53,22 @@ fun combineAmountAndTimes(amount: Double, hour: Int, min: Int): String {
     if (min < 10) {
         minuteString = "0${min.toString()}"
     }
-    return "Määrä: ${amount.toString()}, klo $hourString:$minuteString"
+    val formattedAmount = amountToString(amount)
+    return "Määrä: $formattedAmount; aika: $hourString:$minuteString"
 }
 
 fun combineFormAmountAndTimes(form: String, amount: Double, hour: Int, min: Int): String {
     var minuteString = min.toString()
     val hourString = hour.toString()
     var formattedForm = form
+    val formattedAmount = amountToString(amount)
     if (min < 10) {
         minuteString = "0${min.toString()}"
     }
     if (amount > 1 || amount < 1) {
         formattedForm = pluralForm(form)
     }
-    return "${amount.toString()} $formattedForm klo $hourString:$minuteString"
+    return "$formattedAmount $formattedForm klo $hourString:$minuteString"
 }
 
 fun pluralForm(text: String): String {
@@ -82,6 +84,13 @@ fun pluralForm(text: String): String {
         "IU" -> "IU:ta"
         else -> "annosta"
     }
+}
+
+fun amountToString(number: Double): String {
+    var numberToFormat = number.toString()
+    numberToFormat = numberToFormat.replace(".0", "")
+    numberToFormat = numberToFormat.replace(".", ",")
+    return numberToFormat
 }
 
 fun validateInputInMedicineDetails(name: String?, strength: String?, form: String?): Boolean {
