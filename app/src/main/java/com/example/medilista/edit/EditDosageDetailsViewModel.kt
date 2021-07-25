@@ -34,8 +34,13 @@ class EditDosageDetailsViewModel(
     val navigateToEditMed: LiveData<Boolean>
         get() = _navigateToEditMed
 
+    private val _visible = MutableLiveData<Boolean>()
+    val visible: LiveData<Boolean>
+        get() = _visible
+
     init {
         _selectedDosage.value = dosage
+        _visible.value = dosage.dosageId >= 0
     }
 
     var message = ""
@@ -125,6 +130,15 @@ class EditDosageDetailsViewModel(
             return "Lisää uusi annostus lääkkeelle"
         } else {
             return "Muokkaa annostusta: $dosageText"
+        }
+    }
+
+    fun onDeleteDosageButtonClicked() {
+        viewModelScope.launch {
+            _selectedDosage.value?.let { database.deleteDosage(it) }
+            message = "Lääkkeen annostus on poistettu"
+            _showMessageEvent.value = true
+            _navigateToEditMed.value = true
         }
     }
 }

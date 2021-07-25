@@ -45,9 +45,7 @@ class MedicineWithDosagesFragment: Fragment() {
 
         binding.lifecycleOwner = this
 
-        val editDosageAdapter = EditDosageAdapter(DosageListener { dosage ->
-            medicineWithDosagesViewModel.onDeleteDosageButtonClicked(dosage)
-        }, DosageListenerEdit { dosage ->
+        val editDosageAdapter = EditDosageAdapter(DosageListenerEdit { dosage ->
             medicineWithDosagesViewModel.onEditDosageButtonClicked(dosage)
         })
 

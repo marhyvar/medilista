@@ -84,13 +84,6 @@ class MedicineWithDosagesViewModel(
         }
     }
 
-    fun onDeleteDosageButtonClicked(dosage: Dosage) {
-        viewModelScope.launch {
-            database.deleteDosage(dosage)
-            message = "Lääkkeen annostus on poistettu"
-            _showMessageEvent.value = true
-        }
-    }
 
     fun onEditDosageButtonClicked(dosage: Dosage) {
         _navigateToEditDosage.value = dosage

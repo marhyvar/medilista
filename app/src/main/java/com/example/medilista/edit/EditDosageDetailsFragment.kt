@@ -99,6 +99,12 @@ class EditDosageDetailsFragment : Fragment() {
             }
         })
 
+        editDosageDetailsViewModel.visible.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                binding.deleteDosageButton.visibility = View.VISIBLE
+            }
+        })
+
         return binding.root
     }
 }

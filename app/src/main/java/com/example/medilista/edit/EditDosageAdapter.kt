@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.medilista.database.Dosage
 import com.example.medilista.databinding.EditableItemDosageBinding
 
-class EditDosageAdapter(val clickListener: DosageListener,
-                        val clickListenerEdit: DosageListenerEdit) : ListAdapter<Dosage,
+class EditDosageAdapter(val clickListenerEdit: DosageListenerEdit) : ListAdapter<Dosage,
         EditDosageAdapter.ViewHolder>(DosageDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(clickListener, clickListenerEdit, item)
+        holder.bind(clickListenerEdit, item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,9 +23,8 @@ class EditDosageAdapter(val clickListener: DosageListener,
     class ViewHolder private constructor(val binding: EditableItemDosageBinding) : RecyclerView.ViewHolder(binding.root){
 
 
-        fun bind(clickListener: DosageListener, clickListenerEdit: DosageListenerEdit, item: Dosage) {
+        fun bind(clickListenerEdit: DosageListenerEdit, item: Dosage) {
             binding.editdosage = item
-            binding.clickListener = clickListener
             binding.clickListenerEdit = clickListenerEdit
             binding.executePendingBindings()
         }

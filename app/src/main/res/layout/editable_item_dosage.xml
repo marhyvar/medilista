@@ -9,56 +9,45 @@
             name="editdosage"
             type="com.example.medilista.database.Dosage" />
         <variable
-            name="clickListener"
-            type="com.example.medilista.edit.DosageListener" />
-        <variable
             name="clickListenerEdit"
             type="com.example.medilista.edit.DosageListenerEdit" />
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_dosage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/cardview_light_background"
+        app:cardMaxElevation="6dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        android:onClick="@{() -> clickListenerEdit.onClick(editdosage)}">
 
-        <TextView
-            android:id="@+id/edit_dosage_text_test"
-            style="@style/TextStyle"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:dosageDescription="@{editdosage}"
-            tools:text="Määrä 1, klo 19:00" />
+            >
 
-        <Button
-            android:id="@+id/delete_dosage_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:onClick="@{() -> clickListener.onClick(editdosage)}"
-            android:text="@string/delete"
-            app:deleteButtonContentDescription="@{editdosage}"
-            app:layout_constraintEnd_toStartOf="@+id/edit_dosage_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_dosage_text_test" />
+            <TextView
+                android:id="@+id/edit_dosage_text_test"
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:paddingTop="4dp"
+                android:padding="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:dosageDescription="@{editdosage}"
+                tools:text="Määrä 1, klo 19:00" />
 
-        <Button
-            android:id="@+id/edit_dosage_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:onClick="@{() -> clickListenerEdit.onClick(editdosage)}"
-            android:text="@string/edit_dosage"
-            app:editButtonContentDescription="@{editdosage}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/delete_dosage_button"
-            app:layout_constraintTop_toBottomOf="@+id/edit_dosage_text_test" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

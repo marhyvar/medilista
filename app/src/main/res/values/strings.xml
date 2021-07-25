@@ -30,6 +30,7 @@
     <string name="continue_button">Jatka</string>
     <string name="delete_medicine">Poista lääke</string>
     <string name="delete">Poista</string>
+    <string name="delete_dosage">Poista annostus</string>
     <string name="back">Takaisin</string>
     <string name="save_edited_med_info">Tallenna muutokset</string>
     <string name="edit_dosage">Muokkaa</string>
