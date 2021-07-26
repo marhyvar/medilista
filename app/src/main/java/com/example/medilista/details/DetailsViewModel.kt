@@ -108,6 +108,12 @@ class DetailsViewModel(
         dosageString.value = ""
     }
 
+    fun onCancelAddDosageButtonClicked() {
+        _navigateToDetails.value = true
+        timeString.value = ""
+        dosageString.value = ""
+    }
+
     fun onNavigatedToDetails() {
         _navigateToDetails.value = false
     }
@@ -200,6 +206,7 @@ class DetailsViewModel(
         alarm.value = false
         onlyWhenNeeded.value = false
         setFormSelected("tabletti")
+        clearDosageList()
     }
 
     fun setFormSelected(formValueSelection: String) {
