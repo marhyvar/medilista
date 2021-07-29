@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -137,16 +138,18 @@ class MedicineWithDosagesFragment: Fragment() {
         })
 
         binding.editMedName.doOnTextChanged { text, _, _, _ ->
+            binding.medicineLayout2.error = null
             val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
             if (!valid) {
-                binding.editMedName.error = "Pakollinen tieto"
+                binding.medicineLayout2.error = getString(R.string.mandatory)
             }
         }
 
         binding.editMedStrength.doOnTextChanged { text, _, _, _ ->
+            binding.strengthLayout2.error = null
             val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
             if (!valid) {
-                binding.editMedStrength.error = "Pakollinen tieto"
+                binding.strengthLayout2.error = getString(R.string.mandatory)
             }
         }
 
