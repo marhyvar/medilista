@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -123,18 +124,26 @@ class DetailsFragment : Fragment() {
             if (!hasFocus) {
                 val valid = detailsViewModel.checkInput(detailsViewModel.name)
                 if (!valid) {
-                    binding.editMedicineName.error = "Pakollinen tieto"
+                    binding.medicineLayout.error = getString(R.string.mandatory)
                 }
             }
+        }
+
+        binding.editMedicineName.doOnTextChanged { _, _, _, _ ->
+            binding.medicineLayout.error = null
         }
 
         binding.editMedicineStrength.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val valid = detailsViewModel.checkInput(detailsViewModel.strength)
                 if (!valid) {
-                    binding.editMedicineStrength.error = "Pakollinen tieto"
+                    binding.strengthLayout.error = getString(R.string.mandatory)
                 }
             }
+        }
+
+        binding.editMedicineStrength.doOnTextChanged { _, _, _, _ ->
+            binding.strengthLayout.error = null
         }
 
         return binding.root

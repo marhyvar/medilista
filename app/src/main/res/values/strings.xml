@@ -43,4 +43,5 @@
     <string name="set_dosage">Lisää annostus</string>
     <string name="edit_medicine_info">Lääkkeen tiedot</string>
     <string name="edit_dosage_info">Annostus</string>
+    <string name="mandatory">Pakollinen tieto</string>
 </resources>
