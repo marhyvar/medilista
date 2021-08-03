@@ -25,8 +25,8 @@ class AlarmReceiver: BroadcastReceiver() {
                 val intent = Intent(context, AlarmReceiver::class.java)
                 PendingIntent.getBroadcast(context, 0, intent, 0)
             }
-            val HOUR_TO_SHOW_PUSH = 14
-            val MIN_TO_SHOW_PUSH = 20
+            val HOUR_TO_SHOW_PUSH = 15
+            val MIN_TO_SHOW_PUSH = 37
             val calendar = GregorianCalendar.getInstance().apply {
                 if (get(Calendar.HOUR_OF_DAY) >= HOUR_TO_SHOW_PUSH) {
                     if (get(Calendar.MINUTE) >= MIN_TO_SHOW_PUSH) {
