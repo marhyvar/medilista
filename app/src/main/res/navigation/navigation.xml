@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/medicinesFragment">
 
     <fragment
         android:id="@+id/medicinesFragment"
         android:name="com.example.medilista.medicines.MedicinesFragment"
-        android:label="@string/medicine_list" >
+        android:label="@string/medicine_list"
+        tools:layout="@layout/fragment_medicines">
         <action
             android:id="@+id/action_medicinesFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
@@ -17,7 +19,8 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.medilista.details.DetailsFragment"
-        android:label="@string/add_new_medicine" >
+        android:label="@string/add_new_medicine"
+        tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_detailsFragment_to_medicinesFragment"
             app:destination="@id/medicinesFragment" />
@@ -28,7 +31,8 @@
     <fragment
         android:id="@+id/dosageFragment"
         android:name="com.example.medilista.details.DosageFragment"
-        android:label="@string/set_dosage" >
+        android:label="@string/set_dosage"
+        tools:layout="@layout/fragment_dosage">
         <action
             android:id="@+id/action_dosageFragment_to_detailsFragment"
             app:destination="@id/detailsFragment"
@@ -38,7 +42,8 @@
     <fragment
         android:id="@+id/medicineWithDosagesFragment"
         android:name="com.example.medilista.edit.MedicineWithDosagesFragment"
-        android:label="@string/edit_medicine_info" >
+        android:label="@string/edit_medicine_info"
+        tools:layout="@layout/fragment_medicine_with_dosages">
         <argument
             android:name="medicineKey"
             app:argType="long" />
@@ -52,7 +57,8 @@
     <fragment
         android:id="@+id/editDosageDetailsFragment"
         android:name="com.example.medilista.edit.EditDosageDetailsFragment"
-        android:label="@string/edit_dosage_info" >
+        android:label="@string/edit_dosage_info"
+        tools:layout="@layout/fragment_edit_dosage_details">
         <argument
             android:name="dosage"
             app:argType="com.example.medilista.database.Dosage" />
