@@ -1,6 +1,7 @@
 package com.example.medilista.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -117,6 +118,14 @@ class DetailsFragment : Fragment() {
                 ).show()
                 // Make sure the snackbar is shown once
                 detailsViewModel.doneShowingMessage()
+            }
+        })
+
+        detailsViewModel.setAlarm.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                Log.i("ööö", "got alarmId")
+                detailsViewModel.scheduleAlarms(application)
+                detailsViewModel.doneSettingAlarms()
             }
         })
 

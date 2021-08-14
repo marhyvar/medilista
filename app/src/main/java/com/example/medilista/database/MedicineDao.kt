@@ -38,6 +38,9 @@ interface MedicineDao {
     @Query("SELECT medicineId FROM medicine_table ORDER BY medicineId DESC LIMIT 1")
     suspend fun getInsertedMedicineId(): Long?
 
+    @Query("SELECT dosageId FROM dosage_table ORDER BY dosageId DESC LIMIT 1")
+    suspend fun getInsertedDosageId(): Long?
+
     @Insert
     suspend fun insertDosage(dosage: Dosage)
 
@@ -52,6 +55,9 @@ interface MedicineDao {
 
     @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")
     fun getDosagesOfMedicine(key: Long): LiveData<List<Dosage>>
+
+    @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")
+    fun getDosagesListOfMedicine(key: Long): List<Dosage>
 
     @Query("SELECT * FROM dosage_table")
     fun getDos(): LiveData<List<Dosage>>
