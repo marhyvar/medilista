@@ -18,6 +18,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.alarm.AlarmReceiver.Companion.cancelAlarmNotification
+import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
+import com.example.medilista.createNotificationText
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicineWithDosagesBinding
 import com.google.android.material.snackbar.Snackbar
@@ -148,6 +150,25 @@ class MedicineWithDosagesFragment: Fragment() {
                     Log.i("ööö", "hälytys peruutettu")
                 }
                 medicineWithDosagesViewModel.onAlarmsCancelled()
+            }
+        })
+
+        medicineWithDosagesViewModel.scheduleAlarms.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                val dosages = medicineWithDosagesViewModel.dos.value
+                val med = medicineWithDosagesViewModel.getMed().value?.Medicine
+                Log.i("ööö", "scheduleAlarms listan koko:")
+                Log.i("ööö", dosages?.size.toString())
+
+                dosages?.forEach { dosage ->
+                    med?.let {
+                        val message = createNotificationText(med.medicineName, med.strength, med.form,
+                                dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
+                        scheduleNotification(application, message, dosage.timeValueHours,
+                                dosage.timeValueMinutes, dosage.dosageId.toInt())
+                    }
+                }
+                medicineWithDosagesViewModel.onAlarmsScheduled()
             }
         })
 

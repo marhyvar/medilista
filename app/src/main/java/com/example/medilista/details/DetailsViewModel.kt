@@ -226,9 +226,8 @@ class DetailsViewModel(
         val medStrength = strength.value
         val medForm = _formSelection.value
         list.forEachIndexed { index, dosage ->
-            val text1 = combineNameAndStrength(medName!!, medStrength!!, medForm!!)
-            val text2 = combineFormAmountAndTimes(medForm, dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
-            val message = "$text1 $text2"
+            val message = createNotificationText(medName!!, medStrength!!, medForm!!, dosage.amount,
+                    dosage.timeValueHours, dosage.timeValueMinutes)
             scheduleNotification(context, message, dosage.timeValueHours, dosage.timeValueMinutes, idList[index])
         }
 

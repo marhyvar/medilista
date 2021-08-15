@@ -56,6 +56,10 @@ class MedicineWithDosagesViewModel(
     val cancelAlarms: LiveData<Boolean>
         get() = _cancelAlarms
 
+    private val _scheduleAlarms = MutableLiveData<Boolean>()
+    val scheduleAlarms: LiveData<Boolean>
+        get() = _scheduleAlarms
+
     fun doneShowingMessage() {
         _showMessageEvent.value = false
     }
@@ -78,9 +82,15 @@ class MedicineWithDosagesViewModel(
         _cancelAlarms.value = false
     }
 
+    fun onAlarmsScheduled() {
+        _scheduleAlarms.value = false
+    }
+
     fun onDeleteButtonClicked() {
         dos.value?.let {
-            _cancelAlarms.value = true
+            if (med.value?.Medicine?.alarm == true) {
+                _cancelAlarms.value = true
+            }
         }
         viewModelScope.launch {
             //med.value?.let { database.deleteMedicineData(medicineKey, it.Medicine) }
@@ -123,12 +133,23 @@ class MedicineWithDosagesViewModel(
 
                 med.value?.let {
                     val medicine = med.value!!.Medicine
+                    Log.i("ööö", "vanha alarm: ${medicine.alarm}.toString()")
+                    Log.i("ööö", "uusi alarm ${alarm.toString()}")
                     val oldMedicine = Medicine(medicineName = medicine.medicineName, strength = medicine.strength, form = medicine.form,
                             takenWhenNeeded = medicine.takenWhenNeeded, alarm = medicine.alarm)
                     if (oldMedicine == changedMedicine) {
                         message = "Et ole antanut uusia arvoja lääkkeelle"
                         _showMessageEvent.value = true
                     } else {
+                        if (alarm != medicine.alarm) {
+                            if (alarm) {
+                                _scheduleAlarms.value = true
+                                Log.i("ööö", "laitetaan hälytykset")
+                            } else {
+                                _cancelAlarms.value = true
+                                Log.i("ööö", "perutaan hälytykset")
+                            }
+                        }
                         medicine.medicineName = name
                         medicine.strength = strength
                         medicine.form = form

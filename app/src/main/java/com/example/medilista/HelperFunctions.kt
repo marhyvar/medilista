@@ -86,6 +86,12 @@ fun pluralForm(text: String): String {
     }
 }
 
+fun createNotificationText(
+        name: String, strength: String, form: String, amount: Double, hours: Int, minutes: Int): String {
+    val dosageText = combineFormAmountAndTimes(form, amount, hours, minutes)
+    return "$name $strength: ota $dosageText"
+}
+
 fun amountToString(number: Double): String {
     var numberToFormat = number.toString()
     numberToFormat = numberToFormat.replace(".0", "")
