@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.medilista.combineFormAmountAndTimes
@@ -64,6 +65,13 @@ class AlarmReceiver: BroadcastReceiver() {
                     )
 
             }
+        }
+
+        fun cancelAlarmNotification(context: Context, alarmId: Int) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, AlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0)
+            alarmManager.cancel(pendingIntent)
         }
     }
 

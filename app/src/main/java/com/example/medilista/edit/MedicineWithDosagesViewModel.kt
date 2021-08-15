@@ -1,5 +1,6 @@
 package com.example.medilista.edit
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -51,6 +52,10 @@ class MedicineWithDosagesViewModel(
     val formSelection: LiveData<String>
         get() = _formSelection
 
+    private val _cancelAlarms = MutableLiveData<Boolean>()
+    val cancelAlarms: LiveData<Boolean>
+        get() = _cancelAlarms
+
     fun doneShowingMessage() {
         _showMessageEvent.value = false
     }
@@ -68,7 +73,15 @@ class MedicineWithDosagesViewModel(
         _navigateToHome.value = false
 
     }
+
+    fun onAlarmsCancelled() {
+        _cancelAlarms.value = false
+    }
+
     fun onDeleteButtonClicked() {
+        dos.value?.let {
+            _cancelAlarms.value = true
+        }
         viewModelScope.launch {
             //med.value?.let { database.deleteMedicineData(medicineKey, it.Medicine) }
             med.value?.let {

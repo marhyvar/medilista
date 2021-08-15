@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
+import com.example.medilista.alarm.AlarmReceiver.Companion.cancelAlarmNotification
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicineWithDosagesBinding
 import com.google.android.material.snackbar.Snackbar
@@ -135,6 +136,19 @@ class MedicineWithDosagesFragment: Fragment() {
                 medicineWithDosagesViewModel.onNavigatedToEditDosage()
         }
 
+        })
+
+        medicineWithDosagesViewModel.cancelAlarms.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                val dosages = medicineWithDosagesViewModel.dos.value
+                Log.i("ööö", "cancelAlarms listan koko:")
+                Log.i("ööö", dosages?.size.toString())
+                dosages?.forEach { dosage ->
+                    cancelAlarmNotification(application, dosage.dosageId.toInt())
+                    Log.i("ööö", "hälytys peruutettu")
+                }
+                medicineWithDosagesViewModel.onAlarmsCancelled()
+            }
         })
 
         binding.editMedName.doOnTextChanged { text, _, _, _ ->
