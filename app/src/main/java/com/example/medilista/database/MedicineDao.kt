@@ -41,6 +41,9 @@ interface MedicineDao {
     @Query("SELECT dosageId FROM dosage_table ORDER BY dosageId DESC LIMIT 1")
     suspend fun getInsertedDosageId(): Long?
 
+    @Query("SELECT alarm FROM medicine_table WHERE medicineId = :key")
+    suspend fun getMedicineAlarm(key: Long): Boolean
+
     @Insert
     suspend fun insertDosage(dosage: Dosage)
 

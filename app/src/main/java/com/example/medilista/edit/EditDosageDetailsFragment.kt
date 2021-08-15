@@ -11,8 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
+import com.example.medilista.alarm.AlarmReceiver.Companion.cancelAlarmNotification
+import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
+import com.example.medilista.combineNameAndStrength
+import com.example.medilista.createNotificationText
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentEditDosageDetailsBinding
+import com.example.medilista.validateDosageListInput
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -76,6 +81,13 @@ class EditDosageDetailsFragment : Fragment() {
             }
         })
 
+        editDosageDetailsViewModel.getMedicine().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.medicineTitle.text =
+                    combineNameAndStrength(it.medicineName, it.strength, it.form)
+            }
+        })
+
         editDosageDetailsViewModel.navigateToEditMed.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
                 val medId = editDosageDetailsViewModel.selectedDosage.value?.dosageMedicineId ?: -1
@@ -102,6 +114,47 @@ class EditDosageDetailsFragment : Fragment() {
         editDosageDetailsViewModel.visible.observe(viewLifecycleOwner, Observer {
             if (it == true) {
                 binding.deleteDosageButton.visibility = View.VISIBLE
+            }
+        })
+
+        editDosageDetailsViewModel.cancelAlarm.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                val dosage = editDosageDetailsViewModel.selectedDosage.value
+                Log.i("ööö", "cancelAlarm")
+                if (dosage != null) {
+                    cancelAlarmNotification(application, dosage.dosageId.toInt())
+                    Log.i("ööö", dosage.dosageId.toString())
+                    Log.i("ööö", "hälytys peruutettu")
+                }
+                editDosageDetailsViewModel.onAlarmCancelled()
+            }
+        })
+
+        editDosageDetailsViewModel.scheduleAlarm.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                val dosage = editDosageDetailsViewModel.selectedDosage.value
+                val med = editDosageDetailsViewModel.getMedicine().value
+                Log.i("ööö", "scheduleAlarms")
+
+                if (dosage != null) {
+                    val amount = editDosageDetailsViewModel.dosageValueFromPicker.value?: ""
+                    val hours = editDosageDetailsViewModel.hours.value.toString()
+                    val minutes = editDosageDetailsViewModel.minutes.value.toString()
+                    val newId = editDosageDetailsViewModel.newId.value
+                    if (med != null) {
+                        if (validateDosageListInput(amount, hours, minutes)) {
+                            val message = createNotificationText(med.medicineName, med.strength, med.form,
+                                amount.toDouble(), hours.toInt(), minutes.toInt())
+                            if (newId != null) {
+                                scheduleNotification(application, message, hours.toInt(),
+                                    minutes.toInt(), newId)
+                                Log.i("ööö", "hälytys lisätty")
+                            }
+
+                        }
+                    }
+                }
+                editDosageDetailsViewModel.onAlarmScheduled()
             }
         })
 

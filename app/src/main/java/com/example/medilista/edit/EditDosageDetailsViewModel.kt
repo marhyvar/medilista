@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.medilista.*
 import com.example.medilista.database.Dosage
+import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,9 @@ class EditDosageDetailsViewModel(
     val selectedDosage: LiveData<Dosage>
         get() = _selectedDosage
 
+    private val medicine: LiveData<Medicine>
+    fun getMedicine() = medicine
+
     val hours = MutableLiveData<Int>()
 
     val minutes = MutableLiveData<Int>()
@@ -30,6 +34,8 @@ class EditDosageDetailsViewModel(
 
     val timeString = MutableLiveData<String>()
 
+    val newId = MutableLiveData<Int>()
+
     private val _navigateToEditMed = MutableLiveData<Boolean>()
     val navigateToEditMed: LiveData<Boolean>
         get() = _navigateToEditMed
@@ -38,9 +44,18 @@ class EditDosageDetailsViewModel(
     val visible: LiveData<Boolean>
         get() = _visible
 
+    private val _cancelAlarm = MutableLiveData<Boolean>()
+    val cancelAlarm: LiveData<Boolean>
+        get() = _cancelAlarm
+
+    private val _scheduleAlarm = MutableLiveData<Boolean>()
+    val scheduleAlarm: LiveData<Boolean>
+        get() = _scheduleAlarm
+
     init {
         _selectedDosage.value = dosage
         _visible.value = dosage.dosageId >= 0
+        medicine = database.get(dosage.dosageMedicineId)
     }
 
     var message = ""
@@ -79,6 +94,12 @@ class EditDosageDetailsViewModel(
                         val newDosage = Dosage(dosageMedicineId =medId, amount=amount.toDouble(),
                                 timeValueHours=valueHours.toInt(), timeValueMinutes=valueMinutes.toInt())
                         database.insertDosage(newDosage)
+                        newId.value = database.getInsertedDosageId()?.toInt()
+                        if (medicine.value?.alarm == true) {
+                            newId.value?.let {
+                                _scheduleAlarm.value = true
+                            }
+                        }
                         message = "Lääkkeelle on lisätty uusi annostus"
                         _showMessageEvent.value = true
                         _navigateToEditMed.value = true
@@ -135,10 +156,25 @@ class EditDosageDetailsViewModel(
 
     fun onDeleteDosageButtonClicked() {
         viewModelScope.launch {
-            _selectedDosage.value?.let { database.deleteDosage(it) }
+            _selectedDosage.value?.let {
+                val alarmState = database.getMedicineAlarm(it.dosageMedicineId)
+                if (alarmState) {
+                    Log.i("ööö", alarmState.toString())
+                    _cancelAlarm.value = true
+                }
+                database.deleteDosage(it)
+            }
             message = "Lääkkeen annostus on poistettu"
             _showMessageEvent.value = true
             _navigateToEditMed.value = true
         }
+    }
+
+    fun onAlarmCancelled() {
+        _cancelAlarm.value = false
+    }
+
+    fun onAlarmScheduled() {
+        _scheduleAlarm.value = false
     }
 }
