@@ -6,12 +6,8 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.util.Log
 import androidx.core.content.ContextCompat
-import com.example.medilista.combineFormAmountAndTimes
-import com.example.medilista.database.Dosage
-import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.sendNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,40 +26,38 @@ class AlarmReceiver: BroadcastReceiver() {
         fun scheduleNotification(context: Context, messageText: String, hour: Int, min: Int, idNumber: Int) {
             CoroutineScope(Dispatchers.Default).launch {
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                //val randomInteger = (1..12).shuffled().first()
-                //Log.i("ööö", randomInteger.toString())
 
-                    val alarmPendingIntent by lazy {
-                        val intent = Intent(context, AlarmReceiver::class.java)
-                        intent.putExtra(NOTIFICATION_MESSAGE, messageText)
-                        intent.putExtra(HOURS, hour)
-                        intent.putExtra(MINUTES, min)
-                        intent.putExtra(ID_NUMBER, idNumber.toInt())
-                        PendingIntent.getBroadcast(context, idNumber.toInt(), intent, 0)
-                    }
-                    Log.i("ööö", messageText)
-                    val HOUR_TO_SHOW_PUSH = hour
-                    val MIN_TO_SHOW_PUSH = min
-                    val calendar = GregorianCalendar.getInstance().apply {
-                        if (get(Calendar.HOUR_OF_DAY) >= HOUR_TO_SHOW_PUSH) {
-                            if (get(Calendar.MINUTE) >= MIN_TO_SHOW_PUSH) {
-                                add(Calendar.DAY_OF_MONTH, 1)
-                            }
-                        }
+                val alarmPendingIntent by lazy {
+                    val intent = Intent(context, AlarmReceiver::class.java)
+                    intent.putExtra(NOTIFICATION_MESSAGE, messageText)
+                    intent.putExtra(HOURS, hour.toString())
+                    intent.putExtra(MINUTES, min.toString())
+                    intent.putExtra(ID_NUMBER, idNumber.toString())
+                    PendingIntent.getBroadcast(context, idNumber, intent, 0)
+                }
+                Log.i("ööö", messageText)
+                val startTime = Calendar.getInstance()
+                startTime[Calendar.HOUR_OF_DAY] = hour
+                startTime[Calendar.MINUTE] = min
 
-                        set(Calendar.HOUR_OF_DAY, HOUR_TO_SHOW_PUSH)
-                        set(Calendar.MINUTE, MIN_TO_SHOW_PUSH)
-                        set(Calendar.SECOND, 0)
-                        set(Calendar.MILLISECOND, 0)
-                    }
+                val now = Calendar.getInstance()
 
-                    alarmManager.setExact(
-                            AlarmManager.RTC_WAKEUP,
-                            calendar.timeInMillis,
-                            //AlarmManager.INTERVAL_DAY,
-                            alarmPendingIntent
-                    )
+                val alarmTime = if (now.before(startTime)) {
+                    // set alarm for today
+                    Log.i("ööö", "tänään")
+                    startTime.timeInMillis
+                } else {
+                    // set alarm for tomorrow
+                    Log.i("ööö", "huomenna")
+                    startTime.add(Calendar.DATE, 1)
+                    startTime.timeInMillis
+                }
 
+                alarmManager.setExact(
+                        AlarmManager.RTC_WAKEUP,
+                        alarmTime,
+                        alarmPendingIntent
+                )
             }
         }
 
@@ -85,6 +79,10 @@ class AlarmReceiver: BroadcastReceiver() {
         val hours = intent.getStringExtra(HOURS)?.toInt()
         val minutes = intent.getStringExtra(MINUTES)?.toInt()
         val number = intent.getStringExtra(ID_NUMBER)?.toInt()
+        Log.i("ööö", message.toString())
+        Log.i("ööö", hours.toString())
+        Log.i("ööö", minutes.toString())
+        Log.i("ööö", number.toString())
 
         try {
 
@@ -100,6 +98,7 @@ class AlarmReceiver: BroadcastReceiver() {
         }
         finally {
             // schedule repeating alarm for next day
+            Log.i("ööö", "finally block")
             if (message != null) {
                 if (hours != null) {
                     if (minutes != null) {
@@ -112,3 +111,6 @@ class AlarmReceiver: BroadcastReceiver() {
         }
     }
 }
+
+//Ivan Morgun https://en.proft.me/2017/05/7/scheduling-operations-alarmmanager-android/
+// Desmond Lua https://code.luasoftware.com/tutorials/android/android-daily-repeating-alarm-at-specific-time-with-alarmmanager/
