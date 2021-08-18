@@ -49,7 +49,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             applicationContext.getString(R.string.med_notification_channel_id)
     )
 
-            .setSmallIcon(R.drawable.baseline_delete_forever_24)
+            .setSmallIcon(R.drawable.notifications)
             .setContentTitle(applicationContext
                     .getString(R.string.notification_title))
             .setContentText(messageBody)
