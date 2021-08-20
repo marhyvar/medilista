@@ -28,14 +28,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     )
 
 
-    val notificationImage = BitmapFactory.decodeResource(
-            applicationContext.resources,
-            R.drawable.baseline_delete_forever_24
-    )
-    val bigPicStyle = NotificationCompat.BigPictureStyle()
-            .bigPicture(notificationImage)
-            .bigLargeIcon(null)
-
     //val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
     //val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
     //    applicationContext,
@@ -56,9 +48,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
 
             .setContentIntent(contentPendingIntent)
             .setAutoCancel(true)
-
-            .setStyle(bigPicStyle)
-            .setLargeIcon(notificationImage)
 
             //.addAction(
             //    R.drawable.baseline_delete_forever_24,

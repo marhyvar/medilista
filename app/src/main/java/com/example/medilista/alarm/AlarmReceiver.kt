@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.medilista.sendNotification
@@ -53,11 +54,25 @@ class AlarmReceiver: BroadcastReceiver() {
                     startTime.timeInMillis
                 }
 
-                alarmManager.setExact(
-                        AlarmManager.RTC_WAKEUP,
-                        alarmTime,
-                        alarmPendingIntent
-                )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    alarmManager.setExactAndAllowWhileIdle(
+                            AlarmManager.RTC_WAKEUP,
+                            alarmTime,
+                            alarmPendingIntent
+                    )
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    alarmManager.setExact(
+                            AlarmManager.RTC_WAKEUP,
+                            alarmTime,
+                            alarmPendingIntent
+                    )
+                } else {
+                    alarmManager.set(
+                            AlarmManager.RTC_WAKEUP,
+                            alarmTime,
+                            alarmPendingIntent
+                    )
+                }
             }
         }
 
