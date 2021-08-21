@@ -9,6 +9,8 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.example.medilista.createNotificationText
+import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.sendNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -81,6 +83,28 @@ class AlarmReceiver: BroadcastReceiver() {
             val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0)
             alarmManager.cancel(pendingIntent)
+        }
+
+        fun scheduleAllAlarmNotifications(context: Context) {
+            CoroutineScope(Dispatchers.Default).launch {
+                Log.i("ööö", "scheduleAllAlarmNotifications")
+                val dataSource = MedicineDatabase.getInstance(context).medicineDao
+                val medicines = dataSource.getAllMedicinesList()
+                Log.i("ööö", medicines.size.toString())
+                medicines.forEach { medicine ->
+                    val med = medicine.Medicine
+                    if (med.alarm) {
+                        medicine.dosages.forEach { dos ->
+                            val text = createNotificationText(
+                                    med.medicineName, med.strength, med.form,
+                                    dos.amount, dos.timeValueHours, dos.timeValueMinutes)
+
+                            scheduleNotification(context, text, dos.timeValueHours,
+                                    dos.timeValueMinutes, dos.dosageId.toInt())
+                        }
+                    }
+                }
+            }
         }
     }
 

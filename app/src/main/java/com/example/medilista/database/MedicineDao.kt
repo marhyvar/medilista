@@ -32,6 +32,10 @@ interface MedicineDao {
     fun getAllMedicines(): LiveData<List<MedicineWithDosages>>
 
     @Transaction
+    @Query("SELECT * FROM medicine_table ORDER BY medicine_name")
+    fun getAllMedicinesList(): List<MedicineWithDosages>
+
+    @Transaction
     @Query("SELECT * FROM medicine_table WHERE medicineId = :key")
     fun getMedicineWithDosages(key: Long): LiveData<MedicineWithDosages>
 

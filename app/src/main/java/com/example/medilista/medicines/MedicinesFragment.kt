@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.medilista.R
-//import com.example.medilista.alarm.AlarmReceiver.Companion.schedulePushNotifications
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicinesBinding
 
@@ -37,7 +36,6 @@ class MedicinesFragment : Fragment() {
         val viewModelFactory = MedicinesViewModelFactory(dataSource, application)
 
         createNotificationChannel(getString(R.string.med_notification_channel_id), getString(R.string.med_notification_channel_name))
-        //schedulePushNotifications(application)
 
         val medicinesViewModel =
                 ViewModelProvider(
