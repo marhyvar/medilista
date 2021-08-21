@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navController = this.findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
-        scheduleAllAlarmNotifications(application)
+        //scheduleAllAlarmNotifications(application)
     }
 
     override fun onSupportNavigateUp(): Boolean {

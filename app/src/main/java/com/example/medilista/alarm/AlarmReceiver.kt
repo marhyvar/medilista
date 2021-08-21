@@ -3,6 +3,7 @@ package com.example.medilista.alarm
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -36,9 +37,9 @@ class AlarmReceiver: BroadcastReceiver() {
                     intent.putExtra(HOURS, hour.toString())
                     intent.putExtra(MINUTES, min.toString())
                     intent.putExtra(ID_NUMBER, idNumber.toString())
-                    PendingIntent.getBroadcast(context, idNumber, intent, 0)
+                    PendingIntent.getBroadcast(context, idNumber, intent, FLAG_UPDATE_CURRENT)
                 }
-                Log.i("ööö", messageText)
+                Log.i("ööö", "scheduleNotification got: $messageText")
                 val startTime = Calendar.getInstance()
                 startTime[Calendar.HOUR_OF_DAY] = hour
                 startTime[Calendar.MINUTE] = min
@@ -81,8 +82,9 @@ class AlarmReceiver: BroadcastReceiver() {
         fun cancelAlarmNotification(context: Context, alarmId: Int) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, AlarmReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0)
+            val pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, FLAG_UPDATE_CURRENT)
             alarmManager.cancel(pendingIntent)
+            Log.i("ööö", "cancelAlarmNotification done")
         }
 
         fun scheduleAllAlarmNotifications(context: Context) {

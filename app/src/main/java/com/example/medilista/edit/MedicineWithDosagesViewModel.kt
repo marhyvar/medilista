@@ -1,10 +1,10 @@
 package com.example.medilista.edit
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.medilista.alarm.AlarmReceiver
+import com.example.medilista.createNotificationText
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class MedicineWithDosagesViewModel(
         private val medicineKey: Long = 0L,
-        dataSource: MedicineDao) : ViewModel() {
+        dataSource: MedicineDao, application: Application) : AndroidViewModel(application) {
 
     val database = dataSource
 
@@ -52,14 +52,6 @@ class MedicineWithDosagesViewModel(
     val formSelection: LiveData<String>
         get() = _formSelection
 
-    private val _cancelAlarms = MutableLiveData<Boolean>()
-    val cancelAlarms: LiveData<Boolean>
-        get() = _cancelAlarms
-
-    private val _scheduleAlarms = MutableLiveData<Boolean>()
-    val scheduleAlarms: LiveData<Boolean>
-        get() = _scheduleAlarms
-
     fun doneShowingMessage() {
         _showMessageEvent.value = false
     }
@@ -78,18 +70,10 @@ class MedicineWithDosagesViewModel(
 
     }
 
-    fun onAlarmsCancelled() {
-        _cancelAlarms.value = false
-    }
-
-    fun onAlarmsScheduled() {
-        _scheduleAlarms.value = false
-    }
-
     fun onDeleteButtonClicked() {
         dos.value?.let {
             if (med.value?.Medicine?.alarm == true) {
-                _cancelAlarms.value = true
+                cancelAlarms()
             }
         }
         viewModelScope.launch {
@@ -143,10 +127,10 @@ class MedicineWithDosagesViewModel(
                     } else {
                         if (alarm != medicine.alarm) {
                             if (alarm) {
-                                _scheduleAlarms.value = true
+                                scheduleAlarms()
                                 Log.i("ööö", "laitetaan hälytykset")
                             } else {
-                                _cancelAlarms.value = true
+                                cancelAlarms()
                                 Log.i("ööö", "perutaan hälytykset")
                             }
                         }
@@ -180,5 +164,31 @@ class MedicineWithDosagesViewModel(
         }
         _isButtonActive.value = true
         return true
+    }
+
+    fun scheduleAlarms() {
+        val dosages = dos.value
+        val med = med.value?.Medicine
+        Log.i("ööö", "scheduleAlarms listan koko:")
+        Log.i("ööö", dosages?.size.toString())
+
+        dosages?.forEach { dosage ->
+            med?.let {
+                val message = createNotificationText(med.medicineName, med.strength, med.form,
+                        dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
+                AlarmReceiver.scheduleNotification(getApplication(), message, dosage.timeValueHours,
+                        dosage.timeValueMinutes, dosage.dosageId.toInt())
+            }
+        }
+    }
+
+    fun cancelAlarms() {
+        val dosages = dos.value
+        Log.i("ööö", "cancelAlarms listan koko:")
+        Log.i("ööö", dosages?.size.toString())
+        dosages?.forEach { dosage ->
+            AlarmReceiver.cancelAlarmNotification(getApplication(), dosage.dosageId.toInt())
+            Log.i("ööö", "hälytys peruutettu")
+        }
     }
 }

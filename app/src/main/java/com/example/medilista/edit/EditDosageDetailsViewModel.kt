@@ -1,11 +1,12 @@
 package com.example.medilista.edit
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.medilista.*
+import com.example.medilista.alarm.AlarmReceiver
+import com.example.medilista.alarm.AlarmReceiver.Companion.cancelAlarmNotification
+import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class EditDosageDetailsViewModel(
         dosage: Dosage,
-        dataSource: MedicineDao) : ViewModel() {
+        dataSource: MedicineDao, application: Application) : AndroidViewModel(application) {
 
     val database = dataSource
 
@@ -43,14 +44,6 @@ class EditDosageDetailsViewModel(
     private val _visible = MutableLiveData<Boolean>()
     val visible: LiveData<Boolean>
         get() = _visible
-
-    private val _cancelAlarm = MutableLiveData<Boolean>()
-    val cancelAlarm: LiveData<Boolean>
-        get() = _cancelAlarm
-
-    private val _scheduleAlarm = MutableLiveData<Boolean>()
-    val scheduleAlarm: LiveData<Boolean>
-        get() = _scheduleAlarm
 
     init {
         _selectedDosage.value = dosage
@@ -97,7 +90,7 @@ class EditDosageDetailsViewModel(
                         newId.value = database.getInsertedDosageId()?.toInt()
                         if (medicine.value?.alarm == true) {
                             newId.value?.let {
-                                _scheduleAlarm.value = true
+                                scheduleAlarm()
                             }
                         }
                         message = "Lääkkeelle on lisätty uusi annostus"
@@ -124,6 +117,9 @@ class EditDosageDetailsViewModel(
                     Log.i("testi", edit.toString())
                     if (edit) {
                         database.updateDosage(_selectedDosage.value!!)
+                        if (medicine.value?.alarm == true) {
+                            editAlarm(_selectedDosage.value!!)
+                        }
                         message = "Annostuksen tietoja on muokattu"
                         _showMessageEvent.value = true
                         _navigateToEditMed.value = true
@@ -147,10 +143,10 @@ class EditDosageDetailsViewModel(
 
     fun formatDosageToEdit(dosage: Dosage): String {
         val dosageText = combineAmountAndTimes(dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
-        if (_selectedDosage.value!!.dosageId < 0) {
-            return "Lisää uusi annostus lääkkeelle"
+        return if (_selectedDosage.value!!.dosageId < 0) {
+            "Lisää uusi annostus lääkkeelle"
         } else {
-            return "Muokkaa annostusta: $dosageText"
+            "Muokkaa annostusta: $dosageText"
         }
     }
 
@@ -160,7 +156,7 @@ class EditDosageDetailsViewModel(
                 val alarmState = database.getMedicineAlarm(it.dosageMedicineId)
                 if (alarmState) {
                     Log.i("ööö", alarmState.toString())
-                    _cancelAlarm.value = true
+                    cancelAlarm()
                 }
                 database.deleteDosage(it)
             }
@@ -170,11 +166,51 @@ class EditDosageDetailsViewModel(
         }
     }
 
-    fun onAlarmCancelled() {
-        _cancelAlarm.value = false
+    private fun cancelAlarm() {
+        val dosage = _selectedDosage.value
+        Log.i("ööö", "cancelAlarm")
+        if (dosage != null) {
+            cancelAlarmNotification(getApplication(), dosage.dosageId.toInt())
+            Log.i("ööö", dosage.dosageId.toString())
+            Log.i("ööö", "hälytys peruutettu")
+        }
     }
 
-    fun onAlarmScheduled() {
-        _scheduleAlarm.value = false
+    private fun scheduleAlarm() {
+        val dosage = _selectedDosage.value
+        val med = medicine.value
+        Log.i("ööö", "scheduleAlarms")
+
+        if (dosage != null) {
+            val amount = dosageValueFromPicker.value?: ""
+            val hours = hours.value.toString()
+            val minutes = minutes.value.toString()
+            val newId = newId.value
+            if (med != null) {
+                if (validateDosageListInput(amount, hours, minutes)) {
+                    val message = createNotificationText(med.medicineName, med.strength, med.form,
+                            amount.toDouble(), hours.toInt(), minutes.toInt())
+                    if (newId != null) {
+                        scheduleNotification(getApplication(), message, hours.toInt(),
+                                minutes.toInt(), newId)
+                        Log.i("ööö", "hälytys lisätty")
+                    }
+
+                }
+            }
+        }
+    }
+
+    private fun editAlarm(editedDos: Dosage) {
+        val med = medicine.value
+        val message = med?.let {
+            createNotificationText(it.medicineName, it.strength, it.form,
+                    editedDos.amount, editedDos.timeValueHours, editedDos.timeValueMinutes)
+        }
+        Log.i("ööö", "Edited text: $message")
+        if (message != null) {
+            scheduleNotification(getApplication(), message, editedDos.timeValueHours,
+                    editedDos.timeValueMinutes, editedDos.dosageId.toInt())
+        }
     }
 }

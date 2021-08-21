@@ -38,7 +38,7 @@ class MedicineWithDosagesFragment: Fragment() {
 
         val dataSource = MedicineDatabase.getInstance(application).medicineDao
 
-        val viewModelFactory = MedicineWithDosagesViewModelFactory(arguments.medicineKey, dataSource)
+        val viewModelFactory = MedicineWithDosagesViewModelFactory(arguments.medicineKey, dataSource, application)
 
         //don´t use this: val medicineWithDosagesViewModel: MedicineWithDosagesViewModel by activityViewModels { viewModelFactory }
         val medicineWithDosagesViewModel =
@@ -138,38 +138,6 @@ class MedicineWithDosagesFragment: Fragment() {
                 medicineWithDosagesViewModel.onNavigatedToEditDosage()
         }
 
-        })
-
-        medicineWithDosagesViewModel.cancelAlarms.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                val dosages = medicineWithDosagesViewModel.dos.value
-                Log.i("ööö", "cancelAlarms listan koko:")
-                Log.i("ööö", dosages?.size.toString())
-                dosages?.forEach { dosage ->
-                    cancelAlarmNotification(application, dosage.dosageId.toInt())
-                    Log.i("ööö", "hälytys peruutettu")
-                }
-                medicineWithDosagesViewModel.onAlarmsCancelled()
-            }
-        })
-
-        medicineWithDosagesViewModel.scheduleAlarms.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                val dosages = medicineWithDosagesViewModel.dos.value
-                val med = medicineWithDosagesViewModel.getMed().value?.Medicine
-                Log.i("ööö", "scheduleAlarms listan koko:")
-                Log.i("ööö", dosages?.size.toString())
-
-                dosages?.forEach { dosage ->
-                    med?.let {
-                        val message = createNotificationText(med.medicineName, med.strength, med.form,
-                                dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
-                        scheduleNotification(application, message, dosage.timeValueHours,
-                                dosage.timeValueMinutes, dosage.dosageId.toInt())
-                    }
-                }
-                medicineWithDosagesViewModel.onAlarmsScheduled()
-            }
         })
 
         binding.editMedName.doOnTextChanged { text, _, _, _ ->
