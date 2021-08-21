@@ -137,7 +137,7 @@ class MedicineWithDosagesViewModel(
                         } else if (medicine.alarm) {
                             scheduleAlarms(changedMedicine)
                         }
-                        
+
                         medicine.medicineName = name
                         medicine.strength = strength
                         medicine.form = form

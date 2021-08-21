@@ -33,7 +33,7 @@ class DetailsFragment : Fragment() {
 
         val dataSource = MedicineDatabase.getInstance(application).medicineDao
 
-        val viewModelFactory = DetailsViewModelFactory(dataSource)
+        val viewModelFactory = DetailsViewModelFactory(dataSource, application)
 
         //val detailsViewModel =
          //       ViewModelProvider(
@@ -118,14 +118,6 @@ class DetailsFragment : Fragment() {
                 ).show()
                 // Make sure the snackbar is shown once
                 detailsViewModel.doneShowingMessage()
-            }
-        })
-
-        detailsViewModel.setAlarm.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
-                Log.i("ööö", "got alarmId")
-                detailsViewModel.scheduleAlarms(application)
-                detailsViewModel.doneSettingAlarms()
             }
         })
 

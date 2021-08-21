@@ -1,5 +1,6 @@
 package com.example.medilista.details
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
 import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
 
 class DetailsViewModel(
-        val database: MedicineDao) : ViewModel() {
+        val database: MedicineDao, application: Application) : AndroidViewModel(application) {
 
     private val _navigateToMedicines = MutableLiveData<Boolean?>()
     val navigateToMedicines: LiveData<Boolean?>
@@ -62,9 +63,6 @@ class DetailsViewModel(
     val formSelection: LiveData<String>
         get() = _formSelection
 
-    private val _setAlarm = MutableLiveData<Boolean>()
-    val setAlarm: LiveData<Boolean>
-        get() = _setAlarm
 
     val idList = mutableListOf<Int>()
 
@@ -177,7 +175,7 @@ class DetailsViewModel(
                         insertDosagesForMedicineFromList(id, medAlarm)
                     }
                     if (medAlarm) {
-                        _setAlarm.value = true
+                        scheduleAlarms()
                     }
                 }
 
@@ -202,10 +200,9 @@ class DetailsViewModel(
         val list = dosageList.value ?: arrayListOf()
         Log.i("database", list.get(0).amount.toString())
         list.forEach { item ->
-            val dosage = item
-            val newDosage = Dosage(dosageMedicineId = id, amount = dosage.amount,
-                    timeValueHours = dosage.timeValueHours,
-                    timeValueMinutes = dosage.timeValueMinutes)
+            val newDosage = Dosage(dosageMedicineId = id, amount = item.amount,
+                    timeValueHours = item.timeValueHours,
+                    timeValueMinutes = item.timeValueMinutes)
             database.insertDosage(newDosage)
             if (alarm) {
                 val idInserted = database.getInsertedDosageId()
@@ -219,7 +216,7 @@ class DetailsViewModel(
     }
 
 
-    fun scheduleAlarms(context: Context) {
+    fun scheduleAlarms() {
         Log.i("ööö", "mentiin scheduleAlarms")
         val list = dosageList.value ?: arrayListOf()
         val medName = name.value
@@ -228,13 +225,9 @@ class DetailsViewModel(
         list.forEachIndexed { index, dosage ->
             val message = createNotificationText(medName!!, medStrength!!, medForm!!, dosage.amount,
                     dosage.timeValueHours, dosage.timeValueMinutes)
-            scheduleNotification(context, message, dosage.timeValueHours, dosage.timeValueMinutes, idList[index])
+            scheduleNotification(getApplication(), message, dosage.timeValueHours, dosage.timeValueMinutes, idList[index])
         }
 
-    }
-
-    fun doneSettingAlarms() {
-        _setAlarm.value = false
     }
 
     fun setEmptyValues() {
