@@ -117,23 +117,27 @@ class MedicineWithDosagesViewModel(
 
                 med.value?.let {
                     val medicine = med.value!!.Medicine
-                    Log.i("ööö", "vanha alarm: ${medicine.alarm}.toString()")
-                    Log.i("ööö", "uusi alarm ${alarm.toString()}")
+                    Log.i("ööö", "vanha alarm: ${medicine.alarm}")
+                    Log.i("ööö", "uusi alarm $alarm")
                     val oldMedicine = Medicine(medicineName = medicine.medicineName, strength = medicine.strength, form = medicine.form,
                             takenWhenNeeded = medicine.takenWhenNeeded, alarm = medicine.alarm)
                     if (oldMedicine == changedMedicine) {
                         message = "Et ole antanut uusia arvoja lääkkeelle"
                         _showMessageEvent.value = true
                     } else {
+
                         if (alarm != medicine.alarm) {
                             if (alarm) {
-                                scheduleAlarms()
+                                scheduleAlarms(changedMedicine)
                                 Log.i("ööö", "laitetaan hälytykset")
                             } else {
                                 cancelAlarms()
                                 Log.i("ööö", "perutaan hälytykset")
                             }
+                        } else if (medicine.alarm) {
+                            scheduleAlarms(changedMedicine)
                         }
+                        
                         medicine.medicineName = name
                         medicine.strength = strength
                         medicine.form = form
@@ -166,7 +170,7 @@ class MedicineWithDosagesViewModel(
         return true
     }
 
-    fun scheduleAlarms() {
+    private fun scheduleAlarms(changedMed: Medicine) {
         val dosages = dos.value
         val med = med.value?.Medicine
         Log.i("ööö", "scheduleAlarms listan koko:")
@@ -174,7 +178,7 @@ class MedicineWithDosagesViewModel(
 
         dosages?.forEach { dosage ->
             med?.let {
-                val message = createNotificationText(med.medicineName, med.strength, med.form,
+                val message = createNotificationText(changedMed.medicineName, changedMed.strength, changedMed.form,
                         dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
                 AlarmReceiver.scheduleNotification(getApplication(), message, dosage.timeValueHours,
                         dosage.timeValueMinutes, dosage.dosageId.toInt())
