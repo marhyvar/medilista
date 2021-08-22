@@ -47,6 +47,17 @@ class DetailsViewModel(
         }
     }
 
+    val validTimeAndAmountString = MediatorLiveData<Boolean>().apply {
+        addSource(dosageString) { dosageData ->
+            val timeData = timeString.value
+            this.value = validateData(dosageData, timeData)
+        }
+        addSource(timeString) {strengthData ->
+            val dosageData = dosageString.value
+            this.value = validateData(dosageData, strengthData)
+        }
+    }
+
     private val _navigateToDosage = MutableLiveData<Boolean>()
     val navigateToDosage: LiveData<Boolean>
         get() = _navigateToDosage
