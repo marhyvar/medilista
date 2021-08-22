@@ -61,10 +61,6 @@ class MedicineWithDosagesViewModel(
         _isButtonActive.value = true
     }
 
-    fun onReturnButtonClicked() {
-        _navigateToHome.value = true
-    }
-
     fun onNavigatedToHome() {
         _navigateToHome.value = false
 
@@ -186,7 +182,7 @@ class MedicineWithDosagesViewModel(
         }
     }
 
-    fun cancelAlarms() {
+    private fun cancelAlarms() {
         val dosages = dos.value
         Log.i("ööö", "cancelAlarms listan koko:")
         Log.i("ööö", dosages?.size.toString())
