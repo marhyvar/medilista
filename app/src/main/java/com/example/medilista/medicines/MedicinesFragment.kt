@@ -1,12 +1,15 @@
 package com.example.medilista.medicines
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -31,6 +34,8 @@ class MedicinesFragment : Fragment() {
         val dataSource = MedicineDatabase.getInstance(application).medicineDao
 
         val viewModelFactory = MedicinesViewModelFactory(dataSource, application)
+
+        createNotificationChannel(getString(R.string.med_notification_channel_id), getString(R.string.med_notification_channel_name))
 
         val medicinesViewModel =
                 ViewModelProvider(
@@ -71,5 +76,29 @@ class MedicinesFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun createNotificationChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+                .apply {
+                    setShowBadge(false)
+                }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.med_notification_channel_description)
+
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
+        }
     }
 }

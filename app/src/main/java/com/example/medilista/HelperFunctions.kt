@@ -53,7 +53,50 @@ fun combineAmountAndTimes(amount: Double, hour: Int, min: Int): String {
     if (min < 10) {
         minuteString = "0${min.toString()}"
     }
-    return "Määrä: ${amount.toString()}, klo $hourString:$minuteString"
+    val formattedAmount = amountToString(amount)
+    return "määrä: $formattedAmount; aika: $hourString:$minuteString"
+}
+
+fun combineFormAmountAndTimes(form: String, amount: Double, hour: Int, min: Int): String {
+    var minuteString = min.toString()
+    val hourString = hour.toString()
+    var formattedForm = form
+    val formattedAmount = amountToString(amount)
+    if (min < 10) {
+        minuteString = "0${min.toString()}"
+    }
+    if (amount > 1 || amount < 1) {
+        formattedForm = pluralForm(form)
+    }
+    return "$formattedAmount $formattedForm klo $hourString:$minuteString"
+}
+
+fun pluralForm(text: String): String {
+    return when (text) {
+        "tabletti"-> "tablettia"
+        "kapseli" -> "kapselia"
+        "annospussi" -> "annospussia"
+        "tippa" -> "tippaa"
+        "ml" -> "ml:aa"
+        "inhalaatio" -> "inhalaatiota"
+        "laastari" -> "laastaria"
+        "peräpuikko" -> "peräpuikkoa"
+        "IU" -> "IU:ta"
+        else -> "annosta"
+    }
+}
+
+fun createNotificationText(
+        name: String, strength: String, form: String, amount: Double, hours: Int, minutes: Int): String {
+    val dosageText = combineFormAmountAndTimes(form, amount, hours, minutes)
+    return "$name $strength: ota $dosageText"
+}
+
+fun amountToString(number: Double): String {
+    var numberToFormat = number.toString()
+    numberToFormat = numberToFormat.replace(".0", "")
+    numberToFormat = numberToFormat.replace(".", ",")
+    return numberToFormat
 }
 
 fun validateInputInMedicineDetails(name: String?, strength: String?, form: String?): Boolean {
@@ -91,6 +134,16 @@ fun hasClockValueChanged(oldValue: Int?, newValue: Int?): Boolean {
     return if (oldValue == null || newValue == null) {
         false
     } else oldValue != newValue
+}
+
+fun validateString(string: String?): Boolean {
+    return string != null && string.isNotBlank()
+}
+
+fun validateData(name: String?, strength: String? ): Boolean {
+    val validName = validateString(name)
+    val validStrength = validateString(strength)
+    return validName && validStrength
 }
 
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

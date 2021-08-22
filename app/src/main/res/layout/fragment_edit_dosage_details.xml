@@ -12,12 +12,23 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".edit.EditDosageDetailsFragment"
-        android:accessibilityPaneTitle="@string/edit_new_dosage_pane">
+        tools:context=".edit.EditDosageDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/medicine_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            style="@style/TextStyle"
+            android:text=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Lääke: Amlodipin 10 mg, tabletti" />
 
         <TextView
             android:id="@+id/old_dosage"
@@ -28,8 +39,20 @@
             android:text=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/medicine_title"
             tools:text="Määrä: 1.0, klo 19:00" />
+
+        <Button
+            android:id="@+id/delete_dosage_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="@{() -> editDosageDetailsViewModel.onDeleteDosageButtonClicked()}"
+            android:text="@string/delete_dosage"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/old_dosage" />
 
         <TextView
             android:id="@+id/change_dosage_text"
@@ -40,7 +63,7 @@
             android:text="@string/edit_dosage_value"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/old_dosage" />
+            app:layout_constraintTop_toBottomOf="@+id/delete_dosage_button" />
 
         <NumberPicker
             android:id="@+id/number_picker_edit"
@@ -49,6 +72,7 @@
             android:layout_marginTop="16dp"
             android:contentDescription="@string/edit_dosage_value"
             android:onValueChange="@{(picker,oldvalue,newvalue) -> editDosageDetailsViewModel.onPickerValueChange(newvalue)}"
+            android:theme="@style/NumberPickerStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/change_dosage_text" />
@@ -57,10 +81,8 @@
             android:id="@+id/show_time_picker_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="16dp"
-            android:contentDescription="@string/show_timepicker"
-            android:text="@string/show_timepicker"
+            android:text="@string/show_timepicker_new"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/number_picker_edit" />
@@ -94,7 +116,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:contentDescription="@string/continue_button"
             android:onClick="@{() -> editDosageDetailsViewModel.onBackButtonEditClicked()}"
             android:text="@string/save_edited_med_info"
             app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +127,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:contentDescription="@string/show_timepicker"
             android:text="@string/cancel"
             android:onClick="@{() -> editDosageDetailsViewModel.onBackButtonNoEditClicked()}"
             app:layout_constraintEnd_toEndOf="parent"

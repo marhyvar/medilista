@@ -5,15 +5,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
+import com.example.medilista.alarm.AlarmReceiver.Companion.cancelAlarmNotification
+import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
+import com.example.medilista.createNotificationText
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicineWithDosagesBinding
 import com.google.android.material.snackbar.Snackbar
@@ -32,7 +38,7 @@ class MedicineWithDosagesFragment: Fragment() {
 
         val dataSource = MedicineDatabase.getInstance(application).medicineDao
 
-        val viewModelFactory = MedicineWithDosagesViewModelFactory(arguments.medicineKey, dataSource)
+        val viewModelFactory = MedicineWithDosagesViewModelFactory(arguments.medicineKey, dataSource, application)
 
         //don´t use this: val medicineWithDosagesViewModel: MedicineWithDosagesViewModel by activityViewModels { viewModelFactory }
         val medicineWithDosagesViewModel =
@@ -43,11 +49,40 @@ class MedicineWithDosagesFragment: Fragment() {
 
         binding.lifecycleOwner = this
 
-        val editDosageAdapter = EditDosageAdapter(DosageListener { dosage ->
-            medicineWithDosagesViewModel.onDeleteDosageButtonClicked(dosage)
-        }, DosageListenerEdit { dosageId ->
-            medicineWithDosagesViewModel.onEditDosageButtonClicked(dosageId)
+        val editDosageAdapter = EditDosageAdapter(DosageListenerEdit { dosage ->
+            medicineWithDosagesViewModel.onEditDosageButtonClicked(dosage)
         })
+
+        val spinner: Spinner = binding.medFormSpinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+                application,
+                R.array.form_array,
+                R.layout.spinner_selected_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+
+        spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        view: View?, position: Int, id: Long) {
+                // An item was selected. Null check for configuration change etc.
+                if (position >= 0) {
+                    val value = parent.getItemAtPosition(position).toString()
+                    medicineWithDosagesViewModel.setFormSelected(value)
+                    Log.i("testi", value)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
+
 
         binding.dosagesListEditing.adapter = editDosageAdapter
 
@@ -87,22 +122,39 @@ class MedicineWithDosagesFragment: Fragment() {
             if (it == true) {
                 val name = binding.editMedName.text.toString()
                 val strength = binding.editMedStrength.text.toString()
-                val form = binding.editMedForm.text.toString()
+                //val form = binding.editMedForm.text.toString()
+                val form = medicineWithDosagesViewModel.formSelection.value!!
                 val needed = binding.editTakenWhenNeeded.isChecked
                 val alarm = binding.editAlarm.isChecked
                 medicineWithDosagesViewModel.saveMedicineChanges(name, strength, form, needed, alarm)
             }
         })
 
-        medicineWithDosagesViewModel.navigateToEditDosage.observe(viewLifecycleOwner, Observer { id ->
-            id?.let {
+        medicineWithDosagesViewModel.navigateToEditDosage.observe(viewLifecycleOwner, Observer { dosage ->
+            dosage?.let {
                 val navController = binding.root.findNavController()
                 navController.navigate(MedicineWithDosagesFragmentDirections
-                        .actionMedicineWithDosagesFragmentToEditDosageDetailsFragment(id))
+                        .actionMedicineWithDosagesFragmentToEditDosageDetailsFragment(dosage))
                 medicineWithDosagesViewModel.onNavigatedToEditDosage()
         }
 
         })
+
+        binding.editMedName.doOnTextChanged { text, _, _, _ ->
+            binding.medicineLayout2.error = null
+            val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
+            if (!valid) {
+                binding.medicineLayout2.error = getString(R.string.mandatory)
+            }
+        }
+
+        binding.editMedStrength.doOnTextChanged { text, _, _, _ ->
+            binding.strengthLayout2.error = null
+            val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
+            if (!valid) {
+                binding.strengthLayout2.error = getString(R.string.mandatory)
+            }
+        }
 
         return binding.root
     }

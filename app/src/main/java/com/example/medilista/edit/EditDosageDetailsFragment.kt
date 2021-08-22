@@ -11,8 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
+import com.example.medilista.alarm.AlarmReceiver.Companion.cancelAlarmNotification
+import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
+import com.example.medilista.combineNameAndStrength
+import com.example.medilista.createNotificationText
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentEditDosageDetailsBinding
+import com.example.medilista.validateDosageListInput
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -32,7 +37,7 @@ class EditDosageDetailsFragment : Fragment() {
 
         val arguments = EditDosageDetailsFragmentArgs.fromBundle(requireArguments())
 
-        val viewModelFactory = EditDosageDetailsViewModelFactory(arguments.dosageKey, dataSource)
+        val viewModelFactory = EditDosageDetailsViewModelFactory(arguments.dosage, dataSource, application)
 
         val editDosageDetailsViewModel =
                 ViewModelProvider(
@@ -68,7 +73,7 @@ class EditDosageDetailsFragment : Fragment() {
         picker.maxValue = pickerValues.size -1 // 79
         picker.displayedValues = pickerValues
 
-        editDosageDetailsViewModel.getDosage().observe(viewLifecycleOwner, Observer {
+        editDosageDetailsViewModel.selectedDosage.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.oldDosage.text = editDosageDetailsViewModel.formatDosageToEdit(it)
                 editDosageDetailsViewModel.hours.value = it.timeValueHours
@@ -76,9 +81,16 @@ class EditDosageDetailsFragment : Fragment() {
             }
         })
 
+        editDosageDetailsViewModel.getMedicine().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.medicineTitle.text =
+                    combineNameAndStrength(it.medicineName, it.strength, it.form)
+            }
+        })
+
         editDosageDetailsViewModel.navigateToEditMed.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
-                val medId = editDosageDetailsViewModel.getDosage().value?.dosageMedicineId ?: -1
+                val medId = editDosageDetailsViewModel.selectedDosage.value?.dosageMedicineId ?: -1
                 this.findNavController().navigate(
                         EditDosageDetailsFragmentDirections
                                 .actionEditDosageDetailsFragmentToMedicineWithDosagesFragment(medId))
@@ -96,6 +108,12 @@ class EditDosageDetailsFragment : Fragment() {
                 ).show()
                 // Make sure the snackbar is shown once
                 editDosageDetailsViewModel.doneShowingMessage()
+            }
+        })
+
+        editDosageDetailsViewModel.visible.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                binding.deleteDosageButton.visibility = View.VISIBLE
             }
         })
 
