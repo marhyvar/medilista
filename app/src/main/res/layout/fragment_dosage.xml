@@ -81,6 +81,7 @@
                 android:layout_marginTop="16dp"
                 android:onClick="@{() -> dosageViewModel.onBackButtonClicked()}"
                 android:text="@string/continue_button"
+                android:enabled="@{dosageViewModel.validTimeAndAmountString}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/show_minutes" />

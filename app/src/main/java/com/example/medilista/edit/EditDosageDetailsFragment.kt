@@ -11,8 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
+import com.example.medilista.alarm.AlarmReceiver.Companion.cancelAlarmNotification
+import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
+import com.example.medilista.combineNameAndStrength
+import com.example.medilista.createNotificationText
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentEditDosageDetailsBinding
+import com.example.medilista.validateDosageListInput
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -32,7 +37,7 @@ class EditDosageDetailsFragment : Fragment() {
 
         val arguments = EditDosageDetailsFragmentArgs.fromBundle(requireArguments())
 
-        val viewModelFactory = EditDosageDetailsViewModelFactory(arguments.dosage, dataSource)
+        val viewModelFactory = EditDosageDetailsViewModelFactory(arguments.dosage, dataSource, application)
 
         val editDosageDetailsViewModel =
                 ViewModelProvider(
@@ -73,6 +78,13 @@ class EditDosageDetailsFragment : Fragment() {
                 binding.oldDosage.text = editDosageDetailsViewModel.formatDosageToEdit(it)
                 editDosageDetailsViewModel.hours.value = it.timeValueHours
                 editDosageDetailsViewModel.minutes.value = it.timeValueMinutes
+            }
+        })
+
+        editDosageDetailsViewModel.getMedicine().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.medicineTitle.text =
+                    combineNameAndStrength(it.medicineName, it.strength, it.form)
             }
         })
 

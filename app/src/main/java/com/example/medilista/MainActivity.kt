@@ -1,9 +1,10 @@
 package com.example.medilista
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleAllAlarmNotifications
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,6 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navController = this.findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
+        //scheduleAllAlarmNotifications(application)
     }
 
     override fun onSupportNavigateUp(): Boolean {

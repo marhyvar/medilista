@@ -54,7 +54,7 @@ fun combineAmountAndTimes(amount: Double, hour: Int, min: Int): String {
         minuteString = "0${min.toString()}"
     }
     val formattedAmount = amountToString(amount)
-    return "Määrä: $formattedAmount; aika: $hourString:$minuteString"
+    return "määrä: $formattedAmount; aika: $hourString:$minuteString"
 }
 
 fun combineFormAmountAndTimes(form: String, amount: Double, hour: Int, min: Int): String {
@@ -84,6 +84,12 @@ fun pluralForm(text: String): String {
         "IU" -> "IU:ta"
         else -> "annosta"
     }
+}
+
+fun createNotificationText(
+        name: String, strength: String, form: String, amount: Double, hours: Int, minutes: Int): String {
+    val dosageText = combineFormAmountAndTimes(form, amount, hours, minutes)
+    return "$name $strength: ota $dosageText"
 }
 
 fun amountToString(number: Double): String {

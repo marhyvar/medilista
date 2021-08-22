@@ -1,5 +1,7 @@
 package com.example.medilista.details
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.medilista.*
@@ -7,9 +9,10 @@ import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
 import kotlinx.coroutines.launch
+import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
 
 class DetailsViewModel(
-        val database: MedicineDao) : ViewModel() {
+        val database: MedicineDao, application: Application) : AndroidViewModel(application) {
 
     private val _navigateToMedicines = MutableLiveData<Boolean?>()
     val navigateToMedicines: LiveData<Boolean?>
@@ -44,6 +47,17 @@ class DetailsViewModel(
         }
     }
 
+    val validTimeAndAmountString = MediatorLiveData<Boolean>().apply {
+        addSource(dosageString) { dosageData ->
+            val timeData = timeString.value
+            this.value = validateData(dosageData, timeData)
+        }
+        addSource(timeString) {strengthData ->
+            val dosageData = dosageString.value
+            this.value = validateData(dosageData, strengthData)
+        }
+    }
+
     private val _navigateToDosage = MutableLiveData<Boolean>()
     val navigateToDosage: LiveData<Boolean>
         get() = _navigateToDosage
@@ -60,6 +74,9 @@ class DetailsViewModel(
     val formSelection: LiveData<String>
         get() = _formSelection
 
+
+    val idList = mutableListOf<Int>()
+
     var message = ""
 
     init {
@@ -68,12 +85,12 @@ class DetailsViewModel(
         minutes.value = 0
     }
 
-    fun addDosageToList(dosage: Dosage) {
+    private fun addDosageToList(dosage: Dosage) {
         dosageList.value?.add(dosage)
         dosageList.value = dosageList.value
     }
 
-    fun removeDosageFromList(dosage: Dosage) {
+    private fun removeDosageFromList(dosage: Dosage) {
         dosageList.value?.remove(dosage)
         dosageList.value = dosageList.value
 
@@ -162,11 +179,14 @@ class DetailsViewModel(
                 insert(medicine)
                 val id = database.getInsertedMedicineId()
                 if (id != null) {
-                    Log.i("database", id.toString())
+                    Log.i("ööö", id.toString())
                     val listSize = dosageList.value?.size ?: 0
                     if (listSize > 0) {
-                        Log.i("database", "dosage päivitys")
-                        insertDosagesForMedicineFromList(id)
+                        Log.i("ööö", "dosage päivitys")
+                        insertDosagesForMedicineFromList(id, medAlarm)
+                    }
+                    if (medAlarm) {
+                        scheduleAlarms()
                     }
                 }
 
@@ -187,20 +207,41 @@ class DetailsViewModel(
         _navigateToMedicines.value = true
     }
 
-    private suspend fun insertDosagesForMedicineFromList(id: Long) {
+    private suspend fun insertDosagesForMedicineFromList(id: Long, alarm: Boolean) {
         val list = dosageList.value ?: arrayListOf()
         Log.i("database", list.get(0).amount.toString())
         list.forEach { item ->
-            val dosage = item
-            val newDosage = Dosage(dosageMedicineId = id, amount = dosage.amount,
-                    timeValueHours = dosage.timeValueHours,
-                    timeValueMinutes = dosage.timeValueMinutes)
+            val newDosage = Dosage(dosageMedicineId = id, amount = item.amount,
+                    timeValueHours = item.timeValueHours,
+                    timeValueMinutes = item.timeValueMinutes)
             database.insertDosage(newDosage)
-            Log.i("database", newDosage.timeValueHours.toString())
+            if (alarm) {
+                val idInserted = database.getInsertedDosageId()
+                Log.i("ööö", "id on:")
+                Log.i("ööö", idInserted.toString())
+                if (idInserted != null) {
+                    idList.add(idInserted.toInt())
+                }
+            }
         }
     }
 
-    fun setEmptyValues() {
+
+    private fun scheduleAlarms() {
+        Log.i("ööö", "mentiin scheduleAlarms")
+        val list = dosageList.value ?: arrayListOf()
+        val medName = name.value
+        val medStrength = strength.value
+        val medForm = _formSelection.value
+        list.forEachIndexed { index, dosage ->
+            val message = createNotificationText(medName!!, medStrength!!, medForm!!, dosage.amount,
+                    dosage.timeValueHours, dosage.timeValueMinutes)
+            scheduleNotification(getApplication(), message, dosage.timeValueHours, dosage.timeValueMinutes, idList[index])
+        }
+
+    }
+
+    private fun setEmptyValues() {
         name.value = ""
         strength.value = ""
         alarm.value = false
@@ -224,5 +265,8 @@ class DetailsViewModel(
     fun onDeleteDosageButtonClicked(dosage: Dosage) {
         Log.i("testi", dosage.amount.toString())
         removeDosageFromList(dosage)
+        val text = combineAmountAndTimes(dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
+        message = "Annos poistettu: $text"
+        _showMessageEvent.value = true
     }
 }

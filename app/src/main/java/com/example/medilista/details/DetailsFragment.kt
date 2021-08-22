@@ -1,6 +1,7 @@
 package com.example.medilista.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,7 @@ class DetailsFragment : Fragment() {
 
         val dataSource = MedicineDatabase.getInstance(application).medicineDao
 
-        val viewModelFactory = DetailsViewModelFactory(dataSource)
+        val viewModelFactory = DetailsViewModelFactory(dataSource, application)
 
         //val detailsViewModel =
          //       ViewModelProvider(

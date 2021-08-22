@@ -16,7 +16,7 @@
     <string name="menu_label">Lääkemuoto</string>
     <string name="hint_medicine_form">Lääkemuoto/annostuksen yksikkö</string>
     <string name="hint_medicine_form_label">Lääkemuoto/annostuksen yksikkö:</string>
-    <string name="hint_medicine_form_label_edit">Vaihda lääkemuoto/annostuksen yksikkö:</string>
+    <string name="hint_medicine_form_label_edit">Vaihda lääkemuoto/annoksen yksikkö:</string>
     <string name="current_form">Nykyinen arvo:</string>
     <string name="save_medicine">Tallenna lääkkeen tiedot</string>
     <string name="alarm">Hälytys</string>
@@ -24,24 +24,32 @@
     <string name="countinuous">Jatkuva</string>
     <string name="when_needed">Tarvittaessa</string>
     <string name="details_error">Et voi jättää kenttiä tyhjäksi!</string>
-    <string name="to_dosage">Lisää annostus lääkkeelle</string>
+    <string name="to_dosage">Lisää annos lääkkeelle</string>
     <string name="show_timepicker">Valitse aika</string>
-    <string name="edit_dosage_value">Valitse annostuksen määrä:</string>
+    <string name="edit_dosage_value">Valitse annoksen määrä:</string>
     <string name="continue_button">Jatka</string>
     <string name="delete_medicine">Poista lääke</string>
     <string name="delete">Poista</string>
-    <string name="delete_dosage">Poista annostus</string>
+    <string name="delete_dosage">Poista annos</string>
     <string name="back">Takaisin</string>
     <string name="save_edited_med_info">Tallenna muutokset</string>
     <string name="edit_dosage">Muokkaa</string>
     <string name="cancel">Peruuta</string>
     <string name="form_prompt">Valitse lääkemuoto</string>
-    <string name="to_dosage_edit">Lisää uusi annostus</string>
+    <string name="to_dosage_edit">Lisää uusi annos</string>
     <string name="show_timepicker_new">Valitse uusi aika</string>
     <string name="medicine_list">Lääkityslista</string>
     <string name="add_new_medicine">Lisää uusi lääke</string>
-    <string name="set_dosage">Lisää annostus</string>
+    <string name="set_dosage">Lisää annos</string>
     <string name="edit_medicine_info">Lääkkeen tiedot</string>
-    <string name="edit_dosage_info">Annostus</string>
+    <string name="edit_dosage_info">Annos</string>
     <string name="mandatory">Pakollinen tieto</string>
+    <string name="med_notification_channel_id" translatable="false">medi_channel</string>
+    <string name="med_notification_channel_name" translatable="true">Kanava</string>
+    <string name="notification_title">Lääkemuistutus</string>
+    <string name="notification_text">Ota lääkkeesi!</string>
+    <string name="snooze">Muistuta uudelleen</string>
+    <string name="test_notification">Ilmoitustesti</string>
+    <string name="med_notification_channel_description">kanavan kuvaus</string>
+    <string name="dosage_title_text">Lääkkeen annostus:</string>
 </resources>

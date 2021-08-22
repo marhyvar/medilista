@@ -1,9 +1,10 @@
 package com.example.medilista.edit
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.medilista.alarm.AlarmReceiver
+import com.example.medilista.createNotificationText
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineDao
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class MedicineWithDosagesViewModel(
         private val medicineKey: Long = 0L,
-        dataSource: MedicineDao) : ViewModel() {
+        dataSource: MedicineDao, application: Application) : AndroidViewModel(application) {
 
     val database = dataSource
 
@@ -60,15 +61,17 @@ class MedicineWithDosagesViewModel(
         _isButtonActive.value = true
     }
 
-    fun onReturnButtonClicked() {
-        _navigateToHome.value = true
-    }
-
     fun onNavigatedToHome() {
         _navigateToHome.value = false
 
     }
+
     fun onDeleteButtonClicked() {
+        dos.value?.let {
+            if (med.value?.Medicine?.alarm == true) {
+                cancelAlarms()
+            }
+        }
         viewModelScope.launch {
             //med.value?.let { database.deleteMedicineData(medicineKey, it.Medicine) }
             med.value?.let {
@@ -110,12 +113,27 @@ class MedicineWithDosagesViewModel(
 
                 med.value?.let {
                     val medicine = med.value!!.Medicine
+                    Log.i("ööö", "vanha alarm: ${medicine.alarm}")
+                    Log.i("ööö", "uusi alarm $alarm")
                     val oldMedicine = Medicine(medicineName = medicine.medicineName, strength = medicine.strength, form = medicine.form,
                             takenWhenNeeded = medicine.takenWhenNeeded, alarm = medicine.alarm)
                     if (oldMedicine == changedMedicine) {
                         message = "Et ole antanut uusia arvoja lääkkeelle"
                         _showMessageEvent.value = true
                     } else {
+
+                        if (alarm != medicine.alarm) {
+                            if (alarm) {
+                                scheduleAlarms(changedMedicine)
+                                Log.i("ööö", "laitetaan hälytykset")
+                            } else {
+                                cancelAlarms()
+                                Log.i("ööö", "perutaan hälytykset")
+                            }
+                        } else if (medicine.alarm) {
+                            scheduleAlarms(changedMedicine)
+                        }
+
                         medicine.medicineName = name
                         medicine.strength = strength
                         medicine.form = form
@@ -146,5 +164,31 @@ class MedicineWithDosagesViewModel(
         }
         _isButtonActive.value = true
         return true
+    }
+
+    private fun scheduleAlarms(changedMed: Medicine) {
+        val dosages = dos.value
+        val med = med.value?.Medicine
+        Log.i("ööö", "scheduleAlarms listan koko:")
+        Log.i("ööö", dosages?.size.toString())
+
+        dosages?.forEach { dosage ->
+            med?.let {
+                val message = createNotificationText(changedMed.medicineName, changedMed.strength, changedMed.form,
+                        dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
+                AlarmReceiver.scheduleNotification(getApplication(), message, dosage.timeValueHours,
+                        dosage.timeValueMinutes, dosage.dosageId.toInt())
+            }
+        }
+    }
+
+    private fun cancelAlarms() {
+        val dosages = dos.value
+        Log.i("ööö", "cancelAlarms listan koko:")
+        Log.i("ööö", dosages?.size.toString())
+        dosages?.forEach { dosage ->
+            AlarmReceiver.cancelAlarmNotification(getApplication(), dosage.dosageId.toInt())
+            Log.i("ööö", "hälytys peruutettu")
+        }
     }
 }
