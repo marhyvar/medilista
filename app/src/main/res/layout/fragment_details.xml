@@ -79,14 +79,14 @@
 
             <Spinner
                 android:id="@+id/medicine_form_spinner"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
+                android:background="@color/primaryColor"
                 android:prompt="@string/form_prompt"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_medicine_form"
-                tools:listitem="@layout/spinner_selected_item"/>
+                tools:listitem="@layout/spinner_selected_item" />
 
             <Button
                 android:id="@+id/next_button"
