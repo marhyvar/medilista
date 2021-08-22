@@ -93,7 +93,7 @@ class EditDosageDetailsViewModel(
                                 scheduleAlarm()
                             }
                         }
-                        message = "Lääkkeelle on lisätty uusi annostus"
+                        message = "Lääkkeelle on lisätty uusi annos"
                         _showMessageEvent.value = true
                         _navigateToEditMed.value = true
                     } else {
@@ -120,12 +120,12 @@ class EditDosageDetailsViewModel(
                         if (medicine.value?.alarm == true) {
                             editAlarm(_selectedDosage.value!!)
                         }
-                        message = "Annostuksen tietoja on muokattu"
+                        message = "Annoksen tietoja on muokattu"
                         _showMessageEvent.value = true
                         _navigateToEditMed.value = true
 
                     } else {
-                        message = "Annostuksen tietojen muokkaus ei onnistunut"
+                        message = "Annoksen tietojen muokkaus ei onnistunut"
                         _showMessageEvent.value = true
                     }
                 }
@@ -159,10 +159,11 @@ class EditDosageDetailsViewModel(
                     cancelAlarm()
                 }
                 database.deleteDosage(it)
+                val text = combineAmountAndTimes(it.amount, it.timeValueHours, it.timeValueMinutes)
+                message = "Lääkkeen annos poistettu: $text"
+                _showMessageEvent.value = true
+                _navigateToEditMed.value = true
             }
-            message = "Lääkkeen annostus on poistettu"
-            _showMessageEvent.value = true
-            _navigateToEditMed.value = true
         }
     }
 

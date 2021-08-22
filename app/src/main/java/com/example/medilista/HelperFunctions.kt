@@ -54,7 +54,7 @@ fun combineAmountAndTimes(amount: Double, hour: Int, min: Int): String {
         minuteString = "0${min.toString()}"
     }
     val formattedAmount = amountToString(amount)
-    return "Määrä: $formattedAmount; aika: $hourString:$minuteString"
+    return "määrä: $formattedAmount; aika: $hourString:$minuteString"
 }
 
 fun combineFormAmountAndTimes(form: String, amount: Double, hour: Int, min: Int): String {

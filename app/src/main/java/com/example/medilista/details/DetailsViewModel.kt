@@ -85,12 +85,12 @@ class DetailsViewModel(
         minutes.value = 0
     }
 
-    fun addDosageToList(dosage: Dosage) {
+    private fun addDosageToList(dosage: Dosage) {
         dosageList.value?.add(dosage)
         dosageList.value = dosageList.value
     }
 
-    fun removeDosageFromList(dosage: Dosage) {
+    private fun removeDosageFromList(dosage: Dosage) {
         dosageList.value?.remove(dosage)
         dosageList.value = dosageList.value
 
@@ -227,7 +227,7 @@ class DetailsViewModel(
     }
 
 
-    fun scheduleAlarms() {
+    private fun scheduleAlarms() {
         Log.i("ööö", "mentiin scheduleAlarms")
         val list = dosageList.value ?: arrayListOf()
         val medName = name.value
@@ -241,7 +241,7 @@ class DetailsViewModel(
 
     }
 
-    fun setEmptyValues() {
+    private fun setEmptyValues() {
         name.value = ""
         strength.value = ""
         alarm.value = false
@@ -265,5 +265,8 @@ class DetailsViewModel(
     fun onDeleteDosageButtonClicked(dosage: Dosage) {
         Log.i("testi", dosage.amount.toString())
         removeDosageFromList(dosage)
+        val text = combineAmountAndTimes(dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
+        message = "Annos poistettu: $text"
+        _showMessageEvent.value = true
     }
 }
