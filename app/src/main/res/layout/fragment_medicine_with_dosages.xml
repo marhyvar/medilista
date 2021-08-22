@@ -41,6 +41,9 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/medicine_layout_2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                app:boxBackgroundColor="@color/cardview_light_background"
+                android:textColorHint="@color/secondaryTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -60,6 +63,9 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/strength_layout_2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                app:boxBackgroundColor="@color/cardview_light_background"
+                android:textColorHint="@color/secondaryTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
