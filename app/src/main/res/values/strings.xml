@@ -21,7 +21,7 @@
     <string name="save_medicine">Tallenna lääkkeen tiedot</string>
     <string name="alarm">Hälytys</string>
     <string name="no_alarm">Ei hälytystä</string>
-    <string name="countinuous">Jatkuva</string>
+    <string name="countinuous">Jatkuva lääkitys</string>
     <string name="when_needed">Tarvittaessa</string>
     <string name="details_error">Et voi jättää kenttiä tyhjäksi!</string>
     <string name="to_dosage">Lisää annos lääkkeelle</string>

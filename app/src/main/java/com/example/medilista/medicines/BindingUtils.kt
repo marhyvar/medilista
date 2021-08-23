@@ -1,15 +1,13 @@
 package com.example.medilista.medicines
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.medilista.combineAmountAndTimes
-import com.example.medilista.combineNameAndStrength
+import com.example.medilista.*
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 import com.example.medilista.database.MedicineWithDosages
-import com.example.medilista.determineIfAlarmOrNot
-import com.example.medilista.determineIfNeededOrContinuous
 
 @BindingAdapter("medicineNameAndStrength")
 fun TextView.setMedicineNameAndStrength(item: Medicine?) {
@@ -29,6 +27,16 @@ fun TextView.setWhenNeededOrContinuous(item: Medicine?) {
 fun TextView.setAlarmStatus(item: Medicine?) {
     item?.let {
         text = determineIfAlarmOrNot(item.alarm, context.resources)
+    }
+}
+
+@BindingAdapter("alarmImage")
+fun ImageView.setAlarmImage(item: Medicine?) {
+    item?.let {
+        setImageResource(when (item.alarm) {
+            true -> R.drawable.alarm_on
+            false -> R.drawable.alarm_off
+        })
     }
 }
 
