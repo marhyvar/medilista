@@ -175,6 +175,15 @@ class EditDosageDetailsViewModel(
                 if (alarmState) {
                     Log.i("ööö", alarmState.toString())
                     cancelAlarm()
+                    val dosageCount = database.getDosageCount(it.dosageMedicineId)
+                    Log.i("ööö", "dosageCount: ${dosageCount.toString()}")
+                    if (dosageCount == 1) {
+                        // if the last dosage is deleted, alarm state should be false
+                        medicine.value?.let {medicine ->
+                            medicine.alarm = false
+                            database.update(medicine)
+                        }
+                    }
                 }
                 database.deleteDosage(it)
                 val text = combineAmountAndTimes(it.amount, it.timeValueHours, it.timeValueMinutes)

@@ -100,10 +100,10 @@ class MedicineWithDosagesFragment: Fragment() {
 
         medicineWithDosagesViewModel.dos.observe(viewLifecycleOwner, Observer {
             it?.let {
-                it.forEach {
-                    Log.i("testi", it.timeValueHours.toString())
-                }
                 editDosageAdapter.submitList(it)
+                if (it.isNotEmpty()) {
+                    binding.editAlarm.visibility = View.VISIBLE
+                }
             }
         })
 
