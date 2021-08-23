@@ -140,10 +140,18 @@ fun validateString(string: String?): Boolean {
     return string != null && string.isNotBlank()
 }
 
+fun validateNotSelected(string: String?): Boolean {
+    return string != null && !string.contains("Et ole valinnut", ignoreCase = true)
+}
+
 fun validateData(name: String?, strength: String? ): Boolean {
     val validName = validateString(name)
     val validStrength = validateString(strength)
     return validName && validStrength
+}
+
+fun validateTimeAndAmount(amount: String?, time: String?): Boolean {
+    return validateNotSelected(amount) && validateNotSelected(time)
 }
 
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

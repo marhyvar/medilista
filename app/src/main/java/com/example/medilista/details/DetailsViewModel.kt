@@ -50,11 +50,11 @@ class DetailsViewModel(
     val validTimeAndAmountString = MediatorLiveData<Boolean>().apply {
         addSource(dosageString) { dosageData ->
             val timeData = timeString.value
-            this.value = validateData(dosageData, timeData)
+            this.value = validateTimeAndAmount(dosageData, timeData)
         }
         addSource(timeString) {strengthData ->
             val dosageData = dosageString.value
-            this.value = validateData(dosageData, strengthData)
+            this.value = validateTimeAndAmount(dosageData, strengthData)
         }
     }
 
@@ -83,6 +83,8 @@ class DetailsViewModel(
         dosageList.value = ArrayList()
         hours.value = 0
         minutes.value = 0
+        dosageString.value = "Et ole valinnut määrää."
+        timeString.value= "Et ole valinnut aikaa."
     }
 
     private fun addDosageToList(dosage: Dosage) {
@@ -121,14 +123,14 @@ class DetailsViewModel(
             Log.i("database", "dosage lisätty listaan")
         }
         _navigateToDetails.value = true
-        timeString.value = ""
-        dosageString.value = ""
+        timeString.value = "Et ole valinnut aikaa."
+        dosageString.value = "Et ole valinnut määrää."
     }
 
     fun onCancelAddDosageButtonClicked() {
         _navigateToDetails.value = true
-        timeString.value = ""
-        dosageString.value = ""
+        timeString.value = "Et ole valinnut aikaa."
+        dosageString.value = "Et ole valinnut määrää."
     }
 
     fun onNavigatedToDetails() {

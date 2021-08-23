@@ -42,59 +42,50 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/medicine_layout_2"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                app:boxBackgroundColor="@color/cardview_light_background"
-                android:textColorHint="@color/secondaryTextColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:hint="@string/hint_medicine_name_label_edit"
+                android:textColorHint="@color/secondaryTextColor"
+                app:boxBackgroundColor="@color/cardview_light_background"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/delete_medicine">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_med_name"
-                style="@style/InputStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{medicineWithDosagesViewModel.med.Medicine.medicineName}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medicine_layout_2" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_med_name"
+                    style="@style/InputStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{medicineWithDosagesViewModel.med.Medicine.medicineName}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/medicine_layout_2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/strength_layout_2"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                app:boxBackgroundColor="@color/cardview_light_background"
-                android:textColorHint="@color/secondaryTextColor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/hint_medicine_strength_label_edit"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medicine_layout_2">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_med_strength"
-                style="@style/InputStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{medicineWithDosagesViewModel.med.Medicine.strength}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/strength_layout_2" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/current_form_text"
-                style="@style/LabelStyle"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text='@{@string/current_form + " " + medicineWithDosagesViewModel.med.Medicine.form}'
+                android:hint="@string/hint_medicine_strength_label_edit"
+                android:textColorHint="@color/secondaryTextColor"
+                app:boxBackgroundColor="@color/cardview_light_background"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/strength_layout_2"
-                tools:text="Nykyinen arvo: tabletti" />
+                app:layout_constraintTop_toBottomOf="@+id/medicine_layout_2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_med_strength"
+                    style="@style/InputStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{medicineWithDosagesViewModel.med.Medicine.strength}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/strength_layout_2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/label_med_form_spinner"
@@ -102,22 +93,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:labelFor="@+id/med_form_spinner"
                 android:text="@string/hint_medicine_form_label_edit"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/current_form_text" />
+                app:layout_constraintTop_toBottomOf="@+id/strength_layout_2" />
 
             <Spinner
                 android:id="@+id/med_form_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryColor"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
+                android:background="@color/primaryColor"
                 android:prompt="@string/form_prompt"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_med_form_spinner"
-                tools:listitem="@layout/spinner_selected_item"/>
+                tools:listitem="@layout/spinner_selected_item" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/edit_taken_when_needed"

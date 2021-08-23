@@ -52,4 +52,5 @@
     <string name="test_notification">Ilmoitustesti</string>
     <string name="med_notification_channel_description">kanavan kuvaus</string>
     <string name="dosage_title_text">Lääkkeen annostus:</string>
+    <string name="save">Tallenna</string>
 </resources>
