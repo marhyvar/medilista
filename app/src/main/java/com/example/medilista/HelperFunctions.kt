@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 
 fun formatMedicines(medicines: List<Medicine>, resources: Resources): Spanned {
@@ -152,6 +153,10 @@ fun validateData(name: String?, strength: String? ): Boolean {
 
 fun validateTimeAndAmount(amount: String?, time: String?): Boolean {
     return validateNotSelected(amount) && validateNotSelected(time)
+}
+
+fun sortDosageList(list: List<Dosage>?): List<Dosage>? {
+    return list?.sortedWith(compareBy<Dosage> { it.timeValueHours }.thenBy { it.timeValueMinutes })
 }
 
 class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)

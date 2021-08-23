@@ -60,7 +60,7 @@ interface MedicineDao {
     @Query("SELECT * from dosage_table WHERE dosageId = :key")
     fun getDosage(key: Long): LiveData<Dosage>
 
-    @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")
+    @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key ORDER BY time_hours, time_minutes")
     fun getDosagesOfMedicine(key: Long): LiveData<List<Dosage>>
 
     @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")

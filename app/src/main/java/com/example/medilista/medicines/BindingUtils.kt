@@ -45,7 +45,7 @@ fun RecyclerView.setDosages(medicineWithDosages: MedicineWithDosages?) {
     medicineWithDosages?.let {
         if (medicineWithDosages.dosages != null) {
             val dosageAdapter = DosageAdapter(medicineWithDosages.Medicine.form)
-            dosageAdapter.submitList(medicineWithDosages.dosages)
+            dosageAdapter.submitList(sortDosageList(medicineWithDosages.dosages))
             adapter = dosageAdapter
         }
     }

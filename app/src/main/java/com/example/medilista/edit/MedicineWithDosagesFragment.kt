@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,9 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
-import com.example.medilista.alarm.AlarmReceiver.Companion.cancelAlarmNotification
-import com.example.medilista.alarm.AlarmReceiver.Companion.scheduleNotification
-import com.example.medilista.createNotificationText
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicineWithDosagesBinding
 import com.google.android.material.snackbar.Snackbar
@@ -89,7 +85,7 @@ class MedicineWithDosagesFragment: Fragment() {
 
         medicineWithDosagesViewModel.dos.observe(viewLifecycleOwner, Observer {
             it?.let {
-                it.forEach{
+                it.forEach {
                     Log.i("testi", it.timeValueHours.toString())
                 }
                 editDosageAdapter.submitList(it)
