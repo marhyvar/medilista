@@ -18,15 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/show_time_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/show_timepicker"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/number_picker" />
+
 
             <TextView
                 android:id="@+id/edit_dosage_text"
@@ -59,20 +51,30 @@
                 android:text="@{dosageViewModel.dosageString}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/show_time_picker"
-                tools:text="Annostuksen tiedot" />
+                app:layout_constraintTop_toBottomOf="@+id/number_picker"
+                tools:text="Valittu määrä: 1.0" />
+
+            <Button
+                android:id="@+id/show_time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/show_timepicker"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/show_dosage_text" />
 
             <TextView
                 android:id="@+id/show_minutes"
                 style="@style/TextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="@{dosageViewModel.timeString}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/show_dosage_text"
-                tools:text="20.30" />
+                app:layout_constraintTop_toBottomOf="@+id/show_time_picker"
+                tools:text="Valittu aika: 20.30" />
 
             <Button
                 android:id="@+id/back_button"

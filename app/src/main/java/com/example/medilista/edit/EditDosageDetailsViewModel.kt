@@ -143,7 +143,7 @@ class EditDosageDetailsViewModel(
                         _navigateToEditMed.value = true
 
                     } else {
-                        message = "Annoksen tietojen muokkaus ei onnistunut"
+                        message = "Et ole antanut uusia arvoja annokselle"
                         _showMessageEvent.value = true
                     }
                 }
