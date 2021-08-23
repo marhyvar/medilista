@@ -96,11 +96,23 @@
                 android:id="@+id/next_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:onClick="@{() -> detailsViewModel.onNextButtonClicked()}"
                 android:text="@string/to_dosage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_check_if_taken_when_needed" />
+                app:layout_constraintTop_toBottomOf="@+id/medicine_form_spinner" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dosages_for_saving"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/next_button" />
+
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/edit_check_if_taken_when_needed"
@@ -110,7 +122,7 @@
                 android:checked="@={detailsViewModel.onlyWhenNeeded}"
                 android:text="@string/taken_when_needed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_check_if_alarm" />
+                app:layout_constraintTop_toBottomOf="@+id/dosages_for_saving" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/edit_check_if_alarm"
@@ -119,9 +131,10 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:checked="@={detailsViewModel.alarm}"
+                android:visibility="gone"
                 android:text="@string/alarm_check"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/medicine_form_spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_check_if_taken_when_needed" />
 
             <Button
                 android:id="@+id/save_medicine_button"
@@ -133,7 +146,7 @@
                 android:text="@string/save_medicine"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dosages_for_saving" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_check_if_alarm" />
 
             <Button
                 android:id="@+id/back_to_medicines_button"
@@ -145,16 +158,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/save_medicine_button" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/dosages_for_saving"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/next_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

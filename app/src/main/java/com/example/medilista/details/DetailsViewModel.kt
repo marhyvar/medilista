@@ -74,6 +74,9 @@ class DetailsViewModel(
     val formSelection: LiveData<String>
         get() = _formSelection
 
+    private val _dosageCount = MutableLiveData<Int>()
+    val dosageCount: LiveData<Int>
+        get() = _dosageCount
 
     val idList = mutableListOf<Int>()
 
@@ -85,17 +88,19 @@ class DetailsViewModel(
         minutes.value = 0
         dosageString.value = "Et ole valinnut määrää."
         timeString.value= "Et ole valinnut aikaa."
+        _dosageCount.value = 0
     }
 
     private fun addDosageToList(dosage: Dosage) {
         dosageList.value?.add(dosage)
         dosageList.value = sortDosageList(dosageList.value)?.toMutableList()
+        _dosageCount.value = _dosageCount.value?.plus(1)
     }
 
     private fun removeDosageFromList(dosage: Dosage) {
         dosageList.value?.remove(dosage)
         dosageList.value = dosageList.value
-
+        _dosageCount.value = _dosageCount.value?.minus(1)
     }
 
     fun clearDosageList() {
@@ -252,6 +257,7 @@ class DetailsViewModel(
         onlyWhenNeeded.value = false
         setFormSelected("tabletti")
         clearDosageList()
+        _dosageCount.value = 0
     }
 
     fun setFormSelected(formValueSelection: String) {
