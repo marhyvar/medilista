@@ -89,7 +89,7 @@ class DetailsViewModel(
 
     private fun addDosageToList(dosage: Dosage) {
         dosageList.value?.add(dosage)
-        dosageList.value = dosageList.value
+        dosageList.value = sortDosageList(dosageList.value)?.toMutableList()
     }
 
     private fun removeDosageFromList(dosage: Dosage) {
@@ -121,6 +121,8 @@ class DetailsViewModel(
                     amount.toDouble(), hours.value!!, minutes.value!!)
             addDosageToList(dosage)
             Log.i("database", "dosage lisätty listaan")
+            message = "Annos lisätty"
+            _showMessageEvent.value = true
         }
         _navigateToDetails.value = true
         timeString.value = "Et ole valinnut aikaa."
