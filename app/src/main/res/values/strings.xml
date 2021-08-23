@@ -53,4 +53,7 @@
     <string name="med_notification_channel_description">kanavan kuvaus</string>
     <string name="dosage_title_text">Lääkkeen annostus:</string>
     <string name="save">Tallenna</string>
+    <string name="question_delete_med">Haluatko varmasti poistaa lääkkeen?</string>
+    <string name="yes">Kyllä</string>
+    <string name="question_delete_dos">Haluatko varmasti poistaa annoksen?</string>
 </resources>

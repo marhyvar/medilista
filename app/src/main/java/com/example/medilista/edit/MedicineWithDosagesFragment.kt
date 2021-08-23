@@ -1,5 +1,6 @@
 package com.example.medilista.edit
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -77,6 +78,20 @@ class MedicineWithDosagesFragment: Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // write code to perform some action
             }
+        }
+
+        binding.deleteMedicine.setOnClickListener {
+            val builder = AlertDialog.Builder(requireActivity())
+            builder.setMessage(R.string.question_delete_med)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    medicineWithDosagesViewModel.onDeleteButtonClicked()
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
         }
 
 
