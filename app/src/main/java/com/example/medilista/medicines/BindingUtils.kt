@@ -1,5 +1,6 @@
 package com.example.medilista.medicines
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -56,5 +57,14 @@ fun RecyclerView.setDosages(medicineWithDosages: MedicineWithDosages?) {
 fun TextView.setDosageText(item: Dosage?) {
     item?.let {
         text = combineAmountAndTimes(item.amount, item.timeValueHours, item.timeValueMinutes)
+    }
+}
+
+@BindingAdapter("visibleIfEmptyList")
+fun TextView.setTextVisibility(listExists: Boolean) {
+    visibility = if (listExists) {
+        View.GONE
+    } else {
+        View.VISIBLE
     }
 }
