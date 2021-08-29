@@ -10,24 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.medilista.database.Dosage
 import com.example.medilista.database.Medicine
 
-fun formatMedicines(medicines: List<Medicine>, resources: Resources): Spanned {
-    val sb = StringBuilder()
-    sb.apply {
-        append(resources.getString(R.string.title))
-        medicines.forEach {
-            append("<br>")
-            append("\t${it.medicineName}<br>")
-            append("\t${it.strength}<br>")
-            append("\t${it.form}<br>")
-        }
-    }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        return Html.fromHtml(sb.toString(), Html.FROM_HTML_MODE_LEGACY)
-    } else {
-        return HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
-    }
-}
-
 fun combineNameAndStrength(name: String, strength: String, form: String): String {
     return "$name $strength, $form"
 }
@@ -108,7 +90,7 @@ fun validateInputInMedicineDetails(name: String?, strength: String?, form: Strin
 }
 
 fun validateDosageListInput(amount: String, hours: String, minutes: String): Boolean {
-    if (amount.isNullOrEmpty() || hours.isNullOrEmpty() || minutes.isNullOrEmpty()) {
+    if (amount.isEmpty() || hours.isEmpty() || minutes.isEmpty()) {
         return false
     }
     return true
@@ -159,4 +141,3 @@ fun sortDosageList(list: List<Dosage>?): List<Dosage>? {
     return list?.sortedWith(compareBy<Dosage> { it.timeValueHours }.thenBy { it.timeValueMinutes })
 }
 
-class TextItemViewHolder(val textView: TextView): RecyclerView.ViewHolder(textView)
