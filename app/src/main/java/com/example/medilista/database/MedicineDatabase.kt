@@ -10,8 +10,6 @@ abstract class MedicineDatabase : RoomDatabase() {
 
     abstract val medicineDao: MedicineDao
 
-    abstract val dosageDao: DosageDao
-
     companion object {
 
         @Volatile

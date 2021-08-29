@@ -23,6 +23,18 @@
                 android:layout_height="match_parent"
                 tools:context=".medicines.MedicinesFragment">
 
+                <TextView
+                    android:id="@+id/no_medicines_text"
+                    style="@style/TextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/empty_medicine_list"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:visibleIfEmptyList="@{medicinesViewModel.listExists}" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/medicine_list"
                     android:layout_width="match_parent"

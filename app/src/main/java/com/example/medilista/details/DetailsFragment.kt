@@ -1,7 +1,6 @@
 package com.example.medilista.details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,9 +88,16 @@ class DetailsFragment : Fragment() {
             }
         })
 
-        detailsViewModel.navigateToDosage.observe(viewLifecycleOwner,
-            Observer<Boolean> { shouldNavigate ->
-                if (shouldNavigate == true) {
+        detailsViewModel.dosageCount.observe(viewLifecycleOwner, Observer {
+            if (it > 0) {
+                binding.editCheckIfAlarm.visibility = View.VISIBLE
+            } else {
+                binding.editCheckIfAlarm.visibility = View.GONE
+            }
+        })
+
+        detailsViewModel.navigateToDosage.observe(viewLifecycleOwner, Observer {
+                if (it == true) {
                     val navController = binding.root.findNavController()
                     navController.navigate(R.id.action_detailsFragment_to_dosageFragment)
                     detailsViewModel.onNavigatedToDosage()

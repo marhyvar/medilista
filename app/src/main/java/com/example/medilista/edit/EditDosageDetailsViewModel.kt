@@ -37,6 +37,17 @@ class EditDosageDetailsViewModel(
 
     val newId = MutableLiveData<Int>()
 
+    val validTimeAndAmountString = MediatorLiveData<Boolean>().apply {
+        addSource(dosageString) { dosageData ->
+            val timeData = timeString.value
+            this.value = validateTimeAndAmount(dosageData, timeData)
+        }
+        addSource(timeString) {strengthData ->
+            val dosageData = dosageString.value
+            this.value = validateTimeAndAmount(dosageData, strengthData)
+        }
+    }
+
     private val _navigateToEditMed = MutableLiveData<Boolean>()
     val navigateToEditMed: LiveData<Boolean>
         get() = _navigateToEditMed
@@ -49,6 +60,13 @@ class EditDosageDetailsViewModel(
         _selectedDosage.value = dosage
         _visible.value = dosage.dosageId >= 0
         medicine = database.get(dosage.dosageMedicineId)
+        if (dosage.dosageId < 0) {
+            dosageString.value = "Et ole valinnut määrää."
+            timeString.value= "Et ole valinnut aikaa."
+        } else {
+            dosageString.value = formatAmount(dosage.amount.toString())
+            timeString.value= formatTime(dosage.timeValueHours, dosage.timeValueMinutes)
+        }
     }
 
     var message = ""
@@ -125,7 +143,7 @@ class EditDosageDetailsViewModel(
                         _navigateToEditMed.value = true
 
                     } else {
-                        message = "Annoksen tietojen muokkaus ei onnistunut"
+                        message = "Et ole antanut uusia arvoja annokselle"
                         _showMessageEvent.value = true
                     }
                 }
@@ -144,7 +162,7 @@ class EditDosageDetailsViewModel(
     fun formatDosageToEdit(dosage: Dosage): String {
         val dosageText = combineAmountAndTimes(dosage.amount, dosage.timeValueHours, dosage.timeValueMinutes)
         return if (_selectedDosage.value!!.dosageId < 0) {
-            "Lisää uusi annos lääkkeelle"
+            "Lisää uusi annos."
         } else {
             "Muokkaa annosta: $dosageText"
         }
@@ -157,6 +175,15 @@ class EditDosageDetailsViewModel(
                 if (alarmState) {
                     Log.i("ööö", alarmState.toString())
                     cancelAlarm()
+                    val dosageCount = database.getDosageCount(it.dosageMedicineId)
+                    Log.i("ööö", "dosageCount: ${dosageCount.toString()}")
+                    if (dosageCount == 1) {
+                        // if the last dosage is deleted, alarm state should be false
+                        medicine.value?.let {medicine ->
+                            medicine.alarm = false
+                            database.update(medicine)
+                        }
+                    }
                 }
                 database.deleteDosage(it)
                 val text = combineAmountAndTimes(it.amount, it.timeValueHours, it.timeValueMinutes)

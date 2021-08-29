@@ -50,11 +50,11 @@ class DetailsViewModel(
     val validTimeAndAmountString = MediatorLiveData<Boolean>().apply {
         addSource(dosageString) { dosageData ->
             val timeData = timeString.value
-            this.value = validateData(dosageData, timeData)
+            this.value = validateTimeAndAmount(dosageData, timeData)
         }
         addSource(timeString) {strengthData ->
             val dosageData = dosageString.value
-            this.value = validateData(dosageData, strengthData)
+            this.value = validateTimeAndAmount(dosageData, strengthData)
         }
     }
 
@@ -74,6 +74,9 @@ class DetailsViewModel(
     val formSelection: LiveData<String>
         get() = _formSelection
 
+    private val _dosageCount = MutableLiveData<Int>()
+    val dosageCount: LiveData<Int>
+        get() = _dosageCount
 
     val idList = mutableListOf<Int>()
 
@@ -83,17 +86,21 @@ class DetailsViewModel(
         dosageList.value = ArrayList()
         hours.value = 0
         minutes.value = 0
+        dosageString.value = "Et ole valinnut määrää."
+        timeString.value= "Et ole valinnut aikaa."
+        _dosageCount.value = 0
     }
 
     private fun addDosageToList(dosage: Dosage) {
         dosageList.value?.add(dosage)
-        dosageList.value = dosageList.value
+        dosageList.value = sortDosageList(dosageList.value)?.toMutableList()
+        _dosageCount.value = _dosageCount.value?.plus(1)
     }
 
     private fun removeDosageFromList(dosage: Dosage) {
         dosageList.value?.remove(dosage)
         dosageList.value = dosageList.value
-
+        _dosageCount.value = _dosageCount.value?.minus(1)
     }
 
     fun clearDosageList() {
@@ -119,16 +126,18 @@ class DetailsViewModel(
                     amount.toDouble(), hours.value!!, minutes.value!!)
             addDosageToList(dosage)
             Log.i("database", "dosage lisätty listaan")
+            message = "Annos lisätty"
+            _showMessageEvent.value = true
         }
         _navigateToDetails.value = true
-        timeString.value = ""
-        dosageString.value = ""
+        timeString.value = "Et ole valinnut aikaa."
+        dosageString.value = "Et ole valinnut määrää."
     }
 
     fun onCancelAddDosageButtonClicked() {
         _navigateToDetails.value = true
-        timeString.value = ""
-        dosageString.value = ""
+        timeString.value = "Et ole valinnut aikaa."
+        dosageString.value = "Et ole valinnut määrää."
     }
 
     fun onNavigatedToDetails() {
@@ -248,6 +257,7 @@ class DetailsViewModel(
         onlyWhenNeeded.value = false
         setFormSelected("tabletti")
         clearDosageList()
+        _dosageCount.value = 0
     }
 
     fun setFormSelected(formValueSelection: String) {

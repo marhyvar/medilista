@@ -21,7 +21,7 @@
     <string name="save_medicine">Tallenna lääkkeen tiedot</string>
     <string name="alarm">Hälytys</string>
     <string name="no_alarm">Ei hälytystä</string>
-    <string name="countinuous">Jatkuva</string>
+    <string name="countinuous">Jatkuva lääkitys</string>
     <string name="when_needed">Tarvittaessa</string>
     <string name="details_error">Et voi jättää kenttiä tyhjäksi!</string>
     <string name="to_dosage">Lisää annos lääkkeelle</string>
@@ -52,4 +52,9 @@
     <string name="test_notification">Ilmoitustesti</string>
     <string name="med_notification_channel_description">kanavan kuvaus</string>
     <string name="dosage_title_text">Lääkkeen annostus:</string>
+    <string name="save">Tallenna</string>
+    <string name="question_delete_med">Haluatko varmasti poistaa lääkkeen?</string>
+    <string name="yes">Kyllä</string>
+    <string name="question_delete_dos">Haluatko varmasti poistaa annoksen?</string>
+    <string name="empty_medicine_list">Lääkityslistallasi ei ole lääkkeitä.</string>
 </resources>

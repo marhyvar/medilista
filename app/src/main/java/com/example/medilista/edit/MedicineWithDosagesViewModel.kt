@@ -2,7 +2,10 @@ package com.example.medilista.edit
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.medilista.alarm.AlarmReceiver
 import com.example.medilista.createNotificationText
 import com.example.medilista.database.Dosage
@@ -191,4 +194,5 @@ class MedicineWithDosagesViewModel(
             Log.i("ööö", "hälytys peruutettu")
         }
     }
+
 }

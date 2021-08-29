@@ -48,6 +48,9 @@ interface MedicineDao {
     @Query("SELECT alarm FROM medicine_table WHERE medicineId = :key")
     suspend fun getMedicineAlarm(key: Long): Boolean
 
+    @Query("SELECT COUNT(dosageId) FROM dosage_table WHERE dosage_medicine_id = :key" )
+    suspend fun getDosageCount(key: Long): Int
+
     @Insert
     suspend fun insertDosage(dosage: Dosage)
 
@@ -60,7 +63,7 @@ interface MedicineDao {
     @Query("SELECT * from dosage_table WHERE dosageId = :key")
     fun getDosage(key: Long): LiveData<Dosage>
 
-    @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")
+    @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key ORDER BY time_hours, time_minutes")
     fun getDosagesOfMedicine(key: Long): LiveData<List<Dosage>>
 
     @Query("SELECT * FROM dosage_table WHERE dosage_medicine_id = :key")

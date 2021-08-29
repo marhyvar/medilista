@@ -1,5 +1,6 @@
 package com.example.medilista.edit
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -72,6 +73,20 @@ class EditDosageDetailsFragment : Fragment() {
         picker.minValue = 0
         picker.maxValue = pickerValues.size -1 // 79
         picker.displayedValues = pickerValues
+
+        binding.deleteDosageButton.setOnClickListener {
+            val builder = AlertDialog.Builder(requireActivity())
+            builder.setMessage(R.string.question_delete_dos)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    editDosageDetailsViewModel.onDeleteDosageButtonClicked()
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
+        }
 
         editDosageDetailsViewModel.selectedDosage.observe(viewLifecycleOwner, Observer {
             it?.let {

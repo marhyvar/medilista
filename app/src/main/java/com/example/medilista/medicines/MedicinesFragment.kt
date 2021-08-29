@@ -54,6 +54,7 @@ class MedicinesFragment : Fragment() {
         medicinesViewModel.medicines.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+                medicinesViewModel.determineVisibility(it)
             }
         })
 
@@ -74,6 +75,7 @@ class MedicinesFragment : Fragment() {
                 medicinesViewModel.onEditingNavigated()
             }
         })
+
 
         return binding.root
     }
