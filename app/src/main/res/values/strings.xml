@@ -1,3 +1,60 @@
 <resources>
     <string name="app_name">Medilista</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="fragment_one">Hello blank fragment 1</string>
+    <string name="fragment_two">Hello blank fragment 2</string>
+    <string name="fab_description">Lisää lääke</string>
+    <string name="title"><![CDATA[<h1>Lääkkeeni</h1>]]></string>
+    <string name="hint_medicine_name">Lääkkeen nimi</string>
+    <string name="hint_medicine_name_label">Lääkkeen nimi:</string>
+    <string name="hint_medicine_name_label_edit">Vaihda lääkkeen nimi:</string>
+    <string name="hint_medicine_strength">Lääkkeen vahvuus</string>
+    <string name="hint_medicine_strength_label">Lääkkeen vahvuus:</string>
+    <string name="hint_medicine_strength_label_edit">Vaihda lääkkeen vahvuus:</string>
+    <string name="alarm_check">Laita hälytys</string>
+    <string name="taken_when_needed">Otetaan tarvittaessa</string>
+    <string name="menu_label">Lääkemuoto</string>
+    <string name="hint_medicine_form">Lääkemuoto/annostuksen yksikkö</string>
+    <string name="hint_medicine_form_label">Lääkemuoto/annostuksen yksikkö:</string>
+    <string name="hint_medicine_form_label_edit">Vaihda lääkemuoto/annoksen yksikkö:</string>
+    <string name="current_form">Nykyinen arvo:</string>
+    <string name="save_medicine">Tallenna lääkkeen tiedot</string>
+    <string name="alarm">Hälytys</string>
+    <string name="no_alarm">Ei hälytystä</string>
+    <string name="countinuous">Jatkuva lääkitys</string>
+    <string name="when_needed">Tarvittaessa</string>
+    <string name="details_error">Et voi jättää kenttiä tyhjäksi!</string>
+    <string name="to_dosage">Lisää annos lääkkeelle</string>
+    <string name="show_timepicker">Valitse aika</string>
+    <string name="edit_dosage_value">Valitse annoksen määrä:</string>
+    <string name="continue_button">Jatka</string>
+    <string name="delete_medicine">Poista lääke</string>
+    <string name="delete">Poista</string>
+    <string name="delete_dosage">Poista annos</string>
+    <string name="back">Takaisin</string>
+    <string name="save_edited_med_info">Tallenna muutokset</string>
+    <string name="edit_dosage">Muokkaa</string>
+    <string name="cancel">Peruuta</string>
+    <string name="form_prompt">Valitse lääkemuoto</string>
+    <string name="to_dosage_edit">Lisää uusi annos</string>
+    <string name="show_timepicker_new">Valitse uusi aika</string>
+    <string name="medicine_list">Lääkityslista</string>
+    <string name="add_new_medicine">Lisää uusi lääke</string>
+    <string name="set_dosage">Lisää annos</string>
+    <string name="edit_medicine_info">Lääkkeen tiedot</string>
+    <string name="edit_dosage_info">Annos</string>
+    <string name="mandatory">Pakollinen tieto</string>
+    <string name="med_notification_channel_id" translatable="false">medi_channel</string>
+    <string name="med_notification_channel_name" translatable="true">Kanava</string>
+    <string name="notification_title">Lääkemuistutus</string>
+    <string name="notification_text">Ota lääkkeesi!</string>
+    <string name="snooze">Muistuta uudelleen</string>
+    <string name="test_notification">Ilmoitustesti</string>
+    <string name="med_notification_channel_description">kanavan kuvaus</string>
+    <string name="dosage_title_text">Lääkkeen annostus:</string>
+    <string name="save">Tallenna</string>
+    <string name="question_delete_med">Haluatko varmasti poistaa lääkkeen?</string>
+    <string name="yes">Kyllä</string>
+    <string name="question_delete_dos">Haluatko varmasti poistaa annoksen?</string>
+    <string name="empty_medicine_list">Lääkityslistallasi ei ole lääkkeitä.</string>
 </resources>

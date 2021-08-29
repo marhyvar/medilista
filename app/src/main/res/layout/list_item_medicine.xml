@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="medicinewithdos"
+            type="com.example.medilista.database.MedicineWithDosages" />
+        <variable
+            name="clickListener" type="com.example.medilista.medicines.MedIdListener"/>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/cardview_light_background"
+        app:cardMaxElevation="6dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        android:onClick="@{() -> clickListener.onClick(medicinewithdos)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/med_if_needed_text"
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/med_name_text"
+                app:whenNeededOrContinuous="@{medicinewithdos.Medicine}"
+                tools:text="Jatkuva" />
+
+            <TextView
+                android:id="@+id/med_name_text"
+                style="@style/BoldTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:medicineNameAndStrength="@{medicinewithdos.Medicine}"
+                tools:text="Amlodipin 10 mg" />
+
+            <ImageView
+                android:id="@+id/alarm_image"
+                android:layout_width="36dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/med_if_needed_text"
+                app:alarmImage="@{medicinewithdos.Medicine}" />
+
+            <TextView
+                android:id="@+id/alarm_text"
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:alarmStatus="@{medicinewithdos.Medicine}"
+                app:layout_constraintBottom_toBottomOf="@+id/alarm_image"
+                app:layout_constraintStart_toEndOf="@+id/alarm_image"
+                app:layout_constraintTop_toTopOf="@+id/alarm_image"
+                tools:text="Hälytys" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dosage_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/alarm_image"
+                app:setDosages="@{medicinewithdos}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

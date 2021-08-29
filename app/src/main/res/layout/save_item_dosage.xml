@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="clickListenerDelete"
+            type="com.example.medilista.details.DosageListenerDelete" />
+        <variable
+            name="savedosage"
+            type="com.example.medilista.database.Dosage" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/save_dosage_text"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:save="@{savedosage}"
+            tools:text="Määrä 1, klo 19:00" />
+
+
+        <Button
+            android:id="@+id/delete_unsaved_dosage_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="@{() -> clickListenerDelete.onClick(savedosage)}"
+            android:text="@string/delete"
+            app:deleteButtonContentDescription="@{savedosage}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/save_dosage_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

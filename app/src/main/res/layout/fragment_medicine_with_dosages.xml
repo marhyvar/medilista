@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="medicineWithDosagesViewModel"
+            type="com.example.medilista.edit.MedicineWithDosagesViewModel" />
+    </data>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".edit.MedicineWithDosagesFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/chosen_med"
+                style="@style/BoldTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:med="@{medicineWithDosagesViewModel.med.Medicine}"
+                tools:text="Amlodipin 10 mg tabletti" />
+
+            <Button
+                android:id="@+id/delete_medicine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/delete_medicine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chosen_med" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/medicine_layout_2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/hint_medicine_name_label_edit"
+                android:textColorHint="@color/secondaryTextColor"
+                app:boxBackgroundColor="@color/cardview_light_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/delete_medicine">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_med_name"
+                    style="@style/InputStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{medicineWithDosagesViewModel.med.Medicine.medicineName}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/medicine_layout_2" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/strength_layout_2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/hint_medicine_strength_label_edit"
+                android:textColorHint="@color/secondaryTextColor"
+                app:boxBackgroundColor="@color/cardview_light_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/medicine_layout_2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_med_strength"
+                    style="@style/InputStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{medicineWithDosagesViewModel.med.Medicine.strength}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/strength_layout_2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/label_med_form_spinner"
+                style="@style/LabelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:labelFor="@+id/med_form_spinner"
+                android:text="@string/hint_medicine_form_label_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/strength_layout_2" />
+
+            <Spinner
+                android:id="@+id/med_form_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/primaryColor"
+                android:prompt="@string/form_prompt"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_med_form_spinner"
+                tools:listitem="@layout/spinner_selected_item" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/edit_taken_when_needed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:checked="@{medicineWithDosagesViewModel.med.Medicine.takenWhenNeeded}"
+                android:text="@string/taken_when_needed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_alarm" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/edit_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:checked="@{medicineWithDosagesViewModel.med.Medicine.alarm}"
+                android:text="@string/alarm_check"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/med_form_spinner" />
+
+            <Button
+                android:id="@+id/edit_medicine_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:onClick="@{() -> medicineWithDosagesViewModel.onSaveMedicineChangesClicked()}"
+                android:text="@string/save_edited_med_info"
+                android:enabled="@{medicineWithDosagesViewModel.isButtonActive}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_taken_when_needed" />
+
+            <TextView
+                android:id="@+id/dosage_heading_text"
+                style="@style/TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/dosage_title_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_medicine_button" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dosages_list_editing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dosage_heading_text" />
+
+            <Button
+                android:id="@+id/button_new_dosage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:onClick="@{() -> medicineWithDosagesViewModel.onAddNewDosageButtonClicked()}"
+                android:text="@string/to_dosage_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dosages_list_editing" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

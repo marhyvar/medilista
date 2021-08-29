@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/medicinesFragment">
+
+    <fragment
+        android:id="@+id/medicinesFragment"
+        android:name="com.example.medilista.medicines.MedicinesFragment"
+        android:label="@string/medicine_list"
+        tools:layout="@layout/fragment_medicines">
+        <action
+            android:id="@+id/action_medicinesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_medicinesFragment_to_medicineWithDosagesFragment"
+            app:destination="@id/medicineWithDosagesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.medilista.details.DetailsFragment"
+        android:label="@string/add_new_medicine"
+        tools:layout="@layout/fragment_details">
+        <action
+            android:id="@+id/action_detailsFragment_to_medicinesFragment"
+            app:destination="@id/medicinesFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_dosageFragment"
+            app:destination="@id/dosageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dosageFragment"
+        android:name="com.example.medilista.details.DosageFragment"
+        android:label="@string/set_dosage"
+        tools:layout="@layout/fragment_dosage">
+        <action
+            android:id="@+id/action_dosageFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:popUpTo="@id/detailsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicineWithDosagesFragment"
+        android:name="com.example.medilista.edit.MedicineWithDosagesFragment"
+        android:label="@string/edit_medicine_info"
+        tools:layout="@layout/fragment_medicine_with_dosages">
+        <argument
+            android:name="medicineKey"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_medicineWithDosagesFragment_to_medicinesFragment"
+            app:destination="@id/medicinesFragment" />
+        <action
+            android:id="@+id/action_medicineWithDosagesFragment_to_editDosageDetailsFragment"
+            app:destination="@id/editDosageDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDosageDetailsFragment"
+        android:name="com.example.medilista.edit.EditDosageDetailsFragment"
+        android:label="@string/edit_dosage_info"
+        tools:layout="@layout/fragment_edit_dosage_details">
+        <argument
+            android:name="dosage"
+            app:argType="com.example.medilista.database.Dosage" />
+        <action
+            android:id="@+id/action_editDosageDetailsFragment_to_medicineWithDosagesFragment"
+            app:destination="@id/medicineWithDosagesFragment"
+            app:popUpTo="@id/medicineWithDosagesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
