@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -127,30 +128,22 @@ class DetailsFragment : Fragment() {
             }
         })
 
-        binding.editMedicineName.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                val valid = detailsViewModel.checkInput(detailsViewModel.name)
-                if (!valid) {
-                    binding.medicineLayout.error = getString(R.string.mandatory)
-                }
+        binding.editMedicineName.doAfterTextChanged {
+            val valid = detailsViewModel.checkInput(detailsViewModel.name)
+            if (!valid) {
+                binding.medicineLayout.error = getString(R.string.text_length)
+            } else {
+                binding.medicineLayout.error = null
             }
         }
 
-        binding.editMedicineName.doOnTextChanged { _, _, _, _ ->
-            binding.medicineLayout.error = null
-        }
-
-        binding.editMedicineStrength.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                val valid = detailsViewModel.checkInput(detailsViewModel.strength)
-                if (!valid) {
-                    binding.strengthLayout.error = getString(R.string.mandatory)
-                }
+        binding.editMedicineStrength.doAfterTextChanged {
+            val valid = detailsViewModel.checkInput(detailsViewModel.strength)
+            if (!valid) {
+                binding.strengthLayout.error = getString(R.string.text_length)
+            } else {
+                binding.strengthLayout.error = null
             }
-        }
-
-        binding.editMedicineStrength.doOnTextChanged { _, _, _, _ ->
-            binding.strengthLayout.error = null
         }
 
         return binding.root
