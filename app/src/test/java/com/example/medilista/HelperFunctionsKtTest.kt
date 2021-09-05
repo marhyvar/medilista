@@ -172,6 +172,20 @@ class HelperFunctionsKtTest {
         val list2 = sortDosageList(list1)
             assertThat(list2!![0]).isEqualTo(Dosage(3, 1, 1.0, 9, 47))
     }
+
+    @Test
+    fun defineSpinnerPositionReturnsCorrectValue() {
+        val form = "tippa"
+        val result = defineSpinnerPosition("tippa")
+        assertThat(result).isEqualTo(3)
+    }
+
+    @Test
+    fun defineSpinnerPositionReturnsDefault() {
+        val result = defineSpinnerPosition(null)
+        assertThat(result).isEqualTo(0)
+    }
+
 }
 
 //https://github.com/philipplackner/UnitTestingYT

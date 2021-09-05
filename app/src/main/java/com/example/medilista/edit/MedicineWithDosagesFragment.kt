@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicineWithDosagesBinding
+import com.example.medilista.defineSpinnerPosition
 import com.google.android.material.snackbar.Snackbar
 
 class MedicineWithDosagesFragment: Fragment() {
@@ -105,6 +106,10 @@ class MedicineWithDosagesFragment: Fragment() {
                     binding.editAlarm.visibility = View.VISIBLE
                 }
             }
+        })
+
+        medicineWithDosagesViewModel.getMed().observe(viewLifecycleOwner, Observer {
+            spinner.setSelection(defineSpinnerPosition(it.Medicine.form))
         })
 
         medicineWithDosagesViewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
