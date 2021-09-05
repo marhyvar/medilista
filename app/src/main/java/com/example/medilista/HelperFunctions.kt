@@ -141,3 +141,18 @@ fun sortDosageList(list: List<Dosage>?): List<Dosage>? {
     return list?.sortedWith(compareBy<Dosage> { it.timeValueHours }.thenBy { it.timeValueMinutes })
 }
 
+fun defineSpinnerPosition(form: String?): Int {
+    return when (form) {
+        "tabletti"-> 0
+        "kapseli" -> 1
+        "annospussi" -> 2
+        "tippa" -> 3
+        "ml" -> 4
+        "inhalaatio" -> 5
+        "laastari" -> 6
+        "peräpuikko" -> 7
+        "IU" -> 8
+        else -> 0
+    }
+}
+
