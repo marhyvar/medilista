@@ -175,14 +175,14 @@ class DetailsViewModel(
 
     fun onSaveButtonClick() {
         viewModelScope.launch {
-            val medName = name.value
-            val medStrength = strength.value
+            val medName = name.value?.trim() ?: ""
+            val medStrength = strength.value?.trim() ?: ""
             val medForm = _formSelection.value
             val medAlarm = alarm.value
             val medNeeded = onlyWhenNeeded.value
 
             if (validateInputInMedicineDetails(medName, medStrength, medForm)) {
-                val medicine = Medicine(medicineName = medName!!, strength = medStrength!!,
+                val medicine = Medicine(medicineName = medName, strength = medStrength,
                     form = medForm!!, alarm = medAlarm!!, takenWhenNeeded = medNeeded!!)
                 //val id = insert(medicine)
                 insert(medicine)

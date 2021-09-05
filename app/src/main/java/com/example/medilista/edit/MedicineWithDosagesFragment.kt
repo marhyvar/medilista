@@ -131,8 +131,8 @@ class MedicineWithDosagesFragment: Fragment() {
 
         medicineWithDosagesViewModel.saveMedicineEvent.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                val name = binding.editMedName.text.toString()
-                val strength = binding.editMedStrength.text.toString()
+                val name = binding.editMedName.text.toString().trim()
+                val strength = binding.editMedStrength.text.toString().trim()
                 //val form = binding.editMedForm.text.toString()
                 val form = medicineWithDosagesViewModel.formSelection.value!!
                 val needed = binding.editTakenWhenNeeded.isChecked
