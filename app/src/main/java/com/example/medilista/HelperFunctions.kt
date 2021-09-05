@@ -120,7 +120,7 @@ fun hasClockValueChanged(oldValue: Int?, newValue: Int?): Boolean {
 }
 
 fun validateString(string: String?): Boolean {
-    return string != null && string.isNotBlank()
+    return string != null && string.isNotBlank() && string.length < 40
 }
 
 fun validateNotSelected(string: String?): Boolean {

@@ -165,6 +165,12 @@ class HelperFunctionsKtTest {
     }
 
     @Test
+    fun stringValidationReturnsFalseWithTooLongText() {
+        val result = validateString("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+        assertThat(result).isFalse()
+    }
+
+    @Test
     fun listIsSortedCorrectly() {
         val list1 = mutableListOf<Dosage>(Dosage(1, 1, 2.0, 12, 30),
                 Dosage(2, 1, 1.0, 10, 10),

@@ -18,9 +18,9 @@ class DetailsViewModel(
     val navigateToMedicines: LiveData<Boolean?>
         get() = _navigateToMedicines
 
-    val name = MutableLiveData<String>()
+    val name = MutableLiveData<String?>()
 
-    val strength = MutableLiveData<String>()
+    val strength = MutableLiveData<String?>()
 
     val alarm = MutableLiveData<Boolean>(false)
 
@@ -251,8 +251,8 @@ class DetailsViewModel(
     }
 
     private fun setEmptyValues() {
-        name.value = ""
-        strength.value = ""
+        name.value = null
+        strength.value = null
         alarm.value = false
         onlyWhenNeeded.value = false
         setFormSelected("tabletti")
@@ -264,12 +264,8 @@ class DetailsViewModel(
         _formSelection.value = formValueSelection
     }
 
-    fun checkInput(inputName: MutableLiveData<String>): Boolean {
-        val valid = validateString(inputName.value)
-        if (!valid) {
-            return false
-        }
-        return true
+    fun checkInput(inputName: MutableLiveData<String?>): Boolean {
+        return validateString(inputName.value)
     }
 
     fun onDeleteDosageButtonClicked(dosage: Dosage) {
@@ -279,4 +275,5 @@ class DetailsViewModel(
         message = "Annos poistettu: $text"
         _showMessageEvent.value = true
     }
+
 }

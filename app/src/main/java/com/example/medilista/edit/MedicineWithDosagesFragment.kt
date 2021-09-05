@@ -109,7 +109,10 @@ class MedicineWithDosagesFragment: Fragment() {
         })
 
         medicineWithDosagesViewModel.getMed().observe(viewLifecycleOwner, Observer {
-            spinner.setSelection(defineSpinnerPosition(it.Medicine.form))
+            it?.let {
+                val formPosition = defineSpinnerPosition(it.Medicine.form)
+                spinner.setSelection(formPosition)
+            }
         })
 
         medicineWithDosagesViewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
@@ -160,7 +163,7 @@ class MedicineWithDosagesFragment: Fragment() {
             binding.medicineLayout2.error = null
             val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
             if (!valid) {
-                binding.medicineLayout2.error = getString(R.string.mandatory)
+                binding.medicineLayout2.error = getString(R.string.text_length)
             }
         }
 
@@ -168,7 +171,7 @@ class MedicineWithDosagesFragment: Fragment() {
             binding.strengthLayout2.error = null
             val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
             if (!valid) {
-                binding.strengthLayout2.error = getString(R.string.mandatory)
+                binding.strengthLayout2.error = getString(R.string.text_length)
             }
         }
 
