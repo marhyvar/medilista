@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.medilista.R
 import com.example.medilista.database.MedicineDatabase
 import com.example.medilista.databinding.FragmentMedicineWithDosagesBinding
+import com.example.medilista.defineSpinnerPosition
 import com.google.android.material.snackbar.Snackbar
 
 class MedicineWithDosagesFragment: Fragment() {
@@ -107,6 +108,13 @@ class MedicineWithDosagesFragment: Fragment() {
             }
         })
 
+        medicineWithDosagesViewModel.getMed().observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val formPosition = defineSpinnerPosition(it.Medicine.form)
+                spinner.setSelection(formPosition)
+            }
+        })
+
         medicineWithDosagesViewModel.navigateToHome.observe(viewLifecycleOwner, Observer {
             if (it == true) { // Observed state = true
                 this.findNavController().navigate(MedicineWithDosagesFragmentDirections
@@ -131,8 +139,8 @@ class MedicineWithDosagesFragment: Fragment() {
 
         medicineWithDosagesViewModel.saveMedicineEvent.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                val name = binding.editMedName.text.toString()
-                val strength = binding.editMedStrength.text.toString()
+                val name = binding.editMedName.text.toString().trim()
+                val strength = binding.editMedStrength.text.toString().trim()
                 //val form = binding.editMedForm.text.toString()
                 val form = medicineWithDosagesViewModel.formSelection.value!!
                 val needed = binding.editTakenWhenNeeded.isChecked
@@ -155,7 +163,7 @@ class MedicineWithDosagesFragment: Fragment() {
             binding.medicineLayout2.error = null
             val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
             if (!valid) {
-                binding.medicineLayout2.error = getString(R.string.mandatory)
+                binding.medicineLayout2.error = getString(R.string.text_length)
             }
         }
 
@@ -163,7 +171,7 @@ class MedicineWithDosagesFragment: Fragment() {
             binding.strengthLayout2.error = null
             val valid = medicineWithDosagesViewModel.checkInput(text?.toString())
             if (!valid) {
-                binding.strengthLayout2.error = getString(R.string.mandatory)
+                binding.strengthLayout2.error = getString(R.string.text_length)
             }
         }
 

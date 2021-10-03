@@ -17,6 +17,6 @@ fun TextView.setDosageSaveText(item: Dosage?) {
 fun Button.setContentDescriptionForDelete(item: Dosage?) {
     item?.let {
         val text = combineAmountAndTimes(item.amount, item.timeValueHours, item.timeValueMinutes)
-        contentDescription = "Poista annostus $text"
+        contentDescription = "Poista annos $text"
     }
 }

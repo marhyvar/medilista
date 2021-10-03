@@ -120,7 +120,7 @@ fun hasClockValueChanged(oldValue: Int?, newValue: Int?): Boolean {
 }
 
 fun validateString(string: String?): Boolean {
-    return string != null && string.isNotBlank()
+    return string != null && string.isNotBlank() && string.length < 40
 }
 
 fun validateNotSelected(string: String?): Boolean {
@@ -139,5 +139,20 @@ fun validateTimeAndAmount(amount: String?, time: String?): Boolean {
 
 fun sortDosageList(list: List<Dosage>?): List<Dosage>? {
     return list?.sortedWith(compareBy<Dosage> { it.timeValueHours }.thenBy { it.timeValueMinutes })
+}
+
+fun defineSpinnerPosition(form: String?): Int {
+    return when (form) {
+        "tabletti"-> 0
+        "kapseli" -> 1
+        "annospussi" -> 2
+        "tippa" -> 3
+        "ml" -> 4
+        "inhalaatio" -> 5
+        "laastari" -> 6
+        "peräpuikko" -> 7
+        "IU" -> 8
+        else -> 0
+    }
 }
 

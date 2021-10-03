@@ -44,6 +44,7 @@
     <string name="edit_medicine_info">Lääkkeen tiedot</string>
     <string name="edit_dosage_info">Annos</string>
     <string name="mandatory">Pakollinen tieto</string>
+    <string name="text_length">Tekstin pituus tulee olla vähintään 1 ja enintään 40 merkkiä</string>
     <string name="med_notification_channel_id" translatable="false">medi_channel</string>
     <string name="med_notification_channel_name" translatable="true">Kanava</string>
     <string name="notification_title">Lääkemuistutus</string>
